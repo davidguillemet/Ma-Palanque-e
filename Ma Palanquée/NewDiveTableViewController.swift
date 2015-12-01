@@ -250,17 +250,33 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             let targetController = targetNavController?.topViewController as? DiversTableViewController
             targetController?.selection = excludedDivers
             
+            // Get the list of divers from the group list
+            var usedDivers: Set<String> = Set<String>()
+            if (self.initialDive != nil && self.initialDive!.groups != nil && self.initialDive!.groups!.count > 0)
+            {
+                for group in self.initialDive!.groups!
+                {
+                    if (group.divers != nil)
+                    {
+                        group.divers!.forEach({ (diver: String) -> Void in
+                          usedDivers.insert(diver)
+                        })
+                    }
+                }
+            }
+            
             // build a diver list from the current trip
             var tripDivers: [Diver] = [Diver]()
             for diver in trip.divers
             {
                 // Exclude the dive current dive director
-                if (self.diveDirector != nil && self.diveDirector!.id == diver)
+                if (self.diveDirector != nil && self.diveDirector!.id == diver || usedDivers.contains(diver))
                 {
                     continue
                 }
                 tripDivers.append(DiverManager.GetDiver(diver))
             }
+            
             targetController?.initialDivers = tripDivers
             targetController?.selectionType = "DiveExcludedDivers"
         }
