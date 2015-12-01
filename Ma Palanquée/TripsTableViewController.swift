@@ -175,7 +175,13 @@ class TripsTableViewController: SearchableTableViewController {
                 self.tableView.editing = false
                 if (self.TripScope != TripScope.All.rawValue)
                 {
+                    // remove item from list
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                }
+                else
+                {
+                    // for the scope "All", we must refreah the item
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 }
             })
             
@@ -193,6 +199,11 @@ class TripsTableViewController: SearchableTableViewController {
                 if (self.TripScope != TripScope.All.rawValue)
                 {
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                }
+                else
+                {
+                    // for the scope "All", we must refreah the item
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 }
             })
         
