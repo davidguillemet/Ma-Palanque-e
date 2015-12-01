@@ -151,12 +151,8 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                     // Get the gesture position relative to tableView in order to get the offset to apply
                     let locationInTableView: CGPoint = longPress.locationInView(collectionItem!.tableView)
                     
-                    let offsetX = locationInCollectionView.x - locationInTableView.x
-                    let offsetY = locationInCollectionView.y - locationInTableView.y
-                    
                     // Get the possible active table row
                     let tableRowIndexPath = collectionItem!.tableView.indexPathForRowAtPoint(locationInTableView)
-
 
                     if (tableRowIndexPath != nil)
                     {
@@ -204,12 +200,12 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                         // Check if we are above or bellow the vertical middle of the table row in order to display th einsertion indicator at the bottom or top of the row
                         if (locationInTableView.y < activeTableRow.center.y)
                         {
-                            insertionIndicator.y = activeTableRow.frame.origin.y + offsetY - 1
+                            insertionIndicator.y = activeTableRow.frame.origin.y - 1
                             DraggableDiverData.targetTableRowIndexPath = tableRowIndexPath
                         }
                         else
                         {
-                            insertionIndicator.y = activeTableRow.frame.origin.y + activeTableRow.frame.height + offsetY - 1
+                            insertionIndicator.y = activeTableRow.frame.origin.y + activeTableRow.frame.height - 1
                             DraggableDiverData.targetTableRowIndexPath = NSIndexPath(forRow: tableRowIndexPath!.row + 1, inSection: 0)
                         }
 
@@ -224,23 +220,38 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                         }
                         else
                         {
-                            insertionIndicator.x = activeTableRow.frame.origin.x + offsetX
-                            DraggableDiverData.ShowInsertionIndicatorView(insertionIndicator, width: activeTableRow.frame.width)
+                            insertionIndicator.x = activeTableRow.frame.origin.x
+                            
+                            DraggableDiverData.ShowInsertionIndicatorView(
+                                viewController.collectionView!.convertPoint(insertionIndicator, fromView: activeTableRow.superview),
+                                width: activeTableRow.frame.width)
                         }
                     }
-                    else
+                    else if (collectionItem!.divers.count > 0)
                     {
                         // No active target row -> we will insert the diver at the end
                         // -> Make the bottom border of the last row active
                         // Get the last table view row
                         let rowCount = collectionItem!.divers.count
+                        
                         // Get the last cell
                         let lastTableRow: UITableViewCell = collectionItem!.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: rowCount - 1, inSection: 0))!
                         
-                        let insertionIndicatorPos: CGPoint = CGPoint(x: lastTableRow.frame.origin.x + offsetX, y: lastTableRow.frame.origin.y + lastTableRow.frame.height + offsetY - 1)
+                        let insertionIndicatorPos: CGPoint = CGPoint(x: lastTableRow.frame.origin.x, y: lastTableRow.frame.origin.y + lastTableRow.frame.height - 1)
                         
-                        DraggableDiverData.ShowInsertionIndicatorView(insertionIndicatorPos, width: lastTableRow.frame.width)
+                        DraggableDiverData.ShowInsertionIndicatorView(
+                            viewController.collectionView!.convertPoint(insertionIndicatorPos, fromView: lastTableRow.superview),
+                            width: lastTableRow.frame.width)
                         
+                        // And then -> No target row
+                        DraggableDiverData.targetTableRowIndexPath = nil
+                    }
+                    else
+                    {
+                        // We drag the diver on an empty collection Item
+                        // -> No insertion indicator
+                        DraggableDiverData.HideInsertionIndicatorView()
+                        // And then -> No target row
                         DraggableDiverData.targetTableRowIndexPath = nil
                     }
                 }
@@ -307,24 +318,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                     snapshotDestination = viewController.collectionView!.convertPoint(initialTableRow.center, fromView: initialCollectionItem.tableView)
                 }
                 
-                DraggableDiverData.HideErrorIndicatorView()
-                DraggableDiverData.HideInsertionIndicatorView()
-                
-                UIView.animateWithDuration(
-                    0.25,
-                    animations: { () -> Void in
-                        DraggableDiverData.cellSnapshot!.center.x = snapshotDestination.x
-                        DraggableDiverData.cellSnapshot!.center.y = snapshotDestination.y
-                        DraggableDiverData.cellSnapshot!.transform = CGAffineTransformIdentity
-                        DraggableDiverData.cellSnapshot!.alpha = 0.0
-                    },
-                    completion: { (finished) -> Void in
-                        if finished
-                        {
-                            DraggableDiverData.Clear()
-                        }
-                    }
-                )
+                DraggableDiverData.Terminate(snapshotDestination)
         }
     
     }

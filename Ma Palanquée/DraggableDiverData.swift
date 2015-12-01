@@ -54,6 +54,28 @@ class DraggableDiverData
         DraggableDiverData.insertionIndicatorView = BuildInsertionIndicator(parentView)
     }
     
+    static func Terminate(finalDestination: CGPoint)
+    {
+        DraggableDiverData.HideErrorIndicatorView()
+        DraggableDiverData.HideInsertionIndicatorView()
+        
+        UIView.animateWithDuration(
+            0.25,
+            animations: { () -> Void in
+                DraggableDiverData.cellSnapshot!.center.x = finalDestination.x
+                DraggableDiverData.cellSnapshot!.center.y = finalDestination.y
+                DraggableDiverData.cellSnapshot!.transform = CGAffineTransformIdentity
+                DraggableDiverData.cellSnapshot!.alpha = 0.0
+            },
+            completion: { (finished) -> Void in
+                if finished
+                {
+                    DraggableDiverData.Clear()
+                }
+            }
+        )
+    }
+    
     // Returns true if the Drag gesture has been initialzed from a valid table row
     static var IsInitialized: Bool
     {
@@ -61,33 +83,6 @@ class DraggableDiverData
         {
             return cellSnapshot != nil
         }
-    }
-    
-    // Clear the Drag data structure and releases UI resources
-    static func Clear()
-    {
-        // Remove views
-        if (errorIndicatorView != nil)
-        {
-            errorIndicatorView!.hidden = true
-            errorIndicatorView!.removeFromSuperview()
-        }
-        if (insertionIndicatorView != nil)
-        {
-            insertionIndicatorView!.hidden = true
-            insertionIndicatorView!.removeFromSuperview()
-        }
-        if (cellSnapshot != nil)
-        {
-            cellSnapshot!.removeFromSuperview()
-        }
-        
-        cellSnapshot = nil
-        errorIndicatorView = nil
-        insertionIndicatorView = nil
-        offSetWithCenter = nil
-        targetCollectionItemIndexPath = nil
-        targetTableRowIndexPath = nil
     }
     
     static func ShowErrorIndicatorView()
@@ -189,6 +184,33 @@ class DraggableDiverData
         insertionIndicatorView.hidden = true
         parentView.addSubview(insertionIndicatorView)
         return insertionIndicatorView
+    }
+    
+    // Clear the Drag data structure and releases UI resources
+    private static func Clear()
+    {
+        // Remove views
+        if (errorIndicatorView != nil)
+        {
+            errorIndicatorView!.hidden = true
+            errorIndicatorView!.removeFromSuperview()
+        }
+        if (insertionIndicatorView != nil)
+        {
+            insertionIndicatorView!.hidden = true
+            insertionIndicatorView!.removeFromSuperview()
+        }
+        if (cellSnapshot != nil)
+        {
+            cellSnapshot!.removeFromSuperview()
+        }
+        
+        cellSnapshot = nil
+        errorIndicatorView = nil
+        insertionIndicatorView = nil
+        offSetWithCenter = nil
+        targetCollectionItemIndexPath = nil
+        targetTableRowIndexPath = nil
     }
 
 }
