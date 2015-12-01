@@ -10,8 +10,13 @@ import UIKit
 
 class GroupTableTableViewCell: UITableViewCell {
 
+    var collectionItem: GroupCollectionViewCell!
+    var group: Group!
+    var diverId: String!
+    
     @IBOutlet weak var diverLabel: UILabel!
     @IBOutlet weak var diverLevel: UILabel!
+    @IBOutlet weak var guideButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,4 +29,18 @@ class GroupTableTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    @IBAction func clickGuideButton(sender: AnyObject)
+    {
+        // If diver is already the guide, do nothing
+        if (group.guide != nil && group.guide == diverId)
+        {
+            return
+        }
+        
+        // Set current idvere as guide
+        group.guide = diverId
+        
+        // Redraw table
+        collectionItem.tableView.reloadData()
+    }
 }

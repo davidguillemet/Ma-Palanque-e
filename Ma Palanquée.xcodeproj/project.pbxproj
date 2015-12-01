@@ -17,6 +17,8 @@
 		302B974E1BF3AAF500C58F74 /* DiversTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B974D1BF3AAF500C58F74 /* DiversTableViewController.swift */; };
 		302B97501BF558C900C58F74 /* DiverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B974F1BF558C900C58F74 /* DiverTableViewCell.swift */; };
 		302B97541BF7A78F00C58F74 /* SearchableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B97531BF7A78F00C58F74 /* SearchableTableViewController.swift */; };
+		3030DB311C0B856F003205E0 /* ErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3030DB301C0B856F003205E0 /* ErrorHelper.swift */; };
+		3030DB331C0CE15B003205E0 /* DraggableDiverData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3030DB321C0CE15B003205E0 /* DraggableDiverData.swift */; };
 		306608A31C0B5EC800E2F297 /* PreferencesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306608A21C0B5EC800E2F297 /* PreferencesHelper.swift */; };
 		30969FB71BEE50D300711979 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30969FB61BEE50D300711979 /* AppDelegate.swift */; };
 		30969FB91BEE50D300711979 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30969FB81BEE50D300711979 /* ViewController.swift */; };
@@ -69,6 +71,8 @@
 		302B974D1BF3AAF500C58F74 /* DiversTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiversTableViewController.swift; sourceTree = "<group>"; };
 		302B974F1BF558C900C58F74 /* DiverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverTableViewCell.swift; sourceTree = "<group>"; };
 		302B97531BF7A78F00C58F74 /* SearchableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchableTableViewController.swift; path = "Ma Palanquée/SearchableTableViewController.swift"; sourceTree = "<group>"; };
+		3030DB301C0B856F003205E0 /* ErrorHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHelper.swift; sourceTree = "<group>"; };
+		3030DB321C0CE15B003205E0 /* DraggableDiverData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableDiverData.swift; sourceTree = "<group>"; };
 		306608A21C0B5EC800E2F297 /* PreferencesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesHelper.swift; sourceTree = "<group>"; };
 		30969FB31BEE50D300711979 /* Ma Palanquée.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ma Palanquée.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30969FB61BEE50D300711979 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -220,8 +224,10 @@
 				30FC11391C052EE4006A0361 /* PickerView */,
 				30FC11371C03E051006A0361 /* ColorHelper.swift */,
 				30FC11221C00DFA7006A0361 /* DateHelper.swift */,
+				3030DB321C0CE15B003205E0 /* DraggableDiverData.swift */,
 				30FC113A1C06336E006A0361 /* IconHelper.swift */,
 				30A0B7EE1C00909500994C51 /* MessageHelper.swift */,
+				3030DB301C0B856F003205E0 /* ErrorHelper.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -340,6 +346,7 @@
 				30FC11251C01EEC7006A0361 /* NewDiveTableViewController.swift in Sources */,
 				3096EEDA1BEFBD5100F67D14 /* DiverManager.swift in Sources */,
 				30FC11431C07D28E006A0361 /* GroupCollectionViewCell.swift in Sources */,
+				3030DB331C0CE15B003205E0 /* DraggableDiverData.swift in Sources */,
 				30FC113B1C06336E006A0361 /* IconHelper.swift in Sources */,
 				30969FD51BEE615B00711979 /* TripsTableViewController.swift in Sources */,
 				3096EED01BEFB5F100F67D14 /* Trip.swift in Sources */,
@@ -353,6 +360,7 @@
 				30A0B7EF1C00909500994C51 /* MessageHelper.swift in Sources */,
 				302B97481BF393DC00C58F74 /* TripStatus.swift in Sources */,
 				306608A31C0B5EC800E2F297 /* PreferencesHelper.swift in Sources */,
+				3030DB311C0B856F003205E0 /* ErrorHelper.swift in Sources */,
 				30A0B7D51BFE527100994C51 /* ConstraintType.swift in Sources */,
 				302B973C1BF1308300C58F74 /* TripTableViewCell.swift in Sources */,
 				3096EED81BEFBB6400F67D14 /* DiveType.swift in Sources */,

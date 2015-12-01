@@ -20,6 +20,8 @@ enum IconValue: String
     case IconTrash = "\u{e609}"
     case IconUnlocked = "\u{e607}"
     case IconLocked = "\u{e63f}"
+    case IconRibbon = "\u{e61a}"
+    case IconClose2 = "\u{e680}"
 }
 
 class IconHelper

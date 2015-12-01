@@ -76,7 +76,7 @@ class DiverManager
                 break;
             }
             
-            let newGroup = Group(guide: divers[index].id, divers: nil)
+            let newGroup = Group(divers: Set<String>([divers[index].id]), guide: divers[index].id)
             groups.append(newGroup)
             
             if (index < divers.count - 1)

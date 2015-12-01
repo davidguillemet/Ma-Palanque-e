@@ -134,7 +134,7 @@ class DivesTableViewController: SearchableTableViewController
             self.performSegueWithIdentifier("EditDive", sender: dive)
         })
         
-        editAction.backgroundColor = ColorHelper.PendingGroup
+        editAction.backgroundColor = ColorHelper.PendingTrip
         actions.append(editAction)
     
         let deleteAction = UITableViewRowAction(style: .Default, title: "Delete", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in

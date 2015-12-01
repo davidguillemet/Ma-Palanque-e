@@ -821,8 +821,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="250" height="290"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7CX-hj-vRT">
-                                            <rect key="frame" x="3" y="32" width="244" height="255"/>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7CX-hj-vRT">
+                                            <rect key="frame" x="3" y="38" width="244" height="249"/>
                                             <animations/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <prototypes>
@@ -834,7 +834,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E6p-W0-THq">
-                                                                <rect key="frame" x="46" y="11" width="190" height="21"/>
+                                                                <rect key="frame" x="46" y="11" width="155" height="21"/>
                                                                 <animations/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -851,31 +851,46 @@
                                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="un8-dR-kGH">
+                                                                <rect key="frame" x="206" y="7" width="30" height="30"/>
+                                                                <animations/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="30" id="MMa-Td-NWx"/>
+                                                                    <constraint firstAttribute="height" constant="30" id="hRa-PY-gVg"/>
+                                                                </constraints>
+                                                                <state key="normal" title="G"/>
+                                                                <connections>
+                                                                    <action selector="clickGuideButton:" destination="pZ6-FF-tkb" eventType="touchUpInside" id="rje-PM-H8i"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <animations/>
                                                         <constraints>
-                                                            <constraint firstAttribute="trailingMargin" secondItem="E6p-W0-THq" secondAttribute="trailing" id="7ZV-S1-3jC"/>
+                                                            <constraint firstItem="un8-dR-kGH" firstAttribute="centerY" secondItem="X8P-5C-8eW" secondAttribute="centerY" id="1T1-SG-q9e"/>
                                                             <constraint firstItem="E6p-W0-THq" firstAttribute="leading" secondItem="Dwi-uy-G2j" secondAttribute="trailing" constant="8" id="QNI-U3-pTD"/>
                                                             <constraint firstItem="E6p-W0-THq" firstAttribute="centerY" secondItem="X8P-5C-8eW" secondAttribute="centerY" id="RbW-O0-epr"/>
                                                             <constraint firstItem="Dwi-uy-G2j" firstAttribute="leading" secondItem="X8P-5C-8eW" secondAttribute="leadingMargin" id="S4q-kj-l22"/>
+                                                            <constraint firstAttribute="trailingMargin" secondItem="un8-dR-kGH" secondAttribute="trailing" id="TBs-YK-3Dw"/>
                                                             <constraint firstItem="Dwi-uy-G2j" firstAttribute="centerY" secondItem="X8P-5C-8eW" secondAttribute="centerY" id="WUV-aB-6E6"/>
+                                                            <constraint firstItem="un8-dR-kGH" firstAttribute="leading" secondItem="E6p-W0-THq" secondAttribute="trailing" constant="5" id="smb-97-NNT"/>
                                                         </constraints>
                                                     </tableViewCellContentView>
                                                     <animations/>
                                                     <connections>
                                                         <outlet property="diverLabel" destination="E6p-W0-THq" id="obv-x0-T9f"/>
                                                         <outlet property="diverLevel" destination="Dwi-uy-G2j" id="PQf-eJ-ola"/>
+                                                        <outlet property="guideButton" destination="un8-dR-kGH" id="WbJ-ih-Chx"/>
                                                     </connections>
                                                 </tableViewCell>
                                             </prototypes>
                                         </tableView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZbO-Sz-h7p">
-                                            <rect key="frame" x="3" y="0.0" width="30" height="30"/>
+                                            <rect key="frame" x="3" y="3" width="30" height="30"/>
                                             <animations/>
                                             <state key="normal" title="X"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J2q-Tx-oGV">
-                                            <rect key="frame" x="217" y="0.0" width="30" height="30"/>
+                                            <rect key="frame" x="217" y="3" width="30" height="30"/>
                                             <animations/>
                                             <state key="normal" title="L"/>
                                             <connections>
@@ -888,11 +903,11 @@
                                 </view>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstItem="J2q-Tx-oGV" firstAttribute="top" secondItem="Nst-Mm-6K0" secondAttribute="topMargin" constant="-8" id="C6J-kk-PmT"/>
+                                    <constraint firstItem="J2q-Tx-oGV" firstAttribute="top" secondItem="Nst-Mm-6K0" secondAttribute="topMargin" constant="-5" id="C6J-kk-PmT"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="7CX-hj-vRT" secondAttribute="bottom" constant="-5" id="DrI-xe-GgM"/>
                                     <constraint firstItem="ZbO-Sz-h7p" firstAttribute="leading" secondItem="Nst-Mm-6K0" secondAttribute="leadingMargin" constant="-5" id="bR7-0u-cdo"/>
-                                    <constraint firstItem="ZbO-Sz-h7p" firstAttribute="top" secondItem="Nst-Mm-6K0" secondAttribute="topMargin" constant="-8" id="dlA-0X-rgX"/>
-                                    <constraint firstItem="7CX-hj-vRT" firstAttribute="top" secondItem="Nst-Mm-6K0" secondAttribute="topMargin" constant="24" id="gNk-Ay-3wj"/>
+                                    <constraint firstItem="ZbO-Sz-h7p" firstAttribute="top" secondItem="Nst-Mm-6K0" secondAttribute="topMargin" constant="-5" id="dlA-0X-rgX"/>
+                                    <constraint firstItem="7CX-hj-vRT" firstAttribute="top" secondItem="Nst-Mm-6K0" secondAttribute="topMargin" constant="30" id="gNk-Ay-3wj"/>
                                     <constraint firstItem="7CX-hj-vRT" firstAttribute="leading" secondItem="Nst-Mm-6K0" secondAttribute="leadingMargin" constant="-5" id="vBo-gg-c8s"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="J2q-Tx-oGV" secondAttribute="trailing" constant="-5" id="vzV-Nl-WXj"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="7CX-hj-vRT" secondAttribute="trailing" constant="-5" id="wsa-rG-IJD"/>

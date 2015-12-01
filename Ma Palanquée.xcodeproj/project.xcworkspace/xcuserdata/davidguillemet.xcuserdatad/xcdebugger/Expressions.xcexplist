@@ -9,21 +9,24 @@
          contextName = "NewDiveTableViewController.(viewDidLoad(NewDiveTableViewController) -&gt; () -&gt; ()).(closure #1):NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
+         contextName = "GroupCollectionViewCell.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:GroupCollectionViewCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NewDiveTableViewController.prepareForSegue(UIStoryboardSegue, sender : AnyObject?) -&gt; ():NewDiveTableViewController.swift">
+      </ContextState>
+      <ContextState
          contextName = "DivesTableViewController.reloadDataTable() -&gt; ():DivesTableViewController.swift">
          <PersistentStrings>
-            <PersistentString
-               value = "trip.dives">
-            </PersistentString>
             <PersistentString
                value = "sections[diveDate]">
             </PersistentString>
             <PersistentString
                value = "self.sections.keys">
             </PersistentString>
+            <PersistentString
+               value = "trip.dives">
+            </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "NewDiveTableViewController.prepareForSegue(UIStoryboardSegue, sender : AnyObject?) -&gt; ():NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
          contextName = "DivesTableViewController.numberOfSectionsInTableView(UITableView) -&gt; Int:DivesTableViewController.swift">
@@ -34,9 +37,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GroupCollectionViewCell.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:GroupCollectionViewCell.swift">
-      </ContextState>
-      <ContextState
          contextName = "NewTripViewController.textFieldShouldBeginEditing(UITextField) -&gt; Bool:NewTripViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -44,6 +44,17 @@
             </PersistentString>
             <PersistentString
                value = "textField.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DivesTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:DivesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "cell.diveTimeTextField.text">
+            </PersistentString>
+            <PersistentString
+               value = "cell.diveSiteTextField.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -62,21 +73,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "PopDateViewController.init() -&gt; PopDateViewController:PopDateViewController.swift">
-      </ContextState>
-      <ContextState
          contextName = "DivesTableViewController.unwindToDiveList(UIStoryboardSegue) -&gt; ():DivesTableViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "DivesTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:DivesTableViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "cell.diveSiteTextField.text">
-            </PersistentString>
-            <PersistentString
-               value = "cell.diveTimeTextField.text">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "PopDateViewController.init() -&gt; PopDateViewController:PopDateViewController.swift">
       </ContextState>
       <ContextState
          contextName = "static TripManager.GetTrips() -&gt; [Trip]:TripManager.swift">
@@ -107,6 +107,26 @@
          contextName = "DiveGroupsCollectionViewController.viewDidLoad() -&gt; ():DiveGroupsCollectionViewController.swift">
       </ContextState>
       <ContextState
+         contextName = "GroupCollectionViewCell.longPressGestureRecognized(UIGestureRecognizer) -&gt; ():GroupCollectionViewCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.frame">
+            </PersistentString>
+            <PersistentString
+               value = "centerInCollectionItem">
+            </PersistentString>
+            <PersistentString
+               value = "DraggableDiverData.targetTableRowIndexPath">
+            </PersistentString>
+            <PersistentString
+               value = "Path.initialCollectionItemIndexPath">
+            </PersistentString>
+            <PersistentString
+               value = "collectionItemIndexPath">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "NewDiveTableViewController.viewDidLoad() -&gt; ():NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
@@ -117,6 +137,14 @@
          <PersistentStrings>
             <PersistentString
                value = "self.diverLabel">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "specialized _fatalErrorMessage(StaticString, StaticString, StaticString, UInt) -&gt; ():(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "Path">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

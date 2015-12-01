@@ -19,7 +19,8 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
     
     var trip: Trip!
     var dive: Dive!
-    var groups: [Group]!
+    var groups: [Group]?
+    var availableDivers: Set<String>!
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -30,8 +31,21 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         IconHelper.SetBarButtonIcon(cancelButton, icon: IconValue.IconClose, fontSize: nil, center: false)
         IconHelper.SetBarButtonIcon(saveButton, icon: IconValue.IconSave, fontSize: nil, center: false)
 
-        dive.generateGroups(trip)
-        groups = dive.groups
+        if (dive.groups == nil)
+        {
+            dive.generateGroups(trip)
+        }
+        
+        // Copy all groups
+        if (dive.groups != nil)
+        {
+            groups = dive.groups!.map({ (group: Group) -> Group in
+                return Group(group: group)
+            })
+        }
+        
+        // Build the list containing available divers which are not part of a group (locked or not locked)
+        availableDivers = dive.getAvailableDivers(trip, scanOnlyLockedGroups: false)
         
         let layout: UICollectionViewFlowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
         layout.estimatedItemSize = CGSize(width: 250, height: 200);
@@ -48,10 +62,10 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    func groupForIndexPath(indexPath: NSIndexPath) -> Group
+    
+    func groupHasBeenModified(index: NSIndexPath)
     {
-        return groups[indexPath.row]
+        self.collectionView?.reloadItemsAtIndexPaths([index]) // TODO : on doit faire ça ou pas?
     }
     
     /*
@@ -71,8 +85,9 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return groups.count
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
+        return self.groups != nil ? self.groups!.count : 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -82,7 +97,10 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         cell.contentView.frame = cell.bounds
         cell.contentView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         
-        let group = groups[indexPath.row]
+        let group = groups![indexPath.row]
+        
+        cell.dive = self.dive
+        cell.viewController = self
         cell.group = group
         
         cell.backgroundColor = group.locked ? ColorHelper.LockedGroup : ColorHelper.PendingGroup
@@ -92,7 +110,13 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
 
     override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
     {
-            // move your data order
+        // TODO : move your data order
+    }
+    
+    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    {
+        // Selecton is disabled
+        return false
     }
 
     // MARK: UICollectionViewDelegate
@@ -144,8 +168,9 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
             groupWidth = maximumGroupWidth
         }
             
-        let group =  groupForIndexPath(indexPath)
-        return CGSize(width: groupWidth, height: (group.divers!.count  + 1) * 60)
+        let group = groups![indexPath.row]
+        
+        return CGSize(width: groupWidth, height: 41 + (group.divers!.count + 1) * 44)
     }
     
     //3

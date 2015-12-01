@@ -40,46 +40,49 @@ class Dive : NSObject
         self.excludedDivers = excludedDivers
     }
     
-    func generateGroups(trip: Trip)
+    func getAvailableDivers(trip: Trip, scanOnlyLockedGroups: Bool) -> Set<String>
     {
-        var divers = Set<String>()
+        var availableDivers = Set<String>()
         
         for diver in trip.divers
         {
             if (excludedDivers != nil && !excludedDivers!.contains(diver))
             {
-                divers.insert(diver)
+                availableDivers.insert(diver)
             }
         }
         
-        // Get possible locked groups
-        var lockedGroups: [Group]? = nil
-        if (self.groups != nil)
+        var groupsToScan: [Group]? = self.groups
+        
+        if (scanOnlyLockedGroups && self.groups != nil)
         {
-            lockedGroups = self.groups!.filter({ (group: Group) -> Bool in
+            // Scan only locked groups
+            groupsToScan = self.groups!.filter({ (group: Group) -> Bool in
                 return group.locked
             })
         }
         
-        // Remove divers which are part of a locked group
-        if (lockedGroups != nil)
+        // Remove divers which are part of groups
+        if (groupsToScan != nil)
         {
-            for lockedGroup in lockedGroups!
+            for group in groupsToScan!
             {
-                if (lockedGroup.guide != nil)
+                if (group.divers != nil)
                 {
-                    divers.remove(lockedGroup.guide!)
-                }
-                
-                if (lockedGroup.divers != nil)
-                {
-                    for diver in lockedGroup.divers!
+                    for diver in group.divers!
                     {
-                        divers.remove(diver)
+                        availableDivers.remove(diver)
                     }
                 }
             }
         }
+        return availableDivers
+    }
+    
+    func generateGroups(trip: Trip)
+    {
+        // Get available divers which are not part of a locked group
+        let divers = getAvailableDivers(trip, scanOnlyLockedGroups: true)
         
         // Build a diver list from still available divers
         let availableDivers: [Diver] = divers.map { (id: String) -> Diver in
@@ -89,7 +92,17 @@ class Dive : NSObject
         // Build groups from available divers
         let newGroups: [Group] = DiverManager.GenerateGroupsFromDivers(availableDivers)
         
-        // Append new groups to locked groups
+        var lockedGroups: [Group]? = nil
+        
+        if (self.groups != nil)
+        {
+            // Scan only locked groups
+            lockedGroups = self.groups!.filter({ (group: Group) -> Bool in
+                return group.locked
+            })
+        }
+        
+        // Append new groups to possible locked groups
         if (lockedGroups != nil)
         {
             self.groups = lockedGroups! + newGroups

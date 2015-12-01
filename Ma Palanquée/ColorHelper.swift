@@ -20,7 +20,17 @@ class ColorHelper
     static let ArchivedTrip: UIColor = UIColor ( red: 0.163, green: 0.7283, blue: 0.0398, alpha: 1.0 )
     static let ArchivedTripBackground: UIColor = UIColor ( red: 0.7733, green: 0.9609, blue: 0.7053, alpha: 1.0 )
 
-    static let LockedGroup = UIColor ( red: 0.6639, green: 1.0, blue: 0.4687, alpha: 1.0 )
+    static let LockedGroup = UIColor ( red: 0.6628, green: 0.9255, blue: 0.4995, alpha: 1.0 )
     static let FinishedGroup = UIColor ( red: 0.0344, green: 0.8537, blue: 0.1278, alpha: 1.0 )
     static let PendingGroup = UIColor ( red: 0.9087, green: 0.9087, blue: 0.9087, alpha: 1.0 )
+    
+    static let ExcludedDiverColor = UIColor ( red: 0.9611, green: 0.7623, blue: 0.1838, alpha: 1.0 )
+    
+    static let GuideIconBackground = UIColor ( red: 0.9955, green: 0.9018, blue: 0.8438, alpha: 1.0 )
+    static let GuideIcon = UIColor ( red: 0.9828, green: 0.4486, blue: 0.0, alpha: 1.0 )
+
+    static let ForbiddenIconBackground = UIColor ( red: 0.9955, green: 0.9018, blue: 0.8438, alpha: 1.0 )
+    static let ForbiddenIcon = UIColor ( red: 0.9828, green: 0.4486, blue: 0.0, alpha: 1.0 )
+    
+    static let InsertionIndicator = UIColor.blackColor()
 }
