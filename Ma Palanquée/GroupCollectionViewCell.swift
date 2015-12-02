@@ -108,9 +108,10 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                         DraggableDiverData.targetTableRowIndexPath = tableRowIndexPath
                     }
                 }
+            
             case UIGestureRecognizerState.Changed:
                 
-                if (DraggableDiverData.cellSnapshot == nil)
+                if (!DraggableDiverData.IsInitialized)
                 {
                     // Nothing to do if there is no snapshot...
                     break
@@ -212,8 +213,12 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                             insertionIndicator.y = activeTableRow.frame.origin.y + activeTableRow.frame.height - 1
                             DraggableDiverData.targetTableRowIndexPath = NSIndexPath(forRow: tableRowIndexPath!.row + 1, inSection: 0)
                         }
-
-                        if (DraggableDiverData.targetCollectionItemIndexPath == DraggableDiverData.initialCollectionItemIndexPath && abs(DraggableDiverData.targetTableRowIndexPath!.row - DraggableDiverData.initialTableRowIndexPath!.row) <= 1)
+                        
+                        let sameGroup: Bool = (DraggableDiverData.targetCollectionItemIndexPath == DraggableDiverData.initialCollectionItemIndexPath)
+                        let sameRow: Bool = (DraggableDiverData.targetTableRowIndexPath!.row == DraggableDiverData.initialTableRowIndexPath!.row)
+                        let nextRow: Bool = (DraggableDiverData.targetTableRowIndexPath!.row == DraggableDiverData.initialTableRowIndexPath!.row + 1)
+                        
+                        if (sameGroup && (sameRow || nextRow))
                         {
                             // The target item is exactly the same as the initial one, or just the next one
                             DraggableDiverData.HideInsertionIndicatorView()         // Hide insertion indicators
@@ -281,7 +286,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                 
             default:
 
-                if (DraggableDiverData.cellSnapshot == nil)
+                if (!DraggableDiverData.IsInitialized)
                 {
                     // Nothing to do if there is no snapshot...
                     break
@@ -353,6 +358,8 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
 
         let restAction = UITableViewRowAction(style: .Default, title: "Repos", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
             
+            self.tableView.beginUpdates()
+            
             // Mettre le plongeur au repos
             
             if (self.group.guide == diver)
@@ -374,6 +381,8 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
             
             // Invalidate layout to force redrawing the collection
             self.viewController.collectionView!.collectionViewLayout.invalidateLayout()
+            
+            self.tableView.endUpdates()
         })
         
         restAction.backgroundColor = ColorHelper.ExcludedDiverColor
@@ -382,6 +391,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
         
         let deleteAction = UITableViewRowAction(style: .Default, title: "Enlever", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
             // Supprimer le plongeur de la palanquée
+            self.tableView.beginUpdates()
             
             if (self.group.guide == diver)
             {
@@ -399,6 +409,8 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
             
             // Invalidate layout to force redrawing the collection
             self.viewController.collectionView!.collectionViewLayout.invalidateLayout()
+
+            self.tableView.endUpdates()
         })
         
         deleteAction.backgroundColor = ColorHelper.DeleteColor
@@ -467,10 +479,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
 
     @IBAction func sendGroupToTrash(sender: AnyObject)
     {
-        // Simply remove the group from the list
-        let indexPath = self.viewController.collectionView!.indexPathForCell(self)
-        self.viewController.groups!.removeAtIndex(indexPath!.row)
-        self.viewController.collectionView?.deleteItemsAtIndexPaths([indexPath!])
+        self.viewController.removeCollectionCell(self)
     }
     @IBAction func changeLock(sender: AnyObject)
     {

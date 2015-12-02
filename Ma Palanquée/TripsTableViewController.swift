@@ -169,8 +169,11 @@ class TripsTableViewController: SearchableTableViewController {
             // You cannot edit an archived action
             // -> Custom action to "open" it again
             let activateAction = UITableViewRowAction(style: .Default, title: "Activer", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+                self.tableView.beginUpdates()
+                
                 TripManager.ArchiveTrip(trip, archived: false)
                 self.loadTrips()
+                
                 // Delete the row from the data source
                 self.tableView.editing = false
                 if (self.TripScope != TripScope.All.rawValue)
@@ -183,6 +186,8 @@ class TripsTableViewController: SearchableTableViewController {
                     // for the scope "All", we must refreah the item
                     self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 }
+                
+                self.tableView.endUpdates()
             })
             
             activateAction.backgroundColor = ColorHelper.PendingTrip
@@ -192,6 +197,8 @@ class TripsTableViewController: SearchableTableViewController {
         else
         {
             let archiveAction = UITableViewRowAction(style: .Default, title: "Archive", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+                self.tableView.beginUpdates()
+                
                 TripManager.ArchiveTrip(trip, archived: true)
                 self.loadTrips()
                 // Delete the row from the data source
@@ -205,11 +212,15 @@ class TripsTableViewController: SearchableTableViewController {
                     // for the scope "All", we must refreah the item
                     self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 }
+                
+                self.tableView.endUpdates()
             })
         
             let editAction = UITableViewRowAction(style: .Default, title: "Edit", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+                self.tableView.beginUpdates()
                 self.tableView.editing = false
                 self.performSegueWithIdentifier("EditTrip", sender: trip)
+                self.tableView.endUpdates()
             })
             
             archiveAction.backgroundColor = ColorHelper.ArchivedTrip
@@ -241,6 +252,7 @@ class TripsTableViewController: SearchableTableViewController {
             // Reload trips
             self.loadTrips()
             // Delete the row from the data source
+            self.tableView.endEditing(true)
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         },
         onCancel: {() -> Void in

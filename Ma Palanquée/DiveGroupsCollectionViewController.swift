@@ -61,7 +61,8 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -80,10 +81,23 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: Actions
+    
+    func removeCollectionCell(item: UICollectionViewCell)
+    {
+        // Simply remove the group from the list
+        if let indexPath = self.collectionView!.indexPathForCell(item)
+        {
+            self.groups!.removeAtIndex(indexPath.row)
+            self.collectionView!.deleteItemsAtIndexPaths([indexPath])
+        }
+    }
 
     // MARK: UICollectionViewDataSource
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
+    {
         return 1
     }
 
