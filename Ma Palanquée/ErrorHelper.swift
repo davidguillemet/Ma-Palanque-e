@@ -11,4 +11,5 @@ import Foundation
 enum ErrorHelper : ErrorType
 {
     case InvalidGuide(guide: String)
+    case InvalidDiverIndex(index: Int)
 }

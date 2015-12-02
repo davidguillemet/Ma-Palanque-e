@@ -80,11 +80,7 @@ class Trip : NSObject
             
             for group: Group in dive.groups!
             {
-                if (group.guide == diver)
-                {
-                    return false
-                }
-                if (group.divers != nil && group.divers!.contains(diver))
+                if (group.containsDiver(diver))
                 {
                     return false
                 }

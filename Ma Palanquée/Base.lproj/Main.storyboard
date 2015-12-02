@@ -888,6 +888,9 @@
                                             <rect key="frame" x="3" y="3" width="30" height="30"/>
                                             <animations/>
                                             <state key="normal" title="X"/>
+                                            <connections>
+                                                <action selector="sendGroupToTrash:" destination="Nst-Mm-6K0" eventType="touchUpInside" id="Md8-w3-Vh0"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J2q-Tx-oGV">
                                             <rect key="frame" x="217" y="3" width="30" height="30"/>

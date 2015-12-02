@@ -40,6 +40,15 @@ class Dive : NSObject
         self.excludedDivers = excludedDivers
     }
     
+    func addExcludedDiver(diver: String)
+    {
+        if (self.excludedDivers == nil)
+        {
+            self.excludedDivers = Set<String>()
+        }
+        self.excludedDivers!.insert(diver)
+    }
+    
     func getAvailableDivers(trip: Trip, scanOnlyLockedGroups: Bool) -> Set<String>
     {
         var availableDivers = Set<String>()
@@ -67,12 +76,9 @@ class Dive : NSObject
         {
             for group in groupsToScan!
             {
-                if (group.divers != nil)
+                for (var index = 0; index < group.diverCount; index++)
                 {
-                    for diver in group.divers!
-                    {
-                        availableDivers.remove(diver)
-                    }
+                    try! availableDivers.remove(group.diverAt(index))
                 }
             }
         }

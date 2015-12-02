@@ -256,11 +256,9 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             {
                 for group in self.initialDive!.groups!
                 {
-                    if (group.divers != nil)
+                    for (var index = 0; index < group.diverCount; index++)
                     {
-                        group.divers!.forEach({ (diver: String) -> Void in
-                          usedDivers.insert(diver)
-                        })
+                        usedDivers.insert(try! group.diverAt(index))
                     }
                 }
             }

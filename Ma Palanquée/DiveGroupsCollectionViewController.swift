@@ -49,6 +49,9 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         
         let layout: UICollectionViewFlowLayout = self.collectionViewLayout as! UICollectionViewFlowLayout
         layout.estimatedItemSize = CGSize(width: 250, height: 200);
+        
+        self.collectionView?.allowsSelection = false
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -79,7 +82,7 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
     */
 
     // MARK: UICollectionViewDataSource
-
+    
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -110,9 +113,9 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
 
     override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
     {
-        // TODO : move your data order
+        self.groups!.insert(self.groups!.removeAtIndex(sourceIndexPath.row), atIndex: destinationIndexPath.row)
     }
-    
+
     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
         // Selecton is disabled
@@ -167,10 +170,20 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         {
             groupWidth = maximumGroupWidth
         }
-            
-        let group = groups![indexPath.row]
         
-        return CGSize(width: groupWidth, height: 41 + (group.divers!.count + 1) * 44)
+        
+        var diverCount: Int
+        
+        if let groupCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as? GroupCollectionViewCell
+        {
+            diverCount = groupCell.group.diverCount
+        }
+        else
+        {
+           diverCount = groups![indexPath.row].diverCount
+        }
+        
+        return CGSize(width: groupWidth, height: 41 + (diverCount + 1) * 44)
     }
     
     //3

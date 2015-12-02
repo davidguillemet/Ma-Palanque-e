@@ -31,6 +31,11 @@ class GroupTableTableViewCell: UITableViewCell {
 
     @IBAction func clickGuideButton(sender: AnyObject)
     {
+        if (self.group.locked)
+        {
+            return
+        }
+        
         // If diver is already the guide, do nothing
         if (group.guide != nil && group.guide == diverId)
         {

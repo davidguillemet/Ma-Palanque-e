@@ -17,14 +17,18 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
     
     var dive: Dive!
     
-    var divers: [Diver]!
+    // divers which have been excluded from the groups
+    // -> add to the dive once we save the groups
+    var newExcludedDivers: Set<String> = Set<String>()
+    
+    //var divers: [Diver]!
     var groupId: String!
     
     var group: Group!
     {
         didSet
         {
-            self.divers = DiverManager.GetSortedDivers(group.divers)
+            //self.divers = DiverManager.GetSortedDivers(group.divers)
             SetLockIconState()
         }
     }
@@ -57,8 +61,8 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
 
     func makeCollectionItemActive(item: UICollectionViewCell)
     {
-        item.layer.borderWidth = 1.0
-        item.layer.borderColor = UIColor.blueColor().CGColor
+        item.layer.borderWidth = 3.0
+        item.layer.borderColor = UIColor.redColor().CGColor
     }
     
     func makeCollectionItemInactive(item: UICollectionViewCell)
@@ -227,12 +231,12 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                                 width: activeTableRow.frame.width)
                         }
                     }
-                    else if (collectionItem!.divers.count > 0)
+                    else if (collectionItem!.group.diverCount > 0)
                     {
                         // No active target row -> we will insert the diver at the end
                         // -> Make the bottom border of the last row active
                         // Get the last table view row
-                        let rowCount = collectionItem!.divers.count
+                        let rowCount = collectionItem!.group.diverCount
                         
                         // Get the last cell
                         let lastTableRow: UITableViewCell = collectionItem!.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: rowCount - 1, inSection: 0))!
@@ -335,15 +339,41 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
         // Override to support editing the table view.
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+    {
+        return self.group.locked == false
+    }
+
+    
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
     {
         var actions = [UITableViewRowAction]()
         
+        let diver = try! self.group.diverAt(indexPath.row)
+
         let restAction = UITableViewRowAction(style: .Default, title: "Repos", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            
             // Mettre le plongeur au repos
-            //var diver = self.getDiver(indexPath)
-            // TODO
+            
+            if (self.group.guide == diver)
+            {
+                // Remove guide if needed
+                try! self.group.setGuide(nil)
+            }
+            
+            // Remove the diver from the group
+            self.group.removeDiverAt(indexPath.row)
+            
+            // Set the diver as exclided for the dive
+            self.newExcludedDivers.insert(diver)
+            
             self.tableView.editing = false
+            
+            // Remove the ow from the table
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            
+            // Invalidate layout to force redrawing the collection
+            self.viewController.collectionView!.collectionViewLayout.invalidateLayout()
         })
         
         restAction.backgroundColor = ColorHelper.ExcludedDiverColor
@@ -351,7 +381,24 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
         actions.append(restAction)
         
         let deleteAction = UITableViewRowAction(style: .Default, title: "Enlever", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            // Supprimer le plongeur de la palanquée
+            
+            if (self.group.guide == diver)
+            {
+                // Remove guide if needed
+                try! self.group.setGuide(nil)
+            }
+            
+            // Remove the diver from the group
+            self.group.removeDiverAt(indexPath.row)
+            
             self.tableView.editing = false
+            
+            // Remove the ow from the table
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+            
+            // Invalidate layout to force redrawing the collection
+            self.viewController.collectionView!.collectionViewLayout.invalidateLayout()
         })
         
         deleteAction.backgroundColor = ColorHelper.DeleteColor
@@ -368,7 +415,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return self.divers.count
+        return self.group.diverCount
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -376,7 +423,8 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
         
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! GroupTableTableViewCell
         
-        let diver = self.divers[indexPath.row]
+        let diverId = try! self.group.diverAt(indexPath.row)
+        let diver = DiverManager.GetDiver(diverId)
         
         cell.group = self.group
         cell.diverId = diver.id
@@ -417,6 +465,13 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
         return cell
     }
 
+    @IBAction func sendGroupToTrash(sender: AnyObject)
+    {
+        // Simply remove the group from the list
+        let indexPath = self.viewController.collectionView!.indexPathForCell(self)
+        self.viewController.groups!.removeAtIndex(indexPath!.row)
+        self.viewController.collectionView?.deleteItemsAtIndexPaths([indexPath!])
+    }
     @IBAction func changeLock(sender: AnyObject)
     {
         // Switch lock
@@ -425,11 +480,14 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
             // TODO : in case parameters are complete (time and depth) we should not be able to unlock the group...
             self.group.locked = false
             self.backgroundColor = ColorHelper.PendingGroup
+            // remove trash button
+            self.deleteButton.hidden = false
         }
         else
         {
             self.group.locked = true
             self.backgroundColor = ColorHelper.LockedGroup
+            self.deleteButton.hidden = true
         }
         SetLockIconState()
     }
