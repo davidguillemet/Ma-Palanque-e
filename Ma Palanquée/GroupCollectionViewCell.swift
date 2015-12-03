@@ -49,6 +49,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
         longpress.delegate = self
         
         tableView.addGestureRecognizer(longpress)
+        tableView.bounces = false
         
         IconHelper.SetButtonIcon(deleteButton, icon: IconValue.IconTrash, fontSize: toolbarButtonFontSize, center: false)
     }
@@ -96,22 +97,22 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                         // Take a snapshot from the current pressed table cell
                         let cell = tableView.cellForRowAtIndexPath(tableRowIndexPath!) as UITableViewCell!
                         
-                        DraggableDiverData.Initialize(
+                        Drag.Initialize(
                             cell,
                             parentView: viewController.collectionView!,
                             centerOffset: CGPoint(x: locationInTableView.x - cell.center.x, y: locationInTableView.y - cell.center.y))
                         
                         // update initial path (table row & collection item)
-                        DraggableDiverData.initialCollectionItemIndexPath = collectionItemIndexPath
-                        DraggableDiverData.initialTableRowIndexPath = tableRowIndexPath
-                        DraggableDiverData.targetCollectionItemIndexPath = collectionItemIndexPath
-                        DraggableDiverData.targetTableRowIndexPath = tableRowIndexPath
+                        Drag.initialCollectionItemIndexPath = collectionItemIndexPath
+                        Drag.initialTableRowIndexPath = tableRowIndexPath
+                        Drag.targetCollectionItemIndexPath = collectionItemIndexPath
+                        Drag.targetTableRowIndexPath = tableRowIndexPath
                     }
                 }
             
             case UIGestureRecognizerState.Changed:
                 
-                if (!DraggableDiverData.IsInitialized)
+                if (!Drag.IsInitialized)
                 {
                     // Nothing to do if there is no snapshot...
                     break
@@ -120,10 +121,10 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                 // Move the snapshot according to the drag
                 let locationInCollectionView: CGPoint = longPress.locationInView(viewController.collectionView)
                 
-                var center: CGPoint = DraggableDiverData.cellSnapshot!.center
-                center.x = locationInCollectionView.x - DraggableDiverData.offSetWithCenter!.x
-                center.y = locationInCollectionView.y - DraggableDiverData.offSetWithCenter!.y
-                DraggableDiverData.cellSnapshot!.center = center
+                var center: CGPoint = Drag.cellSnapshot!.center
+                center.x = locationInCollectionView.x - Drag.offSetWithCenter!.x
+                center.y = locationInCollectionView.y - Drag.offSetWithCenter!.y
+                Drag.cellSnapshot!.center = center
                 
                 // Get the Collection item from the location
                 let collectionItemIndexPath = viewController.collectionView!.indexPathForItemAtPoint(locationInCollectionView)
@@ -138,20 +139,20 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                 if (collectionItem != nil && !collectionItem!.group.locked)
                 {
                     // Hide error indicator
-                    DraggableDiverData.HideErrorIndicatorView()
+                    Drag.HideErrorIndicatorView()
                     
                     // Set the collection item as active
                     makeCollectionItemActive(collectionItem!)
                     
-                    if (DraggableDiverData.targetCollectionItemIndexPath != nil && collectionItemIndexPath != DraggableDiverData.targetCollectionItemIndexPath)
+                    if (Drag.targetCollectionItemIndexPath != nil && collectionItemIndexPath != Drag.targetCollectionItemIndexPath)
                     {
                         // the new active collection item is not the same -> clear border
-                        let initialCollectionItem: GroupCollectionViewCell = viewController.collectionView!.cellForItemAtIndexPath(DraggableDiverData.targetCollectionItemIndexPath!) as! GroupCollectionViewCell
-                        makeCollectionItemInactive(initialCollectionItem)
+                        let previousTargetCollectionItem: GroupCollectionViewCell = viewController.collectionView!.cellForItemAtIndexPath(Drag.targetCollectionItemIndexPath!) as! GroupCollectionViewCell
+                        makeCollectionItemInactive(previousTargetCollectionItem)
                     }
                     
                     // Update the new active collection item
-                    DraggableDiverData.targetCollectionItemIndexPath = collectionItemIndexPath
+                    Drag.targetCollectionItemIndexPath = collectionItemIndexPath
                     
                     // Get the gesture position relative to tableView in order to get the offset to apply
                     let locationInTableView: CGPoint = longPress.locationInView(collectionItem!.tableView)
@@ -161,43 +162,6 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
 
                     if (tableRowIndexPath != nil)
                     {
-                        if (collectionItemIndexPath!.row == DraggableDiverData.targetCollectionItemIndexPath?.row)
-                        {
-                            // Drag & Drop in the same collection Item table as the previous one
-                            if (tableRowIndexPath != DraggableDiverData.targetTableRowIndexPath)
-                            {
-                                // Switch divers from the same table
-                                //collectionItem.divers.insert(collectionItem.divers.removeAtIndex(DraggableDiverData.targetTableRowIndexPath!.row), atIndex: tableRowIndexPath!.row)
-                                //collectionItem.tableView.moveRowAtIndexPath(DraggableDiverData.targetTableRowIndexPath!, toIndexPath: tableRowIndexPath!)
-                                
-                                // Update previous table row index
-                                //DraggableDiverData.targetTableRowIndexPath = tableRowIndexPath
-                            }
-                        }
-                        else
-                        {
-                            // Drag the diver into another collection item (another group)
-                            
-                            // 1. Get the previous collection item
-                            /*et initialCollectionItem: GroupCollectionViewCell = viewController.collectionView?.cellForItemAtIndexPath(DraggableDiverData.targetCollectionItemIndexPath!) as! GroupCollectionViewCell
-                            // 2. Remove the diver from the initial group
-                            initialCollectionItem.divers.removeAtIndex(DraggableDiverData.targetTableRowIndexPath!.row)
-                            // 3. Remove the table row from the initial group 
-                            initialCollectionItem.tableView.deleteRowsAtIndexPaths([DraggableDiverData.targetTableRowIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-                            
-                            // 4. Add the diver to the new collection item / Group
-                            let newCollectionItem: GroupCollectionViewCell = viewController.collectionView?.cellForItemAtIndexPath(collectionItemIndexPath!) as! GroupCollectionViewCell
-                            newCollectionItem.divers.insert(DraggableDiverData.diver!, atIndex: tableRowIndexPath!.row)
-                            // 5. Add the new table Row
-                            newCollectionItem.tableView.insertRowsAtIndexPaths([tableRowIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
-                            // 6. Hide the row
-                            let newCell = newCollectionItem.tableView.cellForRowAtIndexPath(tableRowIndexPath!) as UITableViewCell!
-                            newCell.hidden = true*/
-                            
-                            // Update previous table row index
-                            //DraggableDiverData.targetTableRowIndexPath = tableRowIndexPath
-                        }
-                        
                         let activeTableRow: UITableViewCell = collectionItem!.tableView.cellForRowAtIndexPath(tableRowIndexPath!)!
                         
                         var insertionIndicator: CGPoint = CGPoint()
@@ -206,32 +170,39 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                         if (locationInTableView.y < activeTableRow.center.y)
                         {
                             insertionIndicator.y = activeTableRow.frame.origin.y - 1
-                            DraggableDiverData.targetTableRowIndexPath = tableRowIndexPath
+                            Drag.targetTableRowIndexPath = tableRowIndexPath
                         }
                         else
                         {
                             insertionIndicator.y = activeTableRow.frame.origin.y + activeTableRow.frame.height - 1
-                            DraggableDiverData.targetTableRowIndexPath = NSIndexPath(forRow: tableRowIndexPath!.row + 1, inSection: 0)
+                            if (tableRowIndexPath!.row  < collectionItem!.tableView.numberOfRowsInSection(0) - 1)
+                            {
+                                Drag.targetTableRowIndexPath = NSIndexPath(forRow: tableRowIndexPath!.row + 1, inSection: 0)
+                            }
+                            else
+                            {
+                                Drag.targetTableRowIndexPath = nil
+                            }
                         }
                         
-                        let sameGroup: Bool = (DraggableDiverData.targetCollectionItemIndexPath == DraggableDiverData.initialCollectionItemIndexPath)
-                        let sameRow: Bool = (DraggableDiverData.targetTableRowIndexPath!.row == DraggableDiverData.initialTableRowIndexPath!.row)
-                        let nextRow: Bool = (DraggableDiverData.targetTableRowIndexPath!.row == DraggableDiverData.initialTableRowIndexPath!.row + 1)
+                        let sameGroup: Bool = (Drag.targetCollectionItemIndexPath == Drag.initialCollectionItemIndexPath)
+                        let sameRow: Bool = (Drag.targetTableRowIndexPath?.row == Drag.initialTableRowIndexPath!.row)
+                        let nextRow: Bool = (Drag.targetTableRowIndexPath?.row == Drag.initialTableRowIndexPath!.row + 1)
                         
                         if (sameGroup && (sameRow || nextRow))
                         {
                             // The target item is exactly the same as the initial one, or just the next one
-                            DraggableDiverData.HideInsertionIndicatorView()         // Hide insertion indicators
-                            DraggableDiverData.ShowErrorIndicatorView()             // Show Error Indicator
-                            DraggableDiverData.targetTableRowIndexPath = nil        // No table row target
-                            DraggableDiverData.targetCollectionItemIndexPath = nil  // No collection item target
-                            makeCollectionItemInactive(collectionItem!)             // Make the current collction item inactive
+                            Drag.HideInsertionIndicatorView()           // Hide insertion indicators
+                            Drag.ShowErrorIndicatorView()               // Show Error Indicator
+                            Drag.targetTableRowIndexPath = nil          // No table row target
+                            Drag.targetCollectionItemIndexPath = nil    // No collection item target
+                            makeCollectionItemInactive(collectionItem!) // Make the current collction item inactive
                         }
                         else
                         {
                             insertionIndicator.x = activeTableRow.frame.origin.x
                             
-                            DraggableDiverData.ShowInsertionIndicatorView(
+                            Drag.ShowInsertionIndicatorView(
                                 viewController.collectionView!.convertPoint(insertionIndicator, fromView: activeTableRow.superview),
                                 width: activeTableRow.frame.width)
                         }
@@ -239,6 +210,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                     else if (collectionItem!.group.diverCount > 0)
                     {
                         // No active target row -> we will insert the diver at the end
+                        
                         // -> Make the bottom border of the last row active
                         // Get the last table view row
                         let rowCount = collectionItem!.group.diverCount
@@ -248,45 +220,46 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                         
                         let insertionIndicatorPos: CGPoint = CGPoint(x: lastTableRow.frame.origin.x, y: lastTableRow.frame.origin.y + lastTableRow.frame.height - 1)
                         
-                        DraggableDiverData.ShowInsertionIndicatorView(
+                        Drag.ShowInsertionIndicatorView(
                             viewController.collectionView!.convertPoint(insertionIndicatorPos, fromView: lastTableRow.superview),
                             width: lastTableRow.frame.width)
                         
                         // And then -> No target row
-                        DraggableDiverData.targetTableRowIndexPath = nil
+                        Drag.targetTableRowIndexPath = nil
                     }
                     else
                     {
                         // We drag the diver on an empty collection Item
                         // -> No insertion indicator
-                        DraggableDiverData.HideInsertionIndicatorView()
+                        Drag.HideInsertionIndicatorView()
                         // And then -> No target row
-                        DraggableDiverData.targetTableRowIndexPath = nil
+                        Drag.targetTableRowIndexPath = nil
                     }
                 }
                 else // collectionItemIndexPath = nil
                 {
                     // Deactivate the possible previous active Colletion Item
-                    if (DraggableDiverData.targetCollectionItemIndexPath != nil)
+                    if (Drag.targetCollectionItemIndexPath != nil)
                     {
                         // the new active collection item is not the same -> clear border
-                        let initialCollectionItem: GroupCollectionViewCell = viewController.collectionView?.cellForItemAtIndexPath(DraggableDiverData.targetCollectionItemIndexPath!) as! GroupCollectionViewCell
+                        let initialCollectionItem: GroupCollectionViewCell = viewController.collectionView?.cellForItemAtIndexPath(Drag.targetCollectionItemIndexPath!) as! GroupCollectionViewCell
                         makeCollectionItemInactive(initialCollectionItem)
                     }
                     
                     // hide possible table insertion view
-                    DraggableDiverData.HideInsertionIndicatorView()
+                    Drag.HideInsertionIndicatorView()
                     
                     // Show error indicator
-                    DraggableDiverData.ShowErrorIndicatorView()
+                    Drag.ShowErrorIndicatorView()
                     
-                    DraggableDiverData.targetCollectionItemIndexPath = nil
-                    DraggableDiverData.targetTableRowIndexPath = nil
+                    Drag.targetCollectionItemIndexPath = nil
+                    Drag.targetTableRowIndexPath = nil
                 }
+
                 
             default:
 
-                if (!DraggableDiverData.IsInitialized)
+                if (!Drag.IsInitialized)
                 {
                     // Nothing to do if there is no snapshot...
                     break
@@ -294,40 +267,104 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                 
                 var snapshotDestination: CGPoint
                 
-                if (DraggableDiverData.targetCollectionItemIndexPath != nil)
+                if (Drag.targetCollectionItemIndexPath != nil)
                 {
-                    // Get the target Collection item from the location
-                    let targetCollectionItem: GroupCollectionViewCell = viewController.collectionView?.cellForItemAtIndexPath(DraggableDiverData.targetCollectionItemIndexPath!) as! GroupCollectionViewCell
+                    // Get the target collection cell
+                    let targetCell: GroupCollectionViewCell = self.viewController.collectionView?.cellForItemAtIndexPath(Drag.targetCollectionItemIndexPath!) as! GroupCollectionViewCell
                     
-                    makeCollectionItemInactive(targetCollectionItem)
+                    targetCell.tableView.beginUpdates()
                     
-                    // Get the initial table cell
-                    if (DraggableDiverData.targetTableRowIndexPath != nil)
+                    var targetRwoIndexPath: NSIndexPath? = Drag.targetTableRowIndexPath
+                    var finalTargetIndexPath: NSIndexPath? = targetRwoIndexPath
+
+                    if (Drag.targetCollectionItemIndexPath != Drag.initialCollectionItemIndexPath)
                     {
-                        // Insert the
-                        let targetTableRow = targetCollectionItem.tableView.cellForRowAtIndexPath(DraggableDiverData.targetTableRowIndexPath!) as UITableViewCell!
+                        // Move a diver from a group to another one
                         
-                        snapshotDestination = viewController.collectionView!.convertPoint(targetTableRow.center, fromView: targetTableRow.superview)
+                        // 1. Remove the diver from the initial group
+                        let initialCell: GroupCollectionViewCell = self.viewController.collectionView?.cellForItemAtIndexPath(Drag.initialCollectionItemIndexPath!) as! GroupCollectionViewCell
+                        let diverToMove = try! initialCell.group.diverAt(Drag.initialTableRowIndexPath!.row)
+                        initialCell.group.removeDiver(diverToMove)
+                        initialCell.tableView.beginUpdates()
+                        initialCell.tableView.deleteRowsAtIndexPaths([Drag.initialTableRowIndexPath!], withRowAnimation: .Fade)
+                        initialCell.tableView.endUpdates()
+                        
+                        // 1.Bis Remove the Group if the source group is empty...
+                        if (initialCell.group.diverCount == 0)
+                        {
+                            self.viewController.removeCollectionCell(initialCell)
+                        }
+                        
+                        // 2. Insert the diver in the target group
+                        // Drag from a group to another group
+                        if (targetRwoIndexPath != nil)
+                        {
+                            // Add the diver in the group
+                            targetCell.group.insertDiver(diverToMove, atIndex: Drag.targetTableRowIndexPath!.row)
+                        }
+                        else
+                        {
+                            // Add the diver in the group as last diver
+                            targetCell.group.addDiver(diverToMove)
+                            // Create tne index path to append the new diver
+                            targetRwoIndexPath = NSIndexPath(forRow: targetCell.tableView!.numberOfRowsInSection(0), inSection: 0)
+                            finalTargetIndexPath = targetRwoIndexPath
+                        }
+                        
+                        // Insert/Append the new table row
+                        targetCell.tableView.insertRowsAtIndexPaths([targetRwoIndexPath!], withRowAnimation: .Bottom)
                     }
                     else
                     {
-                        // No target cell...only the collection item
-                        // Just animate the snapshot to the same position
-                        snapshotDestination = DraggableDiverData.cellSnapshot!.center
+                        // Move a diver inside the same group
+                        // -> just move rows inside the same tableview
+                        
+                        // 1. Move the diver inside the group
+                        if (targetRwoIndexPath != nil)
+                        {
+                            try! targetCell.group.moveDiver(Drag.initialTableRowIndexPath!.row, toIndex: targetRwoIndexPath!.row)
+                        }
+                        else
+                        {
+                            // The target row is nil, what means that we will move it at the end
+                            targetRwoIndexPath = NSIndexPath(forRow: targetCell.tableView.numberOfRowsInSection(0), inSection: 0)
+                            try! targetCell.group.moveDiver(Drag.initialTableRowIndexPath!.row, toIndex: targetRwoIndexPath!.row)
+                        }
+                        
+                        // With tableView.moveRowAtIndexPath, toIndex must be the index of the moved item in the final array
+                        // -> if fromIndex < toIndex, then toIndex--
+                        // -> if fromIndex > toIndex then nothing
+                        finalTargetIndexPath =
+                            Drag.initialTableRowIndexPath!.row < targetRwoIndexPath!.row ?
+                            NSIndexPath(forRow: targetRwoIndexPath!.row - 1, inSection: 0) :
+                            targetRwoIndexPath!
+                        
+                        // 2. Move the table row
+                        targetCell.tableView.moveRowAtIndexPath(Drag.initialTableRowIndexPath!, toIndexPath: finalTargetIndexPath!)
                     }
+
+                    targetCell.tableView.endUpdates()
+                    
+                    // Get the snapshot target positon using the insertion indicator
+                    snapshotDestination = CGPoint(x: Drag.insertionIndicatorView!.center.x, y: Drag.insertionIndicatorView!.frame.origin.y + Drag.cellSnapshot!.frame.size.height / 2)
+                    
+                    // Invalidate layout in order to update collection cells size
+                    self.viewController.collectionView?.collectionViewLayout.invalidateLayout()
+                    
+                    makeCollectionItemInactive(targetCell)
                 }
                 else
                 {
                     // Do nothing but animate the snapshot to the initial cell
                     // Get the initial Collection item
-                    let initialCollectionItem: GroupCollectionViewCell = viewController.collectionView?.cellForItemAtIndexPath(DraggableDiverData.initialCollectionItemIndexPath!) as! GroupCollectionViewCell
+                    let initialCollectionItem: GroupCollectionViewCell = viewController.collectionView?.cellForItemAtIndexPath(Drag.initialCollectionItemIndexPath!) as! GroupCollectionViewCell
                     // Get the initial table row
-                    let initialTableRow: UITableViewCell = initialCollectionItem.tableView!.cellForRowAtIndexPath(DraggableDiverData.initialTableRowIndexPath!)!
+                    let initialTableRow: UITableViewCell = initialCollectionItem.tableView!.cellForRowAtIndexPath(Drag.initialTableRowIndexPath!)!
                     
                     snapshotDestination = viewController.collectionView!.convertPoint(initialTableRow.center, fromView: initialCollectionItem.tableView)
                 }
                 
-                DraggableDiverData.Terminate(snapshotDestination)
+                Drag.Terminate(snapshotDestination)
         }
     
     }

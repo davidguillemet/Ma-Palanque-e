@@ -197,7 +197,7 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
            diverCount = groups![indexPath.row].diverCount
         }
         
-        return CGSize(width: groupWidth, height: 41 + (diverCount + 1) * 44)
+        return CGSize(width: groupWidth, height: 40 + diverCount * 44)
     }
     
     //3

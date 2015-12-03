@@ -3,30 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "NewTripViewController.validateTrip() -&gt; Bool:NewTripViewController.swift">
+         contextName = "Group.moveDiver(Int, toIndex : Int) throws -&gt; ():Group.swift">
       </ContextState>
       <ContextState
-         contextName = "NewDiveTableViewController.(viewDidLoad(NewDiveTableViewController) -&gt; () -&gt; ()).(closure #1):NewDiveTableViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "GroupCollectionViewCell.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:GroupCollectionViewCell.swift">
-      </ContextState>
-      <ContextState
-         contextName = "NewDiveTableViewController.prepareForSegue(UIStoryboardSegue, sender : AnyObject?) -&gt; ():NewDiveTableViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "DivesTableViewController.reloadDataTable() -&gt; ():DivesTableViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "sections[diveDate]">
-            </PersistentString>
-            <PersistentString
-               value = "self.sections.keys">
-            </PersistentString>
-            <PersistentString
-               value = "trip.dives">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "NewDiveTableViewController.validateDive() -&gt; Bool:NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
          contextName = "DivesTableViewController.numberOfSectionsInTableView(UITableView) -&gt; Int:DivesTableViewController.swift">
@@ -48,15 +28,69 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "DivesTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:DivesTableViewController.swift">
+         contextName = "GroupTableTableViewCell.init(style : UITableViewCellStyle, reuseIdentifier : String?) -&gt; GroupTableTableViewCell:GroupTableTableViewCell.swift">
          <PersistentStrings>
             <PersistentString
-               value = "cell.diveTimeTextField.text">
-            </PersistentString>
-            <PersistentString
-               value = "cell.diveSiteTextField.text">
+               value = "self.diverLabel">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DiveGroupsCollectionViewController.collectionView(UICollectionView, cellForItemAtIndexPath : NSIndexPath) -&gt; UICollectionViewCell:DiveGroupsCollectionViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "DivesTableViewController.unwindToDiveList(UIStoryboardSegue) -&gt; ():DivesTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "DiveGroupsCollectionViewController.viewDidLoad() -&gt; ():DiveGroupsCollectionViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "specialized _fatalErrorMessage(StaticString, StaticString, StaticString, UInt) -&gt; ():(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "Path">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PopDateViewController.init() -&gt; PopDateViewController:PopDateViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "DiveGroupsCollectionViewController.collectionView(UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath : NSIndexPath) -&gt; CGSize:DiveGroupsCollectionViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.view.frame.size">
+            </PersistentString>
+            <PersistentString
+               value = "sectionInsets.right">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GroupCollectionViewCell.(tableView(GroupCollectionViewCell) -&gt; (UITableView, editActionsForRowAtIndexPath : NSIndexPath) -&gt; [UITableViewRowAction]?).(closure #1):GroupCollectionViewCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "DivesTableViewController.reloadDataTable() -&gt; ():DivesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "trip.dives">
+            </PersistentString>
+            <PersistentString
+               value = "self.sections.keys">
+            </PersistentString>
+            <PersistentString
+               value = "sections[diveDate]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DivesTableViewController.(deleteDive(DivesTableViewController) -&gt; (UITableViewRowAction!, indexPath : NSIndexPath!) -&gt; ()).(closure #1):DivesTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NewDiveTableViewController.prepareForSegue(UIStoryboardSegue, sender : AnyObject?) -&gt; ():NewDiveTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GroupCollectionViewCell.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:GroupCollectionViewCell.swift">
       </ContextState>
       <ContextState
          contextName = "DiversTableViewController.updateSearchResultsForSearchController(UISearchController) -&gt; ():DiversTableViewController.swift">
@@ -73,10 +107,19 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "DivesTableViewController.unwindToDiveList(UIStoryboardSegue) -&gt; ():DivesTableViewController.swift">
+         contextName = "Dive.generateGroups(Trip) -&gt; ():Dive.swift">
       </ContextState>
       <ContextState
-         contextName = "PopDateViewController.init() -&gt; PopDateViewController:PopDateViewController.swift">
+         contextName = "NewDiveTableViewController.(viewDidLoad(NewDiveTableViewController) -&gt; () -&gt; ()).(closure #1):NewDiveTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GroupCollectionViewCell.init(frame : CGRect) -&gt; GroupCollectionViewCell:GroupCollectionViewCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "DiversTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:DiversTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Group.addDiver(String) -&gt; ():Group.swift">
       </ContextState>
       <ContextState
          contextName = "static TripManager.GetTrips() -&gt; [Trip]:TripManager.swift">
@@ -87,97 +130,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Dive.generateGroups(Trip) -&gt; ():Dive.swift">
+         contextName = "DiveGroupsCollectionViewController.collectionView(UICollectionView, moveItemAtIndexPath : NSIndexPath, toIndexPath : NSIndexPath) -&gt; ():DiveGroupsCollectionViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "DiveGroupsCollectionViewController.collectionView(UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath : NSIndexPath) -&gt; CGSize:DiveGroupsCollectionViewController.swift">
+         contextName = "DiversTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DiversTableViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.view.frame.size">
-            </PersistentString>
-            <PersistentString
-               value = "sectionInsets.right">
+               value = "self.resultSearchController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "DivesTableViewController.(deleteDive(DivesTableViewController) -&gt; (UITableViewRowAction!, indexPath : NSIndexPath!) -&gt; ()).(closure #1):DivesTableViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "DiveGroupsCollectionViewController.viewDidLoad() -&gt; ():DiveGroupsCollectionViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "GroupCollectionViewCell.longPressGestureRecognized(UIGestureRecognizer) -&gt; ():GroupCollectionViewCell.swift">
+         contextName = "DivesTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:DivesTableViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.frame">
+               value = "cell.diveSiteTextField.text">
             </PersistentString>
             <PersistentString
-               value = "centerInCollectionItem">
-            </PersistentString>
-            <PersistentString
-               value = "DraggableDiverData.targetTableRowIndexPath">
-            </PersistentString>
-            <PersistentString
-               value = "Path.initialCollectionItemIndexPath">
-            </PersistentString>
-            <PersistentString
-               value = "collectionItemIndexPath">
+               value = "cell.diveTimeTextField.text">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "NewDiveTableViewController.viewDidLoad() -&gt; ():NewDiveTableViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "DiveGroupsCollectionViewController.collectionView(UICollectionView, cellForItemAtIndexPath : NSIndexPath) -&gt; UICollectionViewCell:DiveGroupsCollectionViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "GroupTableTableViewCell.init(style : UITableViewCellStyle, reuseIdentifier : String?) -&gt; GroupTableTableViewCell:GroupTableTableViewCell.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.diverLabel">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "specialized _fatalErrorMessage(StaticString, StaticString, StaticString, UInt) -&gt; ():(null)">
-         <PersistentStrings>
-            <PersistentString
-               value = "Path">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "DiversTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:DiversTableViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "SimplePickerView.xibSetup() -&gt; ():SimplePickerView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "bounds">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "NewDiveTableViewController.validateDive() -&gt; Bool:NewDiveTableViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "NewTripViewController.textFieldShouldEndEditing(UITextField) -&gt; Bool:NewTripViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "GroupCollectionViewCell.init(frame : CGRect) -&gt; GroupCollectionViewCell:GroupCollectionViewCell.swift">
-      </ContextState>
-      <ContextState
-         contextName = "DivesTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DivesTableViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.sections[orderedSections[section]]!.count">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "NewDiveTableViewController.textFieldShouldBeginEditing(UITextField) -&gt; Bool:NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
          contextName = "DivesTableViewController.tableView(UITableView, titleForHeaderInSection : Int) -&gt; String?:DivesTableViewController.swift">
@@ -191,13 +163,74 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "NewDiveTableViewController.textFieldShouldBeginEditing(UITextField) -&gt; Bool:NewDiveTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SimplePickerView.xibSetup() -&gt; ():SimplePickerView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "bounds">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GroupCollectionViewCell.longPressGestureRecognized(UIGestureRecognizer) -&gt; ():GroupCollectionViewCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Drag.initialCollectionItemIndexPath?.row">
+            </PersistentString>
+            <PersistentString
+               value = "centerInCollectionItem">
+            </PersistentString>
+            <PersistentString
+               value = "finalTargetIndexPath?.row">
+            </PersistentString>
+            <PersistentString
+               value = "(NSIndexPath)$R11">
+            </PersistentString>
+            <PersistentString
+               value = "collectionItemIndexPath">
+            </PersistentString>
+            <PersistentString
+               value = "targetRwoIndexPath?.row">
+            </PersistentString>
+            <PersistentString
+               value = "Drag.initialTableRowIndexPath!.row">
+            </PersistentString>
+            <PersistentString
+               value = "Drag.targetCollectionItemIndexPath?.row">
+            </PersistentString>
+            <PersistentString
+               value = "(targetIndexPath!)">
+            </PersistentString>
+            <PersistentString
+               value = "snapshotDestination?">
+            </PersistentString>
+            <PersistentString
+               value = "Drag.targetTableRowIndexPath?.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NewTripViewController.textFieldShouldEndEditing(UITextField) -&gt; Bool:NewTripViewController.swift">
+      </ContextState>
+      <ContextState
          contextName = "NewDiveTableViewController.pickerView(UIPickerView, didSelectRow : Int, inComponent : Int) -&gt; ():NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "DiversTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DiversTableViewController.swift">
+         contextName = "GroupCollectionViewCell.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:GroupCollectionViewCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NewTripViewController.validateTrip() -&gt; Bool:NewTripViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NewDiveTableViewController.viewDidLoad() -&gt; ():NewDiveTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "DivesTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DivesTableViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.resultSearchController">
+               value = "self.sections[orderedSections[section]]!.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

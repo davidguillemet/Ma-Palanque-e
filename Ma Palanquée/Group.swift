@@ -61,6 +61,38 @@ class Group
             divers!.insert(diver, atIndex: atIndex)
         }
     }
+    func moveDiver(fromIndex: Int, toIndex: Int) throws
+    {
+        if (self.divers == nil)
+        {
+            return
+        }
+        
+        if (fromIndex < 0 || fromIndex > self.divers!.count)
+        {
+            throw ErrorHelper.InvalidDiverIndex(index: fromIndex)
+        }
+        
+        if (toIndex < 0 || toIndex > self.divers!.count)
+        {
+            throw ErrorHelper.InvalidDiverIndex(index: toIndex)
+        }
+        
+        let diver = self.divers![fromIndex]
+        
+        // if fromIndex < toIndex, first add toIndex and then remove fromIndex
+        if (fromIndex < toIndex)
+        {
+            self.divers!.insert(diver, atIndex: toIndex)
+            self.divers!.removeAtIndex(fromIndex)
+        }
+        // if fromIndex > toIndex, first remove fromIndex and then add toIndex
+        else
+        {
+            self.divers!.removeAtIndex(fromIndex)
+            self.divers!.insert(diver, atIndex: toIndex)
+        }
+    }
     
     func containsDiver(diver: String) -> Bool
     {
@@ -91,6 +123,14 @@ class Group
             return
         }
         
+        // Check if we remove the guide
+        let diverToRemove: String = self.divers![atIndex]
+        
+        if (diverToRemove == self.guide)
+        {
+            self.guide = nil
+        }
+        
         self.divers!.removeAtIndex(atIndex)
     }
     
@@ -109,6 +149,11 @@ class Group
             if (diver == diverToRemove)
             {
                 indexToRemove = index
+                if (self.guide == diverToRemove)
+                {
+                    // In case we remove the guide, set guide as nil
+                    self.guide = nil
+                }
                 break
             }
         }

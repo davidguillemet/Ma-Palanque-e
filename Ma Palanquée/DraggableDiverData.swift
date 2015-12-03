@@ -1,5 +1,5 @@
 //
-//  DraggableDiverData.swift
+//  Drag.swift
 //  Ma Palanquée
 //
 //  Created by David Guillemet on 30/11/2015.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-class DraggableDiverData
+class Drag
 {
     // The highest level view
     static var parentView : UIView? = nil
@@ -41,36 +41,36 @@ class DraggableDiverData
     static func Initialize(cell: UIView, parentView: UIView, centerOffset: CGPoint)
     {
         // 1. populate the parent view
-        DraggableDiverData.parentView = parentView
+        Drag.parentView = parentView
         
         // 2. set the offset between cell center and gesture position
-        DraggableDiverData.offSetWithCenter = centerOffset
+        Drag.offSetWithCenter = centerOffset
         
         // 3. Build the snapshot
-        DraggableDiverData.cellSnapshot = BuildSnapshopOfCell(cell, parentView: parentView)
+        Drag.cellSnapshot = BuildSnapshopOfCell(cell, parentView: parentView)
         
         // 4. Build error and insertion indicators
-        DraggableDiverData.errorIndicatorView = BuildErrorIndicatorView(parentView)
-        DraggableDiverData.insertionIndicatorView = BuildInsertionIndicator(parentView)
+        Drag.errorIndicatorView = BuildErrorIndicatorView(parentView)
+        Drag.insertionIndicatorView = BuildInsertionIndicator(parentView)
     }
     
     static func Terminate(finalDestination: CGPoint)
     {
-        DraggableDiverData.HideErrorIndicatorView()
-        DraggableDiverData.HideInsertionIndicatorView()
+        Drag.HideErrorIndicatorView()
+        Drag.HideInsertionIndicatorView()
         
         UIView.animateWithDuration(
             0.25,
             animations: { () -> Void in
-                DraggableDiverData.cellSnapshot!.center.x = finalDestination.x
-                DraggableDiverData.cellSnapshot!.center.y = finalDestination.y
-                DraggableDiverData.cellSnapshot!.transform = CGAffineTransformIdentity
-                DraggableDiverData.cellSnapshot!.alpha = 0.0
+                Drag.cellSnapshot!.center.x = finalDestination.x
+                Drag.cellSnapshot!.center.y = finalDestination.y
+                Drag.cellSnapshot!.transform = CGAffineTransformIdentity
+                Drag.cellSnapshot!.alpha = 0.0
             },
             completion: { (finished) -> Void in
                 if finished
                 {
-                    DraggableDiverData.Clear()
+                    Drag.Clear()
                 }
             }
         )
@@ -87,35 +87,35 @@ class DraggableDiverData
     
     static func ShowErrorIndicatorView()
     {
-        if (DraggableDiverData.errorIndicatorView != nil)
+        if (Drag.errorIndicatorView != nil)
         {
-            DraggableDiverData.errorIndicatorView!.center = CGPoint(x: DraggableDiverData.cellSnapshot!.frame.origin.x, y: DraggableDiverData.cellSnapshot!.frame.origin.y + 40)
-            DraggableDiverData.errorIndicatorView!.hidden = false
+            Drag.errorIndicatorView!.center = CGPoint(x: Drag.cellSnapshot!.frame.origin.x, y: Drag.cellSnapshot!.frame.origin.y + 40)
+            Drag.errorIndicatorView!.hidden = false
         }
     }
 
     static func HideErrorIndicatorView()
     {
-        if (DraggableDiverData.errorIndicatorView != nil)
+        if (Drag.errorIndicatorView != nil)
         {
-            DraggableDiverData.errorIndicatorView!.hidden = true
+            Drag.errorIndicatorView!.hidden = true
         }
     }
     
     static func HideInsertionIndicatorView()
     {
-        if (DraggableDiverData.insertionIndicatorView != nil)
+        if (Drag.insertionIndicatorView != nil)
         {
-            DraggableDiverData.insertionIndicatorView!.hidden = true
+            Drag.insertionIndicatorView!.hidden = true
         }
     }
     static func ShowInsertionIndicatorView(position: CGPoint, width: CGFloat)
     {
-        if (DraggableDiverData.insertionIndicatorView != nil)
+        if (Drag.insertionIndicatorView != nil)
         {
-            DraggableDiverData.insertionIndicatorView!.frame.size.width = width
-            DraggableDiverData.insertionIndicatorView!.frame.origin = position
-            DraggableDiverData.insertionIndicatorView!.hidden = false
+            Drag.insertionIndicatorView!.frame.size.width = width
+            Drag.insertionIndicatorView!.frame.origin = position
+            Drag.insertionIndicatorView!.hidden = false
         }
     }
     
@@ -134,7 +134,7 @@ class DraggableDiverData
         cellSnapshot.layer.shadowOpacity = 0.4
         
         // Convert the cell center to the parent coordinate system
-        let center = DraggableDiverData.parentView!.convertPoint(inputView.center, fromView: inputView.superview)
+        let center = Drag.parentView!.convertPoint(inputView.center, fromView: inputView.superview)
         cellSnapshot.center = center
         cellSnapshot.alpha = 0.0
         
