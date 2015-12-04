@@ -17,18 +17,14 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
     
     var dive: Dive!
     
-    // divers which have been excluded from the groups
-    // -> add to the dive once we save the groups
-    var newExcludedDivers: Set<String> = Set<String>()
-    
-    //var divers: [Diver]!
-    var groupId: String!
-    
     var group: Group!
     {
         didSet
         {
-            //self.divers = DiverManager.GetSortedDivers(group.divers)
+            if (self.group.locked)
+            {
+                self.deleteButton.hidden = true
+            }
             SetLockIconState()
         }
     }
@@ -55,10 +51,6 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
     }
     
     // MARK: UIGestureRecognizerDelegate
-    /*func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool
-    {
-        return true
-    }*/
 
     func makeCollectionItemActive(item: UICollectionViewCell)
     {
@@ -169,12 +161,12 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                         // Check if we are above or bellow the vertical middle of the table row in order to display th einsertion indicator at the bottom or top of the row
                         if (locationInTableView.y < activeTableRow.center.y)
                         {
-                            insertionIndicator.y = activeTableRow.frame.origin.y - 1
+                            insertionIndicator.y = activeTableRow.frame.origin.y - 2
                             Drag.targetTableRowIndexPath = tableRowIndexPath
                         }
                         else
                         {
-                            insertionIndicator.y = activeTableRow.frame.origin.y + activeTableRow.frame.height - 1
+                            insertionIndicator.y = activeTableRow.frame.origin.y + activeTableRow.frame.height - 2
                             if (tableRowIndexPath!.row  < collectionItem!.tableView.numberOfRowsInSection(0) - 1)
                             {
                                 Drag.targetTableRowIndexPath = NSIndexPath(forRow: tableRowIndexPath!.row + 1, inSection: 0)
@@ -218,7 +210,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
                         // Get the last cell
                         let lastTableRow: UITableViewCell = collectionItem!.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: rowCount - 1, inSection: 0))!
                         
-                        let insertionIndicatorPos: CGPoint = CGPoint(x: lastTableRow.frame.origin.x, y: lastTableRow.frame.origin.y + lastTableRow.frame.height - 1)
+                        let insertionIndicatorPos: CGPoint = CGPoint(x: lastTableRow.frame.origin.x, y: lastTableRow.frame.origin.y + lastTableRow.frame.height - 2)
                         
                         Drag.ShowInsertionIndicatorView(
                             viewController.collectionView!.convertPoint(insertionIndicatorPos, fromView: lastTableRow.superview),
@@ -409,7 +401,7 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
             self.group.removeDiverAt(indexPath.row)
             
             // Set the diver as exclided for the dive
-            self.newExcludedDivers.insert(diver)
+            self.viewController.addNewExcludedDiver(diver)
             
             self.tableView.editing = false
             

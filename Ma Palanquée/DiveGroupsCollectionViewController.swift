@@ -22,6 +22,10 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
     var groups: [Group]?
     var availableDivers: Set<String>!
     
+    // divers which have been excluded from the groups
+    // -> add to the dive once we save the groups
+    var newExcludedDivers: Set<String> = Set<String>()
+    
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
@@ -31,7 +35,7 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         IconHelper.SetBarButtonIcon(cancelButton, icon: IconValue.IconClose, fontSize: nil, center: false)
         IconHelper.SetBarButtonIcon(saveButton, icon: IconValue.IconSave, fontSize: nil, center: false)
 
-        if (dive.groups == nil)
+        if (dive.groups == nil || dive.groups!.count == 0)
         {
             dive.generateGroups(trip)
         }
@@ -51,12 +55,6 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         layout.estimatedItemSize = CGSize(width: 250, height: 200);
         
         self.collectionView?.allowsSelection = false
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.registerClass(GroupCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
     }
@@ -70,6 +68,11 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
     func groupHasBeenModified(index: NSIndexPath)
     {
         self.collectionView?.reloadItemsAtIndexPaths([index]) // TODO : on doit faire ça ou pas?
+    }
+    
+    func addNewExcludedDiver(diver: String)
+    {
+       newExcludedDivers.insert(diver)
     }
     
     /*
@@ -184,7 +187,6 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         {
             groupWidth = maximumGroupWidth
         }
-        
         
         var diverCount: Int
         

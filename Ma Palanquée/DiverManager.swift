@@ -116,6 +116,36 @@ class DiverManager
 
         diver = Diver(firstName:"Stéphane", lastName:"Massot", level:DiveLevel.E2, trainingLevel:nil)
         Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Hélène", lastName: "Brière", level: DiveLevel.N1, trainingLevel: DiveLevel.N2)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Mathieu", lastName: "De Seauve", level: DiveLevel.N3, trainingLevel: nil)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Olivier", lastName: "Deneux", level: DiveLevel.N3, trainingLevel: nil)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Caecilia", lastName: "Dijoux", level: DiveLevel.N2, trainingLevel: nil)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Cecile", lastName: "Farineau", level: DiveLevel.N2, trainingLevel: nil)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Laurence", lastName: "Haeusler", level: DiveLevel.E2, trainingLevel: nil)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Olivier", lastName: "Lanneluc", level: DiveLevel.N4, trainingLevel: nil)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Alexandre", lastName: "Merah", level: DiveLevel.N2, trainingLevel: DiveLevel.N3)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Véronique", lastName: "Pilch", level: DiveLevel.N1, trainingLevel: DiveLevel.N2)
+        Instance.dico[diver.id] = diver
+        
+        diver = Diver(firstName: "Isabelle", lastName: "Philavong", level: DiveLevel.N1, trainingLevel: DiveLevel.N2)
+        Instance.dico[diver.id] = diver
 
         return true
     }

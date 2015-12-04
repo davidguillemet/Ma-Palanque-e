@@ -267,8 +267,7 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             var tripDivers: [Diver] = [Diver]()
             for diver in trip.divers
             {
-                // Exclude the dive current dive director
-                if (self.diveDirector != nil && self.diveDirector!.id == diver || usedDivers.contains(diver))
+                if (usedDivers.contains(diver))
                 {
                     continue
                 }
@@ -310,14 +309,10 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
     {
         if (textField === diveDirectorTextField)
         {
-            // We must remove excluded divers from possible dice directors
+            // Get possible dive directors from level >= E3 or training level is E3
             var possibleDirectors = [Diver]()
             for id in self.trip.divers
             {
-                if (excludedDivers.contains(id))
-                {
-                    continue
-                }
                 let diver = DiverManager.GetDiver(id)
                 if (diver.level.rawValue >= DiveLevel.E3.rawValue || diver.trainingLevel?.rawValue == DiveLevel.E3.rawValue)
                 {

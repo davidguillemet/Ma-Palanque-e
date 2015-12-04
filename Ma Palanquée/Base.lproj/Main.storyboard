@@ -938,7 +938,11 @@
                                 <action selector="cancelAction:" destination="igi-A0-pYL" id="gRr-e5-UhF"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="ok" id="bEv-Nd-fCb"/>
+                        <barButtonItem key="rightBarButtonItem" title="ok" id="bEv-Nd-fCb">
+                            <connections>
+                                <segue destination="PGS-n2-nXp" kind="unwind" identifier="SaveDiveGroups" unwindAction="unwindToDiveList:" id="d81-p4-H1Y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cancelButton" destination="AIF-oa-Hif" id="qqv-Zz-hgt"/>
@@ -947,6 +951,7 @@
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w3j-UV-cIV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="PGS-n2-nXp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5798" y="1590"/>
         </scene>
@@ -1352,8 +1357,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gGr-9E-WK8"/>
         <segue reference="Iq0-cs-amV"/>
+        <segue reference="gGr-9E-WK8"/>
         <segue reference="kdv-Mo-BUI"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -237,26 +237,43 @@ class DivesTableViewController: SearchableTableViewController
     
     // MARK: - Navigation
 
-    @IBAction func unwindToDiveList(sender: UIStoryboardSegue)
+    @IBAction func unwindToDiveList(segue: UIStoryboardSegue)
     {
-        let diveController = sender.sourceViewController as? NewDiveTableViewController
-        if (diveController == nil)
+        if (segue.identifier == "SaveDiveGroups")
         {
-            return
+            if let diveGroupsController = segue.sourceViewController as? DiveGroupsCollectionViewController
+            {
+                // Update the new Dive groups from controller
+                let dive = diveGroupsController.dive
+                dive.groups = diveGroupsController.groups
+                
+                // Update excluded divers
+                diveGroupsController.newExcludedDivers.forEach({ (diver: String) -> Void in
+                    dive.excludedDivers?.insert(diver)
+                })
+            }
         }
+        else if (segue.identifier == "UnwindToDiveList")
+        {
+            let diveController = segue.sourceViewController as? NewDiveTableViewController
+            if (diveController == nil)
+            {
+                return
+            }
         
-        if (diveController!.editionMode)
-        {
-            TripManager.Persist()
-        }
-        else
-        {
-            TripManager.AddDive(diveController!.newdive!, trip: trip)
-        }
+            if (diveController!.editionMode)
+            {
+                TripManager.Persist()
+            }
+            else
+            {
+                TripManager.AddDive(diveController!.newdive!, trip: trip)
+            }
         
-        // Reload the whole table since the updated/new might be moved to any row in the table
-        // depending on the date property
-        reloadDataTable()
+            // Reload the whole table since the updated/new might be moved to any row in the table
+            // depending on the date property
+            reloadDataTable()
+        }
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

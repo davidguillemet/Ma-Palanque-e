@@ -88,6 +88,11 @@
       </ContextState>
       <ContextState
          contextName = "NewDiveTableViewController.prepareForSegue(UIStoryboardSegue, sender : AnyObject?) -&gt; ():NewDiveTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "usedDivers.count">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "GroupCollectionViewCell.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:GroupCollectionViewCell.swift">
@@ -108,6 +113,9 @@
       </ContextState>
       <ContextState
          contextName = "Dive.generateGroups(Trip) -&gt; ():Dive.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GroupCollectionViewCell.awakeFromNib() -&gt; ():GroupCollectionViewCell.swift">
       </ContextState>
       <ContextState
          contextName = "NewDiveTableViewController.(viewDidLoad(NewDiveTableViewController) -&gt; () -&gt; ()).(closure #1):NewDiveTableViewController.swift">

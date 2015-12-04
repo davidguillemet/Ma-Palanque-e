@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/DiveGroupsCollectionViewController.swift"
-            timestampString = "470779208.943397"
+            timestampString = "470878424.992448"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "collectionView(_:layout:sizeForItemAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/DiveGroupsCollectionViewController.swift"
-            timestampString = "470779208.943397"
+            timestampString = "470878424.992448"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "collectionView(_:layout:sizeForItemAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -266,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/GroupCollectionViewCell.swift"
-            timestampString = "470868763.834531"
+            timestampString = "470921653.519689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "longPressGestureRecognized(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -282,12 +282,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/GroupCollectionViewCell.swift"
-            timestampString = "470869124.345851"
+            timestampString = "470921653.519689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            startingLineNumber = "471"
+            endingLineNumber = "471"
+            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/GroupCollectionViewCell.swift"
-            timestampString = "470869124.345851"
+            timestampString = "470921653.519689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "475"
-            endingLineNumber = "475"
+            startingLineNumber = "477"
+            endingLineNumber = "477"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -314,13 +314,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/DiveGroupsCollectionViewController.swift"
-            timestampString = "470779208.943397"
+            timestampString = "470878424.992448"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "collectionView(_:moveItemAtIndexPath:toIndexPath:)"
-            landmarkType = "5">
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "DiveGroupsCollectionViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/GroupCollectionViewCell.swift"
-            timestampString = "470868763.834531"
+            timestampString = "470921653.519689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
             landmarkName = "longPressGestureRecognized(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/GroupCollectionViewCell.swift"
-            timestampString = "470868763.834531"
+            timestampString = "470921653.519689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
             landmarkName = "longPressGestureRecognized(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/GroupCollectionViewCell.swift"
-            timestampString = "470868763.834531"
+            timestampString = "470921653.519689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
             landmarkName = "longPressGestureRecognized(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -378,12 +378,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ma Palanque&#x301;e/GroupCollectionViewCell.swift"
-            timestampString = "470868763.834531"
+            timestampString = "470921653.519689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "285"
-            endingLineNumber = "285"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
             landmarkName = "longPressGestureRecognized(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Ma Palanque&#x301;e/NewDiveTableViewController.swift"
+            timestampString = "470874468.283436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
+            landmarkName = "prepareForSegue(_:sender:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
