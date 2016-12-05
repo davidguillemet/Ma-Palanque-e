@@ -26,20 +26,20 @@ enum IconValue: String
 
 class IconHelper
 {
-    private static var IconFontStroke = "Pe-icon-7-stroke"
-    private static var IconFontAwesome = "FontAwesome"
-    private static var DefaultFontSize: CGFloat = 34
+    fileprivate static var IconFontStroke = "Pe-icon-7-stroke"
+    fileprivate static var IconFontAwesome = "FontAwesome"
+    fileprivate static var DefaultFontSize: CGFloat = 34
     
-    private static var CurrentFontName = IconFontStroke
+    fileprivate static var CurrentFontName = IconFontStroke
     
-    class func SetLabelIcon(label: UILabel, icon: IconValue, fontSize: CGFloat?, center: Bool)
+    class func SetLabelIcon(_ label: UILabel, icon: IconValue, fontSize: CGFloat?, center: Bool)
     {
         label.font = UIFont(name: CurrentFontName, size: fontSize ?? DefaultFontSize)
-        label.textColor = UIColor.lightGrayColor()
+        label.textColor = UIColor.lightGray
         
         if (center)
         {
-            label.textAlignment = .Center
+            label.textAlignment = .center
             /*let attributedString = NSMutableAttributedString(string: icon.rawValue)
             let style = NSMutableParagraphStyle()
             //style.firstLineHeadIndent = 1.0
@@ -55,26 +55,26 @@ class IconHelper
         
     }
     
-    class func SetButtonIcon(button: UIButton, icon: IconValue, fontSize: CGFloat?, center: Bool)
+    class func SetButtonIcon(_ button: UIButton, icon: IconValue, fontSize: CGFloat?, center: Bool)
     {
         SetLabelIcon(button.titleLabel!, icon: icon, fontSize: fontSize, center: center)
-        button.setTitle(icon.rawValue, forState: .Normal)
+        button.setTitle(icon.rawValue, for: UIControlState())
     }
     
-    class func SetCircledIcon(label: UILabel, icon: IconValue, fontSize: CGFloat?, center: Bool)
+    class func SetCircledIcon(_ label: UILabel, icon: IconValue, fontSize: CGFloat?, center: Bool)
     {
         SetLabelIcon(label, icon: icon, fontSize: fontSize, center: center)
-        label.layer.borderColor = UIColor.lightGrayColor().CGColor
+        label.layer.borderColor = UIColor.lightGray.cgColor
         label.layer.borderWidth = 1.0;
         let maxLength: CGFloat = label.frame.height > label.frame.width ? label.frame.height : label.frame.width
         label.layer.cornerRadius = maxLength / 2
     }
     
-    class func SetBarButtonIcon(barButton: UIBarButtonItem, icon: IconValue, fontSize: CGFloat?, center: Bool)
+    class func SetBarButtonIcon(_ barButton: UIBarButtonItem, icon: IconValue, fontSize: CGFloat?, center: Bool)
     {
         barButton.title = icon.rawValue
-        barButton.setTitleTextAttributes([NSFontAttributeName:UIFont(name: CurrentFontName, size: fontSize ?? DefaultFontSize)!], forState: UIControlState.Normal)
-        barButton.setTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: 100), forBarMetrics: .Default)
+        barButton.setTitleTextAttributes([NSFontAttributeName:UIFont(name: CurrentFontName, size: fontSize ?? DefaultFontSize)!], for: UIControlState())
+        barButton.setTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: 100), for: .default)
     }
     
     /*class func SetIcon(button: UIButton, icon: IConValue, fontSize: CGFloat?, center: Bool)

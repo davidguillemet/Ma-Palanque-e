@@ -15,7 +15,7 @@ class SearchableTableViewController: UITableViewController, UISearchResultsUpdat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.separatorStyle = .SingleLine
+        self.tableView.separatorStyle = .singleLine
         
         self.resultSearchController = (
             {
@@ -39,11 +39,11 @@ class SearchableTableViewController: UITableViewController, UISearchResultsUpdat
 
     func DisplaySearchResult() -> Bool
     {
-        return  self.resultSearchController != nil && self.resultSearchController.active &&
+        return  self.resultSearchController != nil && self.resultSearchController.isActive &&
             self.resultSearchController.searchBar.text != nil && self.resultSearchController.searchBar.text != ""
     }
 
-    func updateSearchResultsForSearchController(searchController: UISearchController)
+    func updateSearchResults(for searchController: UISearchController)
     {
         if (DisplaySearchResult())
         {
@@ -53,12 +53,12 @@ class SearchableTableViewController: UITableViewController, UISearchResultsUpdat
         self.tableView.reloadData()
     }
     
-    func InternalProcessFilter(searchController: UISearchController)
+    func InternalProcessFilter(_ searchController: UISearchController)
     {
         // TO Override
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar)
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar)
     {
         self.resultSearchController.searchBar.text = ""
     }

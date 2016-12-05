@@ -18,8 +18,8 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
     var initialTrip: Trip?
     var newTrip: Trip?
     
-    var nsDateFrom: NSDate?
-    var nsDateTo: NSDate?
+    var nsDateFrom: Date?
+    var nsDateTo: Date?
     var divers: Set<String>?
     var constraints: [Constraint]?
     
@@ -44,7 +44,7 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let topConstraint: NSLayoutConstraint = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutAttribute.TopMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.TopMargin
+        let topConstraint: NSLayoutConstraint = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutAttribute.topMargin, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.topMargin
             , multiplier: 1.0, constant: 8)
         self.view.addConstraint(topConstraint)
         
@@ -95,11 +95,11 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
     {
         if (self.divers == nil || self.divers!.isEmpty)
         {
-            constraintsButton.enabled = false
+            constraintsButton.isEnabled = false
         }
         else
         {
-            constraintsButton.enabled = true
+            constraintsButton.isEnabled = true
         }
     }
     
@@ -115,12 +115,12 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
         tripDateFrom.resignFirstResponder()
         tripDateTo.resignFirstResponder()
     }
-    func textFieldShouldReturn(textField: UITextField) -> Bool // called when 'return' key pressed. return NO to ignore.
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool // called when 'return' key pressed. return NO to ignore.
     {
         textField.resignFirstResponder()
         return true;
     }
-    func textFieldShouldClear(textField: UITextField) -> Bool
+    func textFieldShouldClear(_ textField: UITextField) -> Bool
     {
         textField.text = ""
         if (textField == tripDateFrom)
@@ -134,7 +134,7 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
     {
         
         if (textField == tripDateFrom)
@@ -142,7 +142,7 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
             let maximumDate = self.initialTrip != nil ? self.initialTrip!.getMaximalStartDate(nsDateTo!) : nsDateTo
             let initialDate = nsDateFrom ?? nsDateTo
             
-            datePicker = DatePickerViewHelper(textField: textField, initialDate: initialDate, minimumDate: nil, maximumDate: maximumDate, pickerMode: UIDatePickerMode.Date, validationDelegate: { (newDate: NSDate, forTextField : UITextField) -> Bool in
+            datePicker = DatePickerViewHelper(textField: textField, initialDate: initialDate, minimumDate: nil, maximumDate: maximumDate, pickerMode: UIDatePickerMode.date, validationDelegate: { (newDate: Date, forTextField : UITextField) -> Bool in
                 self.nsDateFrom = newDate;
                 return true
             })
@@ -152,7 +152,7 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
             let minimalEndDate = self.initialTrip != nil ? self.initialTrip!.getMinimalEndDate(nsDateFrom!) : nsDateFrom
             let initialDate = nsDateTo ?? nsDateFrom
             
-            datePicker = DatePickerViewHelper(textField: textField, initialDate: initialDate, minimumDate: minimalEndDate, maximumDate: nil, pickerMode: UIDatePickerMode.Date, validationDelegate: { (newDate: NSDate, forTextField : UITextField) -> Bool in
+            datePicker = DatePickerViewHelper(textField: textField, initialDate: initialDate, minimumDate: minimalEndDate, maximumDate: nil, pickerMode: UIDatePickerMode.date, validationDelegate: { (newDate: Date, forTextField : UITextField) -> Bool in
                 self.nsDateTo = newDate;
                 return true
             })
@@ -163,7 +163,7 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
     
     func updateDiversSelectionButtonLabel()
     {
-        diverSelectionButton.setTitle("\(self.divers!.count) Plongeur(s)", forState: .Normal)
+        diverSelectionButton.setTitle("\(self.divers!.count) Plongeur(s)", for: UIControlState())
         diverSelectionButton.sizeToFit()
     }
     
@@ -195,7 +195,7 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
             return false
         }
         // 5. Check start date is not after end date...
-        if (NSCalendar.currentCalendar().compareDate(nsDateFrom!, toDate: nsDateTo!, toUnitGranularity: .Day) == NSComparisonResult.OrderedDescending)
+        if ((Calendar.current as NSCalendar).compare(nsDateFrom!, to: nsDateTo!, toUnitGranularity: .day) == ComparisonResult.orderedDescending)
         {
             MessageHelper.displayError("Il semblerait que la sortie se termine avant d'avoir commencé!", controller: self)
             return false
@@ -218,17 +218,17 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
-    @IBAction func cancel(sender: UIBarButtonItem)
+    @IBAction func cancel(_ sender: UIBarButtonItem)
     {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     
     // MARK: - Navigation
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool
+
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool
     {
-        if (sender === saveButton)
+        if ((sender as AnyObject) === saveButton)
         {
             if (!validateTrip())
             {
@@ -241,15 +241,15 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if (sender === saveButton)
+        if ((sender as AnyObject) === saveButton)
         {
             // Nothing here...
         }
-        else if (sender === diverSelectionButton)
+        else if ((sender as AnyObject) === diverSelectionButton)
         {
-            let targetNavController = segue.destinationViewController as? UINavigationController
+            let targetNavController = segue.destination as? UINavigationController
             let targetController = targetNavController?.topViewController as? DiversTableViewController
             if (self.divers != nil)
             {
@@ -258,9 +258,9 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
             targetController?.trip = self.initialTrip
             targetController?.selectionType = "TripDivers"
         }
-        else if (sender === constraintsButton)
+        else if ((sender as AnyObject) === constraintsButton)
         {
-            let targetNavController = segue.destinationViewController as? UINavigationController
+            let targetNavController = segue.destination as? UINavigationController
             let targetController = targetNavController?.topViewController as? ConstraintsTableViewController
             if (self.divers != nil)
             {
@@ -270,9 +270,9 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
         }
    }
     
-    @IBAction func unwindToNewTrip(sender: UIStoryboardSegue)
+    @IBAction func unwindToNewTrip(_ sender: UIStoryboardSegue)
     {
-        let diversController = sender.sourceViewController as? DiversTableViewController
+        let diversController = sender.source as? DiversTableViewController
         if (diversController != nil)
         {
             self.divers = diversController?.selection

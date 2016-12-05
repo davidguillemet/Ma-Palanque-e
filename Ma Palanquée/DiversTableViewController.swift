@@ -50,12 +50,12 @@ class DiversTableViewController: SearchableTableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if (DisplaySearchResult())
         {
@@ -67,13 +67,13 @@ class DiversTableViewController: SearchableTableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
         let cellIdentifier = "DiverTableViewCell"
         var diver: Diver!
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! DiverTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! DiverTableViewCell
         
         if (DisplaySearchResult())
         {
@@ -96,7 +96,7 @@ class DiversTableViewController: SearchableTableViewController {
         // In case no trip is specified, we just select divers which are not diving for a new dive
         if (self.selectionType == "TripDivers" && self.trip != nil && !self.trip!.canRemoveDiver(diver.id))
         {
-            cell.selectionSwitch.enabled = false // cannot remove a diver which has already dived...or cannot exclude dive director
+            cell.selectionSwitch.isEnabled = false // cannot remove a diver which has already dived...or cannot exclude dive director
             if (self.selectionType == "DiveExcludedDivers")
             {
                 cell.backgroundColor = UIColor ( red: 0.9108, green: 1.0, blue: 0.0, alpha: 1.0 )
@@ -115,7 +115,7 @@ class DiversTableViewController: SearchableTableViewController {
         return cell
     }
     
-    func selectDiver(cell: DiverTableViewCell, selected: Bool)
+    func selectDiver(_ cell: DiverTableViewCell, selected: Bool)
     {
         if (selected)
         {
@@ -128,10 +128,10 @@ class DiversTableViewController: SearchableTableViewController {
         updateSelection()
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
-        cell.separatorInset = UIEdgeInsetsZero
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
         cell.preservesSuperviewLayoutMargins = false
         
         let diverCell: DiverTableViewCell = cell as! DiverTableViewCell
@@ -145,7 +145,7 @@ class DiversTableViewController: SearchableTableViewController {
         }
     }
         
-    func getDiver(indexPath: NSIndexPath) -> Diver
+    func getDiver(_ indexPath: IndexPath) -> Diver
     {
         if (DisplaySearchResult())
         {
@@ -159,11 +159,11 @@ class DiversTableViewController: SearchableTableViewController {
     
     func updateSelection()
     {
-        self.diverScope.setTitle("\(selection.count) Plongeurs", forSegmentAtIndex: 1)
+        self.diverScope.setTitle("\(selection.count) Plongeurs", forSegmentAt: 1)
         //self.title = "\(selection.count) Plongeur(s)"
     }
     
-    func GetDiversFromScope(all: Bool, loading: Bool) -> [Diver]
+    func GetDiversFromScope(_ all: Bool, loading: Bool) -> [Diver]
     {
         var divers = initialDivers ?? DiverManager.GetDivers()
         
@@ -181,7 +181,7 @@ class DiversTableViewController: SearchableTableViewController {
         }
         
         // Sort in alphabetical order
-        divers = divers.sort({ (d1: Diver, d2: Diver) -> Bool in
+        divers = divers.sorted(by: { (d1: Diver, d2: Diver) -> Bool in
             return d1.lastName < d2.lastName
         })
         
@@ -225,7 +225,7 @@ class DiversTableViewController: SearchableTableViewController {
     
     // MARK: Actions
     
-    @IBAction func diverScopeChanged(sender: UISegmentedControl)
+    @IBAction func diverScopeChanged(_ sender: UISegmentedControl)
     {
         if (sender.selectedSegmentIndex == 0)
         {
@@ -240,46 +240,46 @@ class DiversTableViewController: SearchableTableViewController {
     }
     
     // MARK: - Navigation
-    @IBAction func doneAction(sender: AnyObject)
+    @IBAction func doneAction(_ sender: AnyObject)
     {
         if (self.selectionType == "TripDivers")
         {
             // Back To New Trip
-            self.performSegueWithIdentifier("TripSelectedDivers", sender: self)
+            self.performSegue(withIdentifier: "TripSelectedDivers", sender: self)
         }
         else
         {
             // Back To New Dive
-            self.performSegueWithIdentifier("DiveExcludedDivers", sender: self)
+            self.performSegue(withIdentifier: "DiveExcludedDivers", sender: self)
         }
     }
-    @IBAction func cancel(sender: AnyObject)
+    @IBAction func cancel(_ sender: AnyObject)
     {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func saveSelection(sender: UIBarButtonItem) {
+    @IBAction func saveSelection(_ sender: UIBarButtonItem) {
     }
-    override func shouldPerformSegueWithIdentifier(identifier: String,sender: AnyObject?) -> Bool
+    override func shouldPerformSegue(withIdentifier identifier: String,sender: Any?) -> Bool
     {
         return true
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
     
     // MARK: Search
     
-    override func InternalProcessFilter(searchController: UISearchController)
+    override func InternalProcessFilter(_ searchController: UISearchController)
     {
-        filteredDivers.removeAll(keepCapacity: false)
+        filteredDivers.removeAll(keepingCapacity: false)
         
         let searchPredicate = NSPredicate(format: "firstName CONTAINS[c] %@ OR lastName CONTAINS[c] %@", searchController.searchBar.text!, searchController.searchBar.text!)
         
-        let array = (divers as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        let array = (divers as NSArray).filtered(using: searchPredicate)
         
         filteredDivers = array as! [Diver]
     }

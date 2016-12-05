@@ -10,15 +10,15 @@ import Foundation
 
 class Dive : NSObject
 {
-    var date: NSDate
-    var time: NSDate
+    var date: Date
+    var time: Date
     var site: String
     var director: String
     var groups: [Group]?
     var excludedDivers: Set<String>?
     var id: String
     
-    init(date: NSDate, time: NSDate, site: String, director: String, groups: [Group]?, excludedDivers: Set<String>?)
+    init(date: Date, time: Date, site: String, director: String, groups: [Group]?, excludedDivers: Set<String>?)
     {
         self.date = date
         self.time = time
@@ -27,10 +27,10 @@ class Dive : NSObject
         self.groups = groups
         self.excludedDivers = excludedDivers
 
-        self.id = NSUUID().UUIDString
+        self.id = UUID().uuidString
     }
     
-    func update(date: NSDate, time: NSDate, site: String, director: String, groups: [Group]?, excludedDivers: Set<String>?)
+    func update(_ date: Date, time: Date, site: String, director: String, groups: [Group]?, excludedDivers: Set<String>?)
     {
         self.date = date
         self.time = time
@@ -40,7 +40,7 @@ class Dive : NSObject
         self.excludedDivers = excludedDivers
     }
     
-    func addExcludedDiver(diver: String)
+    func addExcludedDiver(_ diver: String)
     {
         if (self.excludedDivers == nil)
         {
@@ -49,7 +49,7 @@ class Dive : NSObject
         self.excludedDivers!.insert(diver)
     }
     
-    func getAvailableDivers(trip: Trip, scanOnlyLockedGroups: Bool) -> Set<String>
+    func getAvailableDivers(_ trip: Trip, scanOnlyLockedGroups: Bool) -> Set<String>
     {
         var availableDivers = Set<String>()
         
@@ -76,7 +76,7 @@ class Dive : NSObject
         {
             for group in groupsToScan!
             {
-                for (var index = 0; index < group.diverCount; index++)
+                for index in (0 ..< group.diverCount)
                 {
                     try! availableDivers.remove(group.diverAt(index))
                 }
@@ -85,7 +85,7 @@ class Dive : NSObject
         return availableDivers
     }
     
-    func generateGroups(trip: Trip)
+    func generateGroups(_ trip: Trip)
     {
         // Get available divers which are not part of a locked group
         let divers = getAvailableDivers(trip, scanOnlyLockedGroups: true)

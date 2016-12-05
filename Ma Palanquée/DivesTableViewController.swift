@@ -42,30 +42,30 @@ class DivesTableViewController: SearchableTableViewController
     }
 
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return sections.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.sections[orderedSections[section]]!.count
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.orderedSections[section]
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
     {
         let headerView = view as! UITableViewHeaderFooterView
         headerView.contentView.backgroundColor = UIColor ( red: 0.7687, green: 0.9521, blue: 0.9974, alpha: 1.0 )
-        headerView.textLabel?.textAlignment = .Center
+        headerView.textLabel?.textAlignment = .center
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("DiveCell", forIndexPath: indexPath) as! DiveTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DiveCell", for: indexPath) as! DiveTableViewCell
         
         let dives = self.sections[orderedSections[indexPath.section]]
         let dive = dives![indexPath.row]
@@ -111,33 +111,33 @@ class DivesTableViewController: SearchableTableViewController
     }
     */
 
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
-        cell.separatorInset = UIEdgeInsetsZero
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
         cell.preservesSuperviewLayoutMargins = false
     }
     
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
     {
         
     }
     
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
     {
         let dive: Dive = self.getDive(indexPath)
         var actions = [UITableViewRowAction]()
         
-        let editAction = UITableViewRowAction(style: .Default, title: "Edit", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
-            self.tableView.editing = false
-            self.performSegueWithIdentifier("EditDive", sender: dive)
+        let editAction = UITableViewRowAction(style: .default, title: "Edit", handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
+            self.tableView.isEditing = false
+            self.performSegue(withIdentifier: "EditDive", sender: dive)
         })
         
         editAction.backgroundColor = ColorHelper.PendingTrip
         actions.append(editAction)
     
-        let deleteAction = UITableViewRowAction(style: .Default, title: "Delete", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
             self.deleteDive(action, indexPath: indexPath)
         })
     
@@ -147,7 +147,7 @@ class DivesTableViewController: SearchableTableViewController
         return actions
     }
     
-    func deleteDive(action:UITableViewRowAction!, indexPath:NSIndexPath!)
+    func deleteDive(_ action:UITableViewRowAction!, indexPath:IndexPath!)
     {
         let dive2Delete: Dive = getDive(indexPath)
         MessageHelper.confirmAction("Etes-vous sûr de vouloir supprimer la plongée '\(dive2Delete.site)' du \(DateHelper.stringFromDate(dive2Delete.date, fullStyle: false)) à \(DateHelper.stringFromTime(dive2Delete.time))?", controller: self, onOk: {() -> Void in
@@ -158,21 +158,21 @@ class DivesTableViewController: SearchableTableViewController
             let sectionId = self.orderedSections[indexPath.section]
             
             // Remove the dive from the section in the data model:
-            self.sections[sectionId]!.removeAtIndex(indexPath.row)
+            self.sections[sectionId]!.remove(at: indexPath.row)
             
             // Delete the row from the data source
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
 
             // Now, remove the section from data model if needed
             if (self.sections[sectionId]!.isEmpty)
             {
                 self.sections[sectionId] = nil
-                self.orderedSections.removeAtIndex(indexPath.section)
-                self.tableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: .Fade)
+                self.orderedSections.remove(at: indexPath.section)
+                self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
             }
         },
         onCancel: {(Void) -> Void in
-            self.tableView.editing = false
+            self.tableView.isEditing = false
         })
     }
 
@@ -198,25 +198,25 @@ class DivesTableViewController: SearchableTableViewController
         }
         
         // Create an array containing keys as NSDates
-        var orderedSections: [NSDate] = self.sections.keys.map({ (key: String) -> NSDate in
+        var orderedSections: [Date] = self.sections.keys.map({ (key: String) -> Date in
             return DateHelper.dateFromString(key, fullStyle: false)!
         })
         
         // Sort the key array
-        orderedSections = orderedSections.sort({ (d1: NSDate, d2: NSDate) -> Bool in
-            return (NSCalendar.currentCalendar().compareDate(d1, toDate: d2, toUnitGranularity: .Day) == NSComparisonResult.OrderedAscending)
+        orderedSections = orderedSections.sorted(by: { (d1: Date, d2: Date) -> Bool in
+            return ((Calendar.current as NSCalendar).compare(d1, to: d2, toUnitGranularity: .day) == ComparisonResult.orderedAscending)
         })
         
         // Convert the ordered NSDate array to a String array
-        self.orderedSections = orderedSections.map({ ( key: NSDate ) -> String in
+        self.orderedSections = orderedSections.map({ ( key: Date ) -> String in
             return DateHelper.stringFromDate(key, fullStyle: false)
         })
         
         // Sort each dive array depending on the hour
         for (date, dives) in self.sections
         {
-            self.sections[date] = dives.sort({ (d1: Dive, d2: Dive) -> Bool in
-                return (NSCalendar.currentCalendar().compareDate(d1.time, toDate: d2.time, toUnitGranularity: .Hour) == NSComparisonResult.OrderedAscending)
+            self.sections[date] = dives.sorted(by: { (d1: Dive, d2: Dive) -> Bool in
+                return ((Calendar.current as NSCalendar).compare(d1.time, to: d2.time, toUnitGranularity: .hour) == ComparisonResult.orderedAscending)
             })
         }
     }
@@ -230,21 +230,21 @@ class DivesTableViewController: SearchableTableViewController
 
     // MARK: Actions
     
-    @IBAction func doneAction(sender: AnyObject)
+    @IBAction func doneAction(_ sender: AnyObject)
     {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Navigation
 
-    @IBAction func unwindToDiveList(segue: UIStoryboardSegue)
+    @IBAction func unwindToDiveList(_ segue: UIStoryboardSegue)
     {
         if (segue.identifier == "SaveDiveGroups")
         {
-            if let diveGroupsController = segue.sourceViewController as? DiveGroupsCollectionViewController
+            if let diveGroupsController = segue.source as? DiveGroupsCollectionViewController
             {
                 // Update the new Dive groups from controller
-                let dive = diveGroupsController.dive
+                let dive = diveGroupsController.dive!
                 dive.groups = diveGroupsController.groups
                 
                 // Update excluded divers
@@ -255,7 +255,7 @@ class DivesTableViewController: SearchableTableViewController
         }
         else if (segue.identifier == "UnwindToDiveList")
         {
-            let diveController = segue.sourceViewController as? NewDiveTableViewController
+            let diveController = segue.source as? NewDiveTableViewController
             if (diveController == nil)
             {
                 return
@@ -277,9 +277,9 @@ class DivesTableViewController: SearchableTableViewController
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        let targetNavController = segue.destinationViewController as? UINavigationController
+        let targetNavController = segue.destination as? UINavigationController
         
         if (segue.identifier == "EditDive")
         {
@@ -293,7 +293,7 @@ class DivesTableViewController: SearchableTableViewController
             let selectedDiveCell = sender as? DiveTableViewCell
             if (selectedDiveCell != nil)
             {
-                let indexPath = tableView.indexPathForCell(selectedDiveCell!)!
+                let indexPath = tableView.indexPath(for: selectedDiveCell!)!
                 let dive: Dive = getDive(indexPath)
                 targetController.trip = trip
                 targetController.dive = dive
@@ -302,7 +302,7 @@ class DivesTableViewController: SearchableTableViewController
     }
     
     // MARK : Utils
-    func getDive(indexPath: NSIndexPath) -> Dive
+    func getDive(_ indexPath: IndexPath) -> Dive
     {
         return self.sections[orderedSections[indexPath.section]]![indexPath.row]
     }
@@ -310,18 +310,18 @@ class DivesTableViewController: SearchableTableViewController
     
     //MARK: Search
     
-    override func InternalProcessFilter(searchController: UISearchController)
+    override func InternalProcessFilter(_ searchController: UISearchController)
     {
         let searchPredicate = NSPredicate(format: "site CONTAINS[c] %@", searchController.searchBar.text!)
         
-        let array = (trip.getDives() as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        let array = (trip.getDives() as NSArray).filtered(using: searchPredicate)
         
         filteredDives = array as! [Dive]
         
         prepareSections()
     }
 
-    override func searchBarCancelButtonClicked(searchBar: UISearchBar)
+    override func searchBarCancelButtonClicked(_ searchBar: UISearchBar)
     {
         super.searchBarCancelButtonClicked(searchBar)
         prepareSections()

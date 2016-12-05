@@ -8,7 +8,7 @@
 
 protocol DataPickerViewControllerDelegate : class {
     
-    func datePickerVCDismissed(date : NSDate?)
+    func datePickerVCDismissed(_ date : Date?)
 }
 
 class PopDateViewController : UIViewController {
@@ -17,7 +17,7 @@ class PopDateViewController : UIViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     weak var delegate : DataPickerViewControllerDelegate?
     
-    var currentDate : NSDate? {
+    var currentDate : Date? {
         didSet {
             updatePickerCurrentDate()
         }
@@ -27,7 +27,7 @@ class PopDateViewController : UIViewController {
         self.init(nibName: "PopDateViewController", bundle: nil)
     }
     
-    private func updatePickerCurrentDate() {
+    fileprivate func updatePickerCurrentDate() {
         
         if let _currentDate = self.currentDate {
             if let _datePicker = self.datePicker {
@@ -36,8 +36,8 @@ class PopDateViewController : UIViewController {
         }
     }
     
-    @IBAction func onOk(sender: UIButton) {
-        self.dismissViewControllerAnimated(true) {
+    @IBAction func onOk(_ sender: UIButton) {
+        self.dismiss(animated: true) {
             
             let nsdate = self.datePicker.date
             self.delegate?.datePickerVCDismissed(nsdate)
@@ -46,13 +46,13 @@ class PopDateViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        datePicker.datePickerMode = UIDatePickerMode.Date
-        datePicker.locale = NSLocale.init(localeIdentifier:"fr")
-        datePicker.timeZone = NSTimeZone.localTimeZone()
+        datePicker.datePickerMode = UIDatePickerMode.date
+        datePicker.locale = Locale.init(identifier:"fr")
+        datePicker.timeZone = TimeZone.autoupdatingCurrent
         updatePickerCurrentDate()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         
         self.delegate?.datePickerVCDismissed(nil)
     }

@@ -12,10 +12,10 @@ private let reuseIdentifier = "Cell"
 
 class DiveGroupsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout
 {
-    private let reuseIdentifier = "GroupCollectionViewCell"
-    private let sectionInsets = UIEdgeInsets(top: 3.0, left: 3.0, bottom: 3.0, right: 3.0)
-    private let rowSpacing = CGFloat(5.0)
-    private let colSpacing = CGFloat(5.0)
+    fileprivate let reuseIdentifier = "GroupCollectionViewCell"
+    fileprivate let sectionInsets = UIEdgeInsets(top: 3.0, left: 3.0, bottom: 3.0, right: 3.0)
+    fileprivate let rowSpacing = CGFloat(5.0)
+    fileprivate let colSpacing = CGFloat(5.0)
     
     var trip: Trip!
     var dive: Dive!
@@ -65,12 +65,12 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         // Dispose of any resources that can be recreated.
     }
     
-    func groupHasBeenModified(index: NSIndexPath)
+    func groupHasBeenModified(_ index: IndexPath)
     {
-        self.collectionView?.reloadItemsAtIndexPaths([index]) // TODO : on doit faire ça ou pas?
+        self.collectionView?.reloadItems(at: [index]) // TODO : on doit faire ça ou pas?
     }
     
-    func addNewExcludedDiver(diver: String)
+    func addNewExcludedDiver(_ diver: String)
     {
        newExcludedDivers.insert(diver)
     }
@@ -87,35 +87,35 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
     
     // MARK: Actions
     
-    func removeCollectionCell(item: UICollectionViewCell)
+    func removeCollectionCell(_ item: UICollectionViewCell)
     {
         // Simply remove the group from the list
-        if let indexPath = self.collectionView!.indexPathForCell(item)
+        if let indexPath = self.collectionView!.indexPath(for: item)
         {
-            self.groups!.removeAtIndex(indexPath.row)
-            self.collectionView!.deleteItemsAtIndexPaths([indexPath])
+            self.groups!.remove(at: indexPath.row)
+            self.collectionView!.deleteItems(at: [indexPath])
         }
     }
 
     // MARK: UICollectionViewDataSource
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
+    override func numberOfSections(in collectionView: UICollectionView) -> Int
     {
         return 1
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         return self.groups != nil ? self.groups!.count : 0
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! GroupCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! GroupCollectionViewCell
     
         cell.contentView.frame = cell.bounds
-        cell.contentView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        cell.contentView.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         let group = groups![indexPath.row]
         
@@ -128,12 +128,12 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         return cell
     }
 
-    override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
     {
-        self.groups!.insert(self.groups!.removeAtIndex(sourceIndexPath.row), atIndex: destinationIndexPath.row)
+        self.groups!.insert(self.groups!.remove(at: sourceIndexPath.row), at: destinationIndexPath.row)
     }
 
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool
     {
         // Selecton is disabled
         return false
@@ -171,7 +171,7 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
     */
     
     // MARK: UICollectionViewDelegateFlowLayout
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         let availableWidth = self.view.frame.size.width - sectionInsets.right - sectionInsets.left + colSpacing
         
@@ -190,7 +190,7 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
         
         var diverCount: Int
         
-        if let groupCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as? GroupCollectionViewCell
+        if let groupCell = self.collectionView!.cellForItem(at: indexPath) as? GroupCollectionViewCell
         {
             diverCount = groupCell.group.diverCount
         }
@@ -203,24 +203,24 @@ class DiveGroupsCollectionViewController: UICollectionViewController, UICollecti
     }
     
     //3
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
     {
             return sectionInsets
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
     {
         return rowSpacing;
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
     {
         return colSpacing
     }
     
     // MARK: Actions
-    @IBAction func cancelAction(sender: AnyObject)
+    @IBAction func cancelAction(_ sender: AnyObject)
     {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -23,13 +23,13 @@ class GroupTableTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
-    @IBAction func clickGuideButton(sender: AnyObject)
+    @IBAction func clickGuideButton(_ sender: AnyObject)
     {
         if (self.group.locked)
         {

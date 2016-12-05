@@ -17,7 +17,7 @@ class PickerViewHelper: AbstractPickerViewHelper, UIPickerViewDataSource, UIPick
     
     var pickerView = UIPickerView()
     
-    init(textField: UITextField, elements: [AnyObject], onSelection: ((selectedObject: AnyObject) -> Void)?)
+    init(textField: UITextField, elements: [AnyObject], onSelection: ((_ selectedObject: AnyObject) -> Void)?)
     {
         super.init(textField: textField)
         
@@ -32,23 +32,23 @@ class PickerViewHelper: AbstractPickerViewHelper, UIPickerViewDataSource, UIPick
     //MARK: - Delegates and data sources
     
     //MARK: Data Sources
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+    func numberOfComponents(in pickerView: UIPickerView) -> Int
     {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
         return elements.count
     }
     
     //MARK: Delegates
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
         return elements[row].description
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         selectedElement = row
     }

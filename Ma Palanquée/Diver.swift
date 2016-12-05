@@ -16,6 +16,8 @@ class Diver : NSObject
     var lastName: String
     var level: DiveLevel
     var trainingLevel: DiveLevel?
+    var mail: String?
+    var archived: Bool = false
     
     init(firstName: String, lastName: String, level: DiveLevel, trainingLevel: DiveLevel?)
     {
@@ -23,7 +25,7 @@ class Diver : NSObject
         self.lastName = lastName
         self.level = level
         self.trainingLevel = trainingLevel
-        self.id = NSUUID().UUIDString
+        self.id = UUID().uuidString
     }
     
     override var description: String

@@ -14,16 +14,16 @@ class Trip : NSObject
     var id: String
     var location: String
     var desc: String
-    var dateFrom: NSDate
-    var dateTo: NSDate
+    var dateFrom: Date
+    var dateTo: Date
     var tripType: TripType
     var divers: Set<String>
     var constraints: [Constraint]?
     var archived: Bool
     
-    private var dives: [String: Dive] = [String: Dive]()
+    fileprivate var dives: [String: Dive] = [String: Dive]()
     
-    init(location: String, desc: String, dateFrom: NSDate, dateTo: NSDate, tripType: TripType, divers: Set<String>, constraints: [Constraint]?)
+    init(location: String, desc: String, dateFrom: Date, dateTo: Date, tripType: TripType, divers: Set<String>, constraints: [Constraint]?)
     {
         self.location = location
         self.desc = desc
@@ -33,11 +33,11 @@ class Trip : NSObject
         self.divers = divers
         self.constraints = constraints
         
-        self.id = NSUUID().UUIDString
+        self.id = UUID().uuidString
         self.archived = false
     }
 
-    func update(location: String, desc: String, dateFrom: NSDate, dateTo: NSDate, tripType: TripType, divers: Set<String>, constraints: [Constraint]?)
+    func update(_ location: String, desc: String, dateFrom: Date, dateTo: Date, tripType: TripType, divers: Set<String>, constraints: [Constraint]?)
     {
         self.location = location
         self.desc = desc
@@ -53,17 +53,17 @@ class Trip : NSObject
         return Array(dives.values)
     }
         
-    func addDive(dive: Dive)
+    func addDive(_ dive: Dive)
     {
         dives[dive.id] = dive
     }
     
-    func removeDive(dive: Dive)
+    func removeDive(_ dive: Dive)
     {
         dives[dive.id] = nil
     }
     
-    func canRemoveDiver(diver: String) -> Bool
+    func canRemoveDiver(_ diver: String) -> Bool
     {
         if (dives.isEmpty)
         {
@@ -91,14 +91,14 @@ class Trip : NSObject
     }
     
     // Get the minimal
-    func getMaximalStartDate(currentDateTo: NSDate) -> NSDate?
+    func getMaximalStartDate(_ currentDateTo: Date) -> Date?
     {
         if (dives.isEmpty)
         {
             return currentDateTo
         }
         
-        var minimumDiveDate: NSDate? = nil
+        var minimumDiveDate: Date? = nil
             
         for (_, dive) in dives
         {
@@ -108,7 +108,7 @@ class Trip : NSObject
                 continue
             }
                 
-            if (NSCalendar.currentCalendar().compareDate(dive.date, toDate: minimumDiveDate!, toUnitGranularity: .Day) == NSComparisonResult.OrderedAscending)
+            if ((Calendar.current as NSCalendar).compare(dive.date, to: minimumDiveDate!, toUnitGranularity: .day) == ComparisonResult.orderedAscending)
             {
                 minimumDiveDate = dive.date
             }
@@ -117,14 +117,14 @@ class Trip : NSObject
         return minimumDiveDate
     }
     
-    func getMinimalEndDate(currentDateFrom: NSDate) -> NSDate?
+    func getMinimalEndDate(_ currentDateFrom: Date) -> Date?
     {
         if (dives.isEmpty)
         {
             return currentDateFrom
         }
         
-        var maximumDiveDate: NSDate? = nil
+        var maximumDiveDate: Date? = nil
         
         for (_, dive) in dives
         {
@@ -134,7 +134,7 @@ class Trip : NSObject
                 continue
             }
             
-            if (NSCalendar.currentCalendar().compareDate(maximumDiveDate!, toDate: dive.date, toUnitGranularity: .Day) == NSComparisonResult.OrderedAscending)
+            if ((Calendar.current as NSCalendar).compare(maximumDiveDate!, to: dive.date, toUnitGranularity: .day) == ComparisonResult.orderedAscending)
             {
                 maximumDiveDate = dive.date
             }

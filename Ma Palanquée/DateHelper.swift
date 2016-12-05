@@ -10,35 +10,35 @@ import Foundation
 
 class DateHelper
 {
-    class func dateFromString(date: String, fullStyle: Bool) -> NSDate?
+    class func dateFromString(_ date: String, fullStyle: Bool) -> Date?
     {
-        let formatter = NSDateFormatter()
-        formatter.locale = NSLocale.init(localeIdentifier:"fr")
-        formatter.dateStyle = fullStyle ? .FullStyle : .MediumStyle
-        formatter.timeStyle = .NoStyle
-        return formatter.dateFromString(date)
+        let formatter = DateFormatter()
+        formatter.locale = Locale.init(identifier:"fr")
+        formatter.dateStyle = fullStyle ? .full : .medium
+        formatter.timeStyle = .none
+        return formatter.date(from: date)
     }
     
-    class func stringFromDate(date: NSDate, fullStyle: Bool) -> String
+    class func stringFromDate(_ date: Date, fullStyle: Bool) -> String
     {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         
-        dateFormatter.locale = NSLocale.init(localeIdentifier:"fr")
+        dateFormatter.locale = Locale.init(identifier:"fr")
 
-        dateFormatter.dateStyle = fullStyle ? .FullStyle : .MediumStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        dateFormatter.dateStyle = fullStyle ? .full : .medium
+        dateFormatter.timeStyle = DateFormatter.Style.none
         
-        return dateFormatter.stringFromDate(date) ?? "??"
+        return dateFormatter.string(from: date)
     }
-    class func stringFromTime(date: NSDate) -> String
+    class func stringFromTime(_ date: Date) -> String
     {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         
-        dateFormatter.locale = NSLocale.init(localeIdentifier:"fr")
+        dateFormatter.locale = Locale.init(identifier:"fr")
 
-        dateFormatter.dateStyle = .NoStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = DateFormatter.Style.short
         
-        return dateFormatter.stringFromDate(date) ?? "??"
+        return dateFormatter.string(from: date)
     }
 }

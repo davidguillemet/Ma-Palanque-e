@@ -10,11 +10,11 @@ import UIKit
 
 class TripsTableViewController: SearchableTableViewController {
 
-    private enum TripScope: Int
+    fileprivate enum TripScope: Int
     {
-        case Pending = 0
-        case Archived = 1
-        case All = 2
+        case pending = 0
+        case archived = 1
+        case all = 2
     }
     
     var trips: [Trip]!
@@ -37,7 +37,7 @@ class TripsTableViewController: SearchableTableViewController {
         
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
-            menuButton.action = "revealToggle:"
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
@@ -64,7 +64,7 @@ class TripsTableViewController: SearchableTableViewController {
         self.tableView.reloadData()
     }
     
-    func getTrip(indexPath: NSIndexPath) -> Trip
+    func getTrip(_ indexPath: IndexPath) -> Trip
     {
         if (DisplaySearchResult())
         {
@@ -76,19 +76,19 @@ class TripsTableViewController: SearchableTableViewController {
         }
     }
     
-    func SetTripIconColor(iconLabel: UILabel, textColor: UIColor, bgColor: UIColor)
+    func SetTripIconColor(_ iconLabel: UILabel, textColor: UIColor, bgColor: UIColor)
     {
         iconLabel.textColor = textColor
-        iconLabel.layer.borderColor = textColor.CGColor
+        iconLabel.layer.borderColor = textColor.cgColor
         iconLabel.backgroundColor = bgColor
         iconLabel.clipsToBounds = true
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if (DisplaySearchResult())
         {
@@ -101,19 +101,19 @@ class TripsTableViewController: SearchableTableViewController {
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "TripTableViewCell"
 
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TripTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TripTableViewCell
 
         // Configure the cell...
         let trip: Trip = getTrip(indexPath)
         tripPosition[trip.id] = indexPath.row
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.locale = NSLocale.init(localeIdentifier:"fr")
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.init(identifier:"fr")
+        dateFormatter.dateStyle = DateFormatter.Style.medium
 
         IconHelper.SetCircledIcon(cell.tripIcon, icon: trip.tripType == TripType.exploration ? IconValue.IconPlane : IconValue.IconUniversity, fontSize: 18, center: true)
         
@@ -124,23 +124,23 @@ class TripsTableViewController: SearchableTableViewController {
         
         cell.tripNameLabel.text = trip.desc
         cell.tripDescLabel.text = trip.location
-        cell.tripDateLabel.text = dateFormatter.stringFromDate(trip.dateFrom)  + " au " + dateFormatter.stringFromDate(trip.dateTo)
+        cell.tripDateLabel.text = dateFormatter.string(from: trip.dateFrom)  + " au " + dateFormatter.string(from: trip.dateTo)
         
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
         return cell
     }
     
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         return 75
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
-        cell.separatorInset = UIEdgeInsetsZero
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
         cell.preservesSuperviewLayoutMargins = false
     }
 
@@ -154,12 +154,12 @@ class TripsTableViewController: SearchableTableViewController {
 
     
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
     {
 
     }
     
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
     {
         let trip: Trip = self.getTrip(indexPath)
         var actions = [UITableViewRowAction]()
@@ -168,23 +168,23 @@ class TripsTableViewController: SearchableTableViewController {
         {
             // You cannot edit an archived action
             // -> Custom action to "open" it again
-            let activateAction = UITableViewRowAction(style: .Default, title: "Activer", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            let activateAction = UITableViewRowAction(style: .default, title: "Activer", handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
                 self.tableView.beginUpdates()
                 
                 TripManager.ArchiveTrip(trip, archived: false)
                 self.loadTrips()
                 
                 // Delete the row from the data source
-                self.tableView.editing = false
-                if (self.TripScope != TripScope.All.rawValue)
+                self.tableView.isEditing = false
+                if (self.TripScope != TripScope.all.rawValue)
                 {
                     // remove item from list
-                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
                 }
                 else
                 {
                     // for the scope "All", we must refreah the item
-                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                    self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                 }
                 
                 self.tableView.endUpdates()
@@ -196,30 +196,30 @@ class TripsTableViewController: SearchableTableViewController {
         }
         else
         {
-            let archiveAction = UITableViewRowAction(style: .Default, title: "Archive", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            let archiveAction = UITableViewRowAction(style: .default, title: "Archive", handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
                 self.tableView.beginUpdates()
                 
                 TripManager.ArchiveTrip(trip, archived: true)
                 self.loadTrips()
                 // Delete the row from the data source
-                self.tableView.editing = false
-                if (self.TripScope != TripScope.All.rawValue)
+                self.tableView.isEditing = false
+                if (self.TripScope != TripScope.all.rawValue)
                 {
-                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
                 }
                 else
                 {
                     // for the scope "All", we must refreah the item
-                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                    self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                 }
                 
                 self.tableView.endUpdates()
             })
         
-            let editAction = UITableViewRowAction(style: .Default, title: "Edit", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            let editAction = UITableViewRowAction(style: .default, title: "Edit", handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
                 self.tableView.beginUpdates()
-                self.tableView.editing = false
-                self.performSegueWithIdentifier("EditTrip", sender: trip)
+                self.tableView.isEditing = false
+                self.performSegue(withIdentifier: "EditTrip", sender: trip)
                 self.tableView.endUpdates()
             })
             
@@ -230,7 +230,7 @@ class TripsTableViewController: SearchableTableViewController {
             actions.append(editAction)
         }
         
-        let deleteAction = UITableViewRowAction(style: .Default, title: "Delete", handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
             self.deleteTrip(action, indexPath: indexPath)
         })
         
@@ -242,7 +242,7 @@ class TripsTableViewController: SearchableTableViewController {
         return actions
     }
     
-    func deleteTrip(action:UITableViewRowAction!, indexPath:NSIndexPath!)
+    func deleteTrip(_ action:UITableViewRowAction!, indexPath:IndexPath!)
     {
         let trip2Delete: Trip = getTrip(indexPath)
         MessageHelper.confirmAction("Etes-vous sûr de vouloir supprimer la sortie '\(trip2Delete.desc)'", controller: self,
@@ -253,10 +253,10 @@ class TripsTableViewController: SearchableTableViewController {
             self.loadTrips()
             // Delete the row from the data source
             self.tableView.endEditing(true)
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
         },
         onCancel: {() -> Void in
-            self.tableView.editing = false
+            self.tableView.isEditing = false
         })
     }
     
@@ -277,13 +277,13 @@ class TripsTableViewController: SearchableTableViewController {
 
     // MARK: Actions
     
-    private func refreshAll()
+    fileprivate func refreshAll()
     {
         loadTrips()
         reloadDataTable()
     }
     
-    private var TripScope: Int
+    fileprivate var TripScope: Int
     {
         get
         {
@@ -291,17 +291,17 @@ class TripsTableViewController: SearchableTableViewController {
         }
     }
     
-    private func loadTrips()
+    fileprivate func loadTrips()
     {
         self.trips = TripManager.GetTrips()
         
         switch self.TripScope
         {
-        case TripScope.Pending.rawValue: // pending = non archived
+        case TripScope.pending.rawValue: // pending = non archived
             self.trips = self.trips.filter({ (t: Trip) -> Bool in
                 return !t.archived
             })
-        case TripScope.Archived.rawValue: // archived
+        case TripScope.archived.rawValue: // archived
             self.trips = self.trips.filter({ (t: Trip) -> Bool in
                 return t.archived
             })
@@ -310,7 +310,7 @@ class TripsTableViewController: SearchableTableViewController {
         }
     }
     
-    @IBAction func tripScopeChanged(sender: UISegmentedControl)
+    @IBAction func tripScopeChanged(_ sender: UISegmentedControl)
     {
         refreshAll()
     }
@@ -318,9 +318,9 @@ class TripsTableViewController: SearchableTableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        let targetNavController = segue.destinationViewController as? UINavigationController
+        let targetNavController = segue.destination as? UINavigationController
 
         if (segue.identifier == "DiveList")
         {
@@ -328,7 +328,7 @@ class TripsTableViewController: SearchableTableViewController {
             let selectedTripCell = sender as? TripTableViewCell
             if (selectedTripCell != nil)
             {
-                let indexPath = tableView.indexPathForCell(selectedTripCell!)!
+                let indexPath = tableView.indexPath(for: selectedTripCell!)!
                 let trip: Trip = getTrip(indexPath)
                 targetController?.trip = trip
             }
@@ -344,9 +344,9 @@ class TripsTableViewController: SearchableTableViewController {
         }
     }
     
-    @IBAction func unwindToTripList(sender: UIStoryboardSegue)
+    @IBAction func unwindToTripList(_ sender: UIStoryboardSegue)
     {
-        let sourceController = sender.sourceViewController as? NewTripViewController
+        let sourceController = sender.source as? NewTripViewController
         if (sourceController == nil)
         {
             return
@@ -369,13 +369,13 @@ class TripsTableViewController: SearchableTableViewController {
     
     //MARK: Search
     
-    override func InternalProcessFilter(searchController: UISearchController)
+    override func InternalProcessFilter(_ searchController: UISearchController)
     {
-        filteredTrips.removeAll(keepCapacity: false)
+        filteredTrips.removeAll(keepingCapacity: false)
         
         let searchPredicate = NSPredicate(format: "location CONTAINS[c] %@ OR desc CONTAINS[c] %@", searchController.searchBar.text!, searchController.searchBar.text!)
         
-        let array = (trips as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        let array = (trips as NSArray).filtered(using: searchPredicate)
         
         filteredTrips = array as! [Trip]
     }

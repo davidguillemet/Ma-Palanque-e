@@ -10,7 +10,7 @@ import Foundation
 
 class Group
 {
-    private var divers: [String]?
+    fileprivate var divers: [String]?
     
     var guide: String?
     var locked: Bool
@@ -22,7 +22,7 @@ class Group
         self.divers = divers
         self.guide = guide
         self.locked = false
-        self.id = NSUUID().UUIDString
+        self.id = UUID().uuidString
     }
     
     init(group: Group)
@@ -30,10 +30,10 @@ class Group
         self.divers = group.divers
         self.guide = group.guide
         self.locked = group.locked
-        self.id = NSUUID().UUIDString
+        self.id = UUID().uuidString
     }
     
-    func addDiver(diver: String)
+    func addDiver(_ diver: String)
     {
         if (divers == nil)
         {
@@ -46,7 +46,7 @@ class Group
         divers!.append(diver)
     }
     
-    func insertDiver(diver: String, atIndex: Int)
+    func insertDiver(_ diver: String, atIndex: Int)
     {
         if (divers == nil)
         {
@@ -58,10 +58,10 @@ class Group
         }
         if (atIndex <= divers!.count)
         {
-            divers!.insert(diver, atIndex: atIndex)
+            divers!.insert(diver, at: atIndex)
         }
     }
-    func moveDiver(fromIndex: Int, toIndex: Int) throws
+    func moveDiver(_ fromIndex: Int, toIndex: Int) throws
     {
         if (self.divers == nil)
         {
@@ -70,12 +70,12 @@ class Group
         
         if (fromIndex < 0 || fromIndex > self.divers!.count)
         {
-            throw ErrorHelper.InvalidDiverIndex(index: fromIndex)
+            throw ErrorHelper.invalidDiverIndex(index: fromIndex)
         }
         
         if (toIndex < 0 || toIndex > self.divers!.count)
         {
-            throw ErrorHelper.InvalidDiverIndex(index: toIndex)
+            throw ErrorHelper.invalidDiverIndex(index: toIndex)
         }
         
         let diver = self.divers![fromIndex]
@@ -83,18 +83,18 @@ class Group
         // if fromIndex < toIndex, first add toIndex and then remove fromIndex
         if (fromIndex < toIndex)
         {
-            self.divers!.insert(diver, atIndex: toIndex)
-            self.divers!.removeAtIndex(fromIndex)
+            self.divers!.insert(diver, at: toIndex)
+            self.divers!.remove(at: fromIndex)
         }
         // if fromIndex > toIndex, first remove fromIndex and then add toIndex
         else
         {
-            self.divers!.removeAtIndex(fromIndex)
-            self.divers!.insert(diver, atIndex: toIndex)
+            self.divers!.remove(at: fromIndex)
+            self.divers!.insert(diver, at: toIndex)
         }
     }
     
-    func containsDiver(diver: String) -> Bool
+    func containsDiver(_ diver: String) -> Bool
     {
         return self.divers == nil ? false : self.divers!.contains(diver)
     }
@@ -102,7 +102,7 @@ class Group
     // Set the guide, which MUST be part of the group divers
     // 1. addDiver (d1)
     // 2. setGuide (d1)
-    func setGuide(guide: String?) throws
+    func setGuide(_ guide: String?) throws
     {
         self.guide = guide
 
@@ -111,12 +111,12 @@ class Group
             // Check the guide is part of the divers
             if (self.divers == nil || !self.divers!.contains(guide!))
             {
-                throw ErrorHelper.InvalidGuide(guide: guide!)
+                throw ErrorHelper.invalidGuide(guide: guide!)
             }
         }
     }
     
-    func removeDiverAt(atIndex: Int)
+    func removeDiverAt(_ atIndex: Int)
     {
         if (divers == nil || atIndex > divers!.count || atIndex < 0)
         {
@@ -131,10 +131,10 @@ class Group
             self.guide = nil
         }
         
-        self.divers!.removeAtIndex(atIndex)
+        self.divers!.remove(at: atIndex)
     }
     
-    func removeDiver(diverToRemove: String)
+    func removeDiver(_ diverToRemove: String)
     {
         if (divers == nil)
         {
@@ -143,7 +143,7 @@ class Group
         
         // search for diver index
         var indexToRemove: Int = -1
-        for (var index = 0; index < divers!.count; index++)
+        for index in (0 ..< divers!.count)
         {
             let diver = divers![index]
             if (diver == diverToRemove)
@@ -160,7 +160,7 @@ class Group
         
         if (indexToRemove >= 0)
         {
-            divers!.removeAtIndex(indexToRemove)
+            divers!.remove(at: indexToRemove)
         }
     }
     
@@ -172,11 +172,11 @@ class Group
         }
     }
     
-    func diverAt(atIndex: Int) throws -> String
+    func diverAt(_ atIndex: Int) throws -> String
     {
         if (self.divers == nil || atIndex < 0 || atIndex > self.divers!.count)
         {
-            throw ErrorHelper.InvalidDiverIndex(index: atIndex)
+            throw ErrorHelper.invalidDiverIndex(index: atIndex)
         }
         
         return self.divers![atIndex]

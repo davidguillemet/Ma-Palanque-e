@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class PopDatePicker : NSObject, UIPopoverPresentationControllerDelegate, DataPickerViewControllerDelegate {
+open class PopDatePicker : NSObject, UIPopoverPresentationControllerDelegate, DataPickerViewControllerDelegate {
     
-    public typealias PopDatePickerCallback = (newDate : NSDate, forTextField : UITextField)->()
+    public typealias PopDatePickerCallback = (_ newDate : Date, _ forTextField : UITextField)->()
     
     var datePickerVC : PopDateViewController
     var popover : UIPopoverPresentationController?
@@ -26,41 +26,41 @@ public class PopDatePicker : NSObject, UIPopoverPresentationControllerDelegate, 
         super.init()
     }
     
-    public func pick(inViewController : UIViewController, initDate : NSDate?, dataChanged : PopDatePickerCallback) {
+    open func pick(_ inViewController : UIViewController, initDate : Date?, dataChanged : @escaping PopDatePickerCallback) {
         
         if presented {
             return  // we are busy
         }
         
         datePickerVC.delegate = self
-        datePickerVC.modalPresentationStyle = UIModalPresentationStyle.Popover
-        datePickerVC.preferredContentSize = CGSizeMake(600,200)
+        datePickerVC.modalPresentationStyle = UIModalPresentationStyle.popover
+        datePickerVC.preferredContentSize = CGSize(width: 600,height: 200)
         datePickerVC.currentDate = initDate
         
         popover = datePickerVC.popoverPresentationController
         if let _popover = popover {
             
             _popover.sourceView = textField
-            _popover.sourceRect = CGRectMake(self.offset,textField.bounds.size.height,0,0)
+            _popover.sourceRect = CGRect(x: self.offset,y: textField.bounds.size.height,width: 0,height: 0)
             _popover.delegate = self
             self.dataChanged = dataChanged
-            inViewController.presentViewController(datePickerVC, animated: true, completion: nil)
+            inViewController.present(datePickerVC, animated: true, completion: nil)
             presented = true
         }
     }
     
-    public func adaptivePresentationStyleForPresentationController(PC: UIPresentationController) -> UIModalPresentationStyle {
+    open func adaptivePresentationStyle(for PC: UIPresentationController) -> UIModalPresentationStyle {
         
-        return .None
+        return .none
     }
     
-    func datePickerVCDismissed(date : NSDate?) {
+    func datePickerVCDismissed(_ date : Date?) {
         
         if let _dataChanged = dataChanged {
             
             if let _date = date {
                 
-                _dataChanged(newDate: _date, forTextField: textField)
+                _dataChanged(_date, textField)
                 
             }
         }

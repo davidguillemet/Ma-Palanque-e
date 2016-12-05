@@ -10,22 +10,22 @@ import Foundation
 
 class MessageHelper
 {
-    class func displayError(msg: String, controller: UIViewController)
+    class func displayError(_ msg: String, controller: UIViewController)
     {
-        let alert:UIAlertController = UIAlertController(title: "Oops...", message: msg, preferredStyle:.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in }))
-        controller.presentViewController(alert, animated:true, completion:nil);
+        let alert:UIAlertController = UIAlertController(title: "Oops...", message: msg, preferredStyle:.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in }))
+        controller.present(alert, animated:true, completion:nil);
     }
     
-    class func confirmAction(msg: String, controller: UIViewController, onOk: ((Void) -> Void), onCancel: ((Void) -> Void)?)
+    class func confirmAction(_ msg: String, controller: UIViewController, onOk: @escaping ((Void) -> Void), onCancel: ((Void) -> Void)?)
     {
-        let alert:UIAlertController = UIAlertController(title: "", message: msg, preferredStyle:.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in
+        let alert:UIAlertController = UIAlertController(title: "", message: msg, preferredStyle:.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
             onOk()
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
             onCancel?()
         }))
-        controller.presentViewController(alert, animated:true, completion: nil);
+        controller.present(alert, animated:true, completion: nil);
     }
 }

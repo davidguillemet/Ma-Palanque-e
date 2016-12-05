@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum ErrorHelper : ErrorType
+enum ErrorHelper : Error
 {
-    case InvalidGuide(guide: String)
-    case InvalidDiverIndex(index: Int)
+    case invalidGuide(guide: String)
+    case invalidDiverIndex(index: Int)
 }

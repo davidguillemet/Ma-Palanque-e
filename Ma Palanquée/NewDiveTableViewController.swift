@@ -17,8 +17,8 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
     var initialDive: Dive?
     var newdive: Dive?
     
-    var diveDate: NSDate?
-    var diveTime: NSDate?
+    var diveDate: Date?
+    var diveTime: Date?
     var diveDirector: Diver?
     var excludedDivers: Set<String> = Set<String>()
     var groups: [Group]?
@@ -41,10 +41,10 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         super.viewDidLoad()
 
         self.tableView.tableFooterView = UIView()
-        diveSiteTextfield.borderStyle = .None
-        diveDateTextField.borderStyle = .None
-        diveDirectorTextField.borderStyle = .None
-        diveTimeTextField.borderStyle = .None
+        diveSiteTextfield.borderStyle = .none
+        diveDateTextField.borderStyle = .none
+        diveDirectorTextField.borderStyle = .none
+        diveTimeTextField.borderStyle = .none
         
         diveSiteTextfield.delegate = self
         diveDateTextField.delegate = self
@@ -95,25 +95,25 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
     
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    override func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return 6
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
         return self.trip.desc
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView
         {
-            headerView.textLabel?.textAlignment = .Center
+            headerView.textLabel?.textAlignment = .center
         }
     }
     /*
@@ -165,7 +165,7 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
     {
         diveDiversLabel.text = "\(trip.divers.count - self.excludedDivers.count) Plongeur(s)"
         
-        excludedDiversButton.setTitle("\(self.excludedDivers.count) Plongeur(s) au repos", forState: .Normal)
+        excludedDiversButton.setTitle("\(self.excludedDivers.count) Plongeur(s) au repos", for: UIControlState())
         excludedDiversButton.sizeToFit()
     }
 
@@ -215,9 +215,9 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
 
     // MARK: - Navigation
 
-    @IBAction func unwindToNewDive(sender: UIStoryboardSegue)
+    @IBAction func unwindToNewDive(_ sender: UIStoryboardSegue)
     {
-        let diversController = sender.sourceViewController as? DiversTableViewController
+        let diversController = sender.source as? DiversTableViewController
         if (diversController != nil)
         {
             self.excludedDivers = (diversController?.selection)!
@@ -225,7 +225,7 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         }
     }
 
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool
     {
         if (identifier == "UnwindToDiveList")
         {
@@ -240,9 +240,9 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        let targetNavController = segue.destinationViewController as? UINavigationController
+        let targetNavController = segue.destination as? UINavigationController
         
         if (segue.identifier == "ExcludedDivers" ||
             segue.identifier == "ExcludedDiversFromRow")
@@ -256,7 +256,7 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             {
                 for group in self.initialDive!.groups!
                 {
-                    for (var index = 0; index < group.diverCount; index++)
+                    for index in (0 ..< group.diverCount)
                     {
                         usedDivers.insert(try! group.diverAt(index))
                     }
@@ -291,7 +291,7 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
     
     // MARK: Actions
     
-    func textFieldShouldClear(textField: UITextField) -> Bool
+    func textFieldShouldClear(_ textField: UITextField) -> Bool
     {
         textField.text = ""
         if (textField === diveDirectorTextField)
@@ -305,7 +305,7 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         return false
     }
 
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
     {
         if (textField === diveDirectorTextField)
         {
@@ -314,14 +314,14 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             for id in self.trip.divers
             {
                 let diver = DiverManager.GetDiver(id)
-                if (diver.level.rawValue >= DiveLevel.E3.rawValue || diver.trainingLevel?.rawValue == DiveLevel.E3.rawValue)
+                if (diver.level.rawValue >= DiveLevel.e3.rawValue || diver.trainingLevel?.rawValue == DiveLevel.e3.rawValue)
                 {
                     possibleDirectors.append(diver)
                 }
             }
             
             // Sort possible directors
-            possibleDirectors = possibleDirectors.sort({ (d1: Diver, d2: Diver) -> Bool in
+            possibleDirectors = possibleDirectors.sorted(by: { (d1: Diver, d2: Diver) -> Bool in
                 return d1.lastName < d2.lastName
             })
             
@@ -331,14 +331,14 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         }
         else if (textField === diveDateTextField)
         {
-            datePickerHelper = DatePickerViewHelper(textField: diveDateTextField, initialDate: self.diveDate ?? trip.dateFrom , minimumDate: trip.dateFrom, maximumDate: trip.dateTo, pickerMode: UIDatePickerMode.Date, validationDelegate: { (newDate: NSDate, forTextField: UITextField) -> Bool in
+            datePickerHelper = DatePickerViewHelper(textField: diveDateTextField, initialDate: self.diveDate ?? trip.dateFrom , minimumDate: trip.dateFrom, maximumDate: trip.dateTo, pickerMode: UIDatePickerMode.date, validationDelegate: { (newDate: Date, forTextField: UITextField) -> Bool in
                 self.diveDate = newDate;
                 return true
             })
         }
         else if (textField === diveTimeTextField)
         {
-            timePickerHelper = DatePickerViewHelper(textField: diveTimeTextField, initialDate: self.diveTime, minimumDate: nil, maximumDate: nil, pickerMode: UIDatePickerMode.Time, validationDelegate: { (newDate: NSDate, forTextField: UITextField) -> Bool in
+            timePickerHelper = DatePickerViewHelper(textField: diveTimeTextField, initialDate: self.diveTime, minimumDate: nil, maximumDate: nil, pickerMode: UIDatePickerMode.time, validationDelegate: { (newDate: Date, forTextField: UITextField) -> Bool in
                 self.diveTime = newDate;
                 return true
             })
@@ -347,16 +347,16 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         return true
     }
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         self.diveSiteTextfield.resignFirstResponder()
         self.view.endEditing(true)
         return false
     }
     
-    @IBAction func cancelAction(sender: AnyObject)
+    @IBAction func cancelAction(_ sender: AnyObject)
     {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
 }

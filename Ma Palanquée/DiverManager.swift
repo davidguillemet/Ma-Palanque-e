@@ -10,25 +10,25 @@ import Foundation
 
 class DiverManager
 {
-    private struct Instance
+    fileprivate struct Instance
     {
         static var dico: [String: Diver] = [String: Diver]()
         static var loaded = DiverManager.LoadDivers()
     }
     
-    class func AddDiver(newDiver: Diver)
+    class func AddDiver(_ newDiver: Diver)
     {
         Instance.dico[newDiver.id] = newDiver
         Persist()
     }
     
-    class func RemoveDiver(diver2Remove: Diver)
+    class func RemoveDiver(_ diver2Remove: Diver)
     {
         Instance.dico[diver2Remove.id] = nil
         Persist()
     }
     
-    class func GetDiver(id: String) -> Diver
+    class func GetDiver(_ id: String) -> Diver
     {
         return Instance.dico[id]!
     }
@@ -40,7 +40,7 @@ class DiverManager
         return Array(Instance.dico.values)
     }
     
-    class func GetSortedDivers(divers: Set<String>?) -> [Diver]
+    class func GetSortedDivers(_ divers: Set<String>?) -> [Diver]
     {
         var sortedDivers = [Diver]()
         
@@ -55,18 +55,19 @@ class DiverManager
         }
         
         // Sort in alphabetical order
-        sortedDivers = sortedDivers.sort({ (d1: Diver, d2: Diver) -> Bool in
+        sortedDivers = sortedDivers.sorted(by: { (d1: Diver, d2: Diver) -> Bool in
             return d1.lastName < d2.lastName
         })
         
         return sortedDivers
     }
     
-    class func GenerateGroupsFromDivers(divers: [Diver]) -> [Group]
+    class func GenerateGroupsFromDivers(_ divers: [Diver]) -> [Group]
     {
         var groups = [Group]()
         
-        for (var index = 0; index < divers.count; /* Nothing */)
+        var index = 0;
+        while index < divers.count
         {
             if (index == divers.count - 1 && groups.count > 0)
             {
@@ -81,77 +82,77 @@ class DiverManager
             
             if (index < divers.count - 1)
             {
-                index++
+                index += 1
                 newGroup.addDiver(divers[index].id)
             }
             
-            index++
+            index += 1
         }
         
         return groups
     }
     
-    private class func LoadDivers() -> Bool
+    fileprivate class func LoadDivers() -> Bool
     {
-        var diver = Diver(firstName:"Stéphane", lastName:"Desjardins", level:DiveLevel.E4, trainingLevel:nil)
+        var diver = Diver(firstName:"Stéphane", lastName:"Desjardins", level:DiveLevel.e4, trainingLevel:nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName:"David", lastName:"Guillemet", level:DiveLevel.E2, trainingLevel:nil)
+        diver = Diver(firstName:"David", lastName:"Guillemet", level:DiveLevel.e2, trainingLevel:nil)
         Instance.dico[diver.id] = diver
 
-        diver = Diver(firstName:"Isabelle", lastName:"Baudouin", level:DiveLevel.E2, trainingLevel:DiveLevel.E3)
+        diver = Diver(firstName:"Isabelle", lastName:"Baudouin", level:DiveLevel.e2, trainingLevel:DiveLevel.e3)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName:"Hélène", lastName:"Som", level:DiveLevel.E2, trainingLevel:DiveLevel.E3)
+        diver = Diver(firstName:"Hélène", lastName:"Som", level:DiveLevel.e2, trainingLevel:DiveLevel.e3)
         Instance.dico[diver.id] = diver
 
-        diver = Diver(firstName:"Gilles", lastName:"Serafino", level:DiveLevel.E3, trainingLevel:nil)
+        diver = Diver(firstName:"Gilles", lastName:"Serafino", level:DiveLevel.e3, trainingLevel:nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName:"Caroline", lastName:"Lesavre", level:DiveLevel.E4, trainingLevel:nil)
+        diver = Diver(firstName:"Caroline", lastName:"Lesavre", level:DiveLevel.e4, trainingLevel:nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName:"Bruno", lastName:"Merindol", level:DiveLevel.N4, trainingLevel:nil)
+        diver = Diver(firstName:"Bruno", lastName:"Merindol", level:DiveLevel.n4, trainingLevel:nil)
         Instance.dico[diver.id] = diver
 
-        diver = Diver(firstName:"Stéphane", lastName:"Massot", level:DiveLevel.E2, trainingLevel:nil)
+        diver = Diver(firstName:"Stéphane", lastName:"Massot", level:DiveLevel.e2, trainingLevel:nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Hélène", lastName: "Brière", level: DiveLevel.N1, trainingLevel: DiveLevel.N2)
+        diver = Diver(firstName: "Hélène", lastName: "Brière", level: DiveLevel.n1, trainingLevel: DiveLevel.n2)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Mathieu", lastName: "De Seauve", level: DiveLevel.N3, trainingLevel: nil)
+        diver = Diver(firstName: "Mathieu", lastName: "De Seauve", level: DiveLevel.n3, trainingLevel: nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Olivier", lastName: "Deneux", level: DiveLevel.N3, trainingLevel: nil)
+        diver = Diver(firstName: "Olivier", lastName: "Deneux", level: DiveLevel.n3, trainingLevel: nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Caecilia", lastName: "Dijoux", level: DiveLevel.N2, trainingLevel: nil)
+        diver = Diver(firstName: "Caecilia", lastName: "Dijoux", level: DiveLevel.n2, trainingLevel: nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Cecile", lastName: "Farineau", level: DiveLevel.N2, trainingLevel: nil)
+        diver = Diver(firstName: "Cecile", lastName: "Farineau", level: DiveLevel.n2, trainingLevel: nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Laurence", lastName: "Haeusler", level: DiveLevel.E2, trainingLevel: nil)
+        diver = Diver(firstName: "Laurence", lastName: "Haeusler", level: DiveLevel.e2, trainingLevel: nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Olivier", lastName: "Lanneluc", level: DiveLevel.N4, trainingLevel: nil)
+        diver = Diver(firstName: "Olivier", lastName: "Lanneluc", level: DiveLevel.n4, trainingLevel: nil)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Alexandre", lastName: "Merah", level: DiveLevel.N2, trainingLevel: DiveLevel.N3)
+        diver = Diver(firstName: "Alexandre", lastName: "Merah", level: DiveLevel.n2, trainingLevel: DiveLevel.n3)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Véronique", lastName: "Pilch", level: DiveLevel.N1, trainingLevel: DiveLevel.N2)
+        diver = Diver(firstName: "Véronique", lastName: "Pilch", level: DiveLevel.n1, trainingLevel: DiveLevel.n2)
         Instance.dico[diver.id] = diver
         
-        diver = Diver(firstName: "Isabelle", lastName: "Philavong", level: DiveLevel.N1, trainingLevel: DiveLevel.N2)
+        diver = Diver(firstName: "Isabelle", lastName: "Philavong", level: DiveLevel.n1, trainingLevel: DiveLevel.n2)
         Instance.dico[diver.id] = diver
 
         return true
     }
     
     
-    private class func Persist()
+    fileprivate class func Persist()
     {
         // TODO
     }

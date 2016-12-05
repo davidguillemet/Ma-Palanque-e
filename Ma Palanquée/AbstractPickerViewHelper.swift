@@ -22,17 +22,17 @@ class AbstractPickerViewHelper: NSObject
         self.textField = textField
         
         let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
-        toolBar.translucent = true
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Terminé", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Annuler", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelPicker")
+        let doneButton = UIBarButtonItem(title: "Terminé", style: UIBarButtonItemStyle.plain, target: self, action: Selector("donePicker"))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Annuler", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AbstractPickerViewHelper.cancelPicker))
         
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.userInteractionEnabled = true
+        toolBar.isUserInteractionEnabled = true
         textField.inputAccessoryView = toolBar
     }
         

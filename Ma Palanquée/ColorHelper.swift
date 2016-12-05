@@ -32,5 +32,5 @@ class ColorHelper
     static let ForbiddenIconBackground = UIColor ( red: 0.9955, green: 0.9018, blue: 0.8438, alpha: 1.0 )
     static let ForbiddenIcon = UIColor ( red: 0.9828, green: 0.4486, blue: 0.0, alpha: 1.0 )
     
-    static let InsertionIndicator = UIColor.blackColor()
+    static let InsertionIndicator = UIColor.black
 }

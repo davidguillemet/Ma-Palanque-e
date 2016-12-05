@@ -10,31 +10,31 @@ import Foundation
 
 enum DiveLevel : Int
 {
-    case    N0      = 0,
-            N1      = 1,
-            PA20    = 2,
-            N2      = 3,
-            PE40    = 4,
-            N3      = 5,
-            N4      = 6,
-            E2      = 7,
-            E3      = 8,
-            E4      = 9
+    case    n0      = 0,
+            n1      = 1,
+            pa20    = 2,
+            n2      = 3,
+            pe40    = 4,
+            n3      = 5,
+            n4      = 6,
+            e2      = 7,
+            e3      = 8,
+            e4      = 9
     
     var stringValue : String
     {
         switch self {
                 // Use Internationalization, as appropriate.
-            case .N0: return "N0";
-            case .N1: return "N1";
-            case .PA20: return "PA20";
-            case .N2: return "N2";
-            case .PE40: return "PE40";
-            case .N3: return "N3";
-            case .N4: return "N4";
-            case .E2: return "E2";
-            case .E3: return "E3";
-            case .E4: return "E4";
+            case .n0: return "N0";
+            case .n1: return "N1";
+            case .pa20: return "PA20";
+            case .n2: return "N2";
+            case .pe40: return "PE40";
+            case .n3: return "N3";
+            case .n4: return "N4";
+            case .e2: return "E2";
+            case .e3: return "E3";
+            case .e4: return "E4";
         }
     }
 }
