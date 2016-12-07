@@ -40,7 +40,8 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.tableFooterView = UIView()
+        TableViewHelper.ConfigureTable(tableView: self.tableView)
+        
         diveSiteTextfield.borderStyle = .none
         diveDateTextField.borderStyle = .none
         diveDirectorTextField.borderStyle = .none
@@ -110,12 +111,25 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         return self.trip.desc
     }
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        return 60
+    }
+    
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView
         {
             headerView.textLabel?.textAlignment = .center
         }
     }
+
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
+        cell.preservesSuperviewLayoutMargins = false
+    }
+    
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
@@ -249,32 +263,8 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         {
             let targetController = targetNavController?.topViewController as? DiversTableViewController
             targetController?.selection = excludedDivers
-            
-            // Get the list of divers from the group list
-            var usedDivers: Set<String> = Set<String>()
-            if (self.initialDive != nil && self.initialDive!.groups != nil && self.initialDive!.groups!.count > 0)
-            {
-                for group in self.initialDive!.groups!
-                {
-                    for index in (0 ..< group.diverCount)
-                    {
-                        usedDivers.insert(try! group.diverAt(index))
-                    }
-                }
-            }
-            
-            // build a diver list from the current trip
-            var tripDivers: [Diver] = [Diver]()
-            for diver in trip.divers
-            {
-                if (usedDivers.contains(diver))
-                {
-                    continue
-                }
-                tripDivers.append(DiverManager.GetDiver(diver))
-            }
-            
-            targetController?.initialDivers = tripDivers
+            targetController?.dive = initialDive
+            targetController?.initialDivers = trip.divers.map{ (diverId: String) -> Diver in return DiverManager.GetDiver(diverId) }
             targetController?.selectionType = "DiveExcludedDivers"
         }
         else if (segue.identifier == "ShowDiveGroups")

@@ -40,6 +40,8 @@ class TripsTableViewController: SearchableTableViewController {
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        
+        TableViewHelper.ConfigureTable(tableView: tripsTable)
 
         // Reload the table
         reloadDataTable()

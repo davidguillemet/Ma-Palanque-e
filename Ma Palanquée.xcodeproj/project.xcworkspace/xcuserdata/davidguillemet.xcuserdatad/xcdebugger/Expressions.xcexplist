@@ -3,7 +3,12 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "Group.moveDiver(Int, toIndex : Int) throws -&gt; ():Group.swift">
+         contextName = "DivesTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DivesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.sections[orderedSections[section]]!.count">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "NewDiveTableViewController.validateDive() -&gt; Bool:NewDiveTableViewController.swift">
@@ -67,19 +72,30 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "DiversTableViewController.GetDiversFromScope(Bool, loading : Bool) -&gt; ():DiversTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.orderedSections">
+            </PersistentString>
+            <PersistentString
+               value = "self.diverSections">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "GroupCollectionViewCell.(tableView(GroupCollectionViewCell) -&gt; (UITableView, editActionsForRowAtIndexPath : NSIndexPath) -&gt; [UITableViewRowAction]?).(closure #1):GroupCollectionViewCell.swift">
       </ContextState>
       <ContextState
          contextName = "DivesTableViewController.reloadDataTable() -&gt; ():DivesTableViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "trip.dives">
+               value = "sections[diveDate]">
             </PersistentString>
             <PersistentString
                value = "self.sections.keys">
             </PersistentString>
             <PersistentString
-               value = "sections[diveDate]">
+               value = "trip.dives">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -152,10 +168,10 @@
          contextName = "DivesTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:DivesTableViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "cell.diveSiteTextField.text">
+               value = "cell.diveTimeTextField.text">
             </PersistentString>
             <PersistentString
-               value = "cell.diveTimeTextField.text">
+               value = "cell.diveSiteTextField.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -220,10 +236,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "NewTripViewController.textFieldShouldEndEditing(UITextField) -&gt; Bool:NewTripViewController.swift">
+         contextName = "NewDiveTableViewController.pickerView(UIPickerView, didSelectRow : Int, inComponent : Int) -&gt; ():NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "NewDiveTableViewController.pickerView(UIPickerView, didSelectRow : Int, inComponent : Int) -&gt; ():NewDiveTableViewController.swift">
+         contextName = "NewTripViewController.textFieldShouldEndEditing(UITextField) -&gt; Bool:NewTripViewController.swift">
       </ContextState>
       <ContextState
          contextName = "GroupCollectionViewCell.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:GroupCollectionViewCell.swift">
@@ -235,12 +251,7 @@
          contextName = "NewDiveTableViewController.viewDidLoad() -&gt; ():NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "DivesTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DivesTableViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.sections[orderedSections[section]]!.count">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "Group.moveDiver(Int, toIndex : Int) throws -&gt; ():Group.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

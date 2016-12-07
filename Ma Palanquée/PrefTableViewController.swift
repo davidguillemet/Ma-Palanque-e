@@ -8,9 +8,15 @@
 
 import UIKit
 
-class PrefTableViewController: UITableViewController {
+class PrefTableViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var menuButton: UIBarButtonItem!
+    
+    @IBOutlet weak var nameDisplayTextField: UITextField!
+    
+    var pickerHelper: PickerViewHelper!
+    
+    @IBOutlet var prefTreeView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +26,13 @@ class PrefTableViewController: UITableViewController {
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        
+        TableViewHelper.ConfigureTable(tableView: prefTreeView)
+        prefTreeView.allowsSelection = false
+        
+        nameDisplayTextField.delegate = self
+
+        nameDisplayTextField.text = PreferencesHelper.NameDisplayOption.description
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -37,59 +50,47 @@ class PrefTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 2
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
+        cell.preservesSuperviewLayoutMargins = false
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+
+    // MARK: Actions
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
+    {
+        if (textField === self.nameDisplayTextField)
+        {
+            // Get possible dive directors from level >= E3 or training level is E3
+            let possibleOptions: [NameDisplay] = [NameDisplay.FirstNameLastName, NameDisplay.LastNameFirstName, NameDisplay.LastNameOnly]
+            
+            pickerHelper = PickerViewHelper(textField: nameDisplayTextField, elements: possibleOptions as [AnyObject], onSelection: { (selection: AnyObject) -> Void in
+                PreferencesHelper.NameDisplayOption = selection as! NameDisplay
+            })
+        }
+        
         return true
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        self.nameDisplayTextField.resignFirstResponder()
+        self.view.endEditing(true)
+        return false
     }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+    
     /*
     // MARK: - Navigation
 

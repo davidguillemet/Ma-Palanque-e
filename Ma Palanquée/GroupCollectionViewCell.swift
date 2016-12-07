@@ -366,7 +366,20 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
     
     func diverLabel(_ diver: Diver) -> String
     {
-        return "\(diver.firstName) \(diver.lastName)"
+        let displayOpt: NameDisplay = PreferencesHelper.NameDisplayOption
+        
+        if displayOpt === NameDisplay.FirstNameLastName
+        {
+            return "\(diver.firstName) \(diver.lastName)"
+        }
+        else if displayOpt === NameDisplay.LastNameFirstName
+        {
+            return "\(diver.lastName) \(diver.firstName)"
+        }
+        else
+        {
+            return diver.lastName
+        }
     }
     
     // MARK: UITableViewDataSource
@@ -474,16 +487,10 @@ class GroupCollectionViewCell: UICollectionViewCell, UITableViewDataSource, UITa
         cell.diverId = diver.id
         cell.collectionItem = self
         
-        cell.diverLabel.text = diverLabel(diver)
+        cell.diverLabel.attributedText = UIHelper.GetDiverNameAttributedString(forDiver: diver)
         
-        cell.diverLevel.adjustsFontSizeToFitWidth = true
-        cell.diverLevel.text = diver.level.stringValue
-        
-        let colors = PreferencesHelper.GetDiveLevelColors(diver.level)
-        cell.diverLevel.backgroundColor = colors.color
-        cell.diverLevel.textColor = colors.reversedColor
-        cell.diverLevel.layer.cornerRadius = cell.diverLevel.layer.frame.width / 2
-        cell.diverLevel.clipsToBounds = true
+        // Write the Diver Level as circled button witht colors from preferences
+        IconHelper.WriteDiveLevel(cell.diverLevel, diver.level)
         
         IconHelper.SetButtonIcon(cell.guideButton, icon: IconValue.IconRibbon, fontSize: 18, center: true)
         cell.guideButton.layer.cornerRadius = 15

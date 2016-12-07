@@ -81,4 +81,18 @@ class IconHelper
     {
         button.titleLabel
     }*/
+    
+    
+    
+    class func WriteDiveLevel(_ diverLevelUi: UILabel, _ diveLevel: DiveLevel)
+    {
+        diverLevelUi.adjustsFontSizeToFitWidth = true
+        diverLevelUi.text = diveLevel.stringValue
+        
+        let colors = PreferencesHelper.GetDiveLevelColors(diveLevel)
+        diverLevelUi.backgroundColor = colors.color
+        diverLevelUi.textColor = colors.reversedColor
+        diverLevelUi.layer.cornerRadius = diverLevelUi.layer.frame.width / 2
+        diverLevelUi.clipsToBounds = true
+    }
 }

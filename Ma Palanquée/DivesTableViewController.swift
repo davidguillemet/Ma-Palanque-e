@@ -19,6 +19,7 @@ class DivesTableViewController: SearchableTableViewController
         
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet var divesTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,8 @@ class DivesTableViewController: SearchableTableViewController
         IconHelper.SetBarButtonIcon(addButton, icon: IconValue.IconPlus, fontSize: nil, center: false)
 
         self.title = trip.desc
+        
+        TableViewHelper.ConfigureTable(tableView: divesTable)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -60,7 +63,7 @@ class DivesTableViewController: SearchableTableViewController
     {
         let headerView = view as! UITableViewHeaderFooterView
         headerView.contentView.backgroundColor = UIColor ( red: 0.7687, green: 0.9521, blue: 0.9974, alpha: 1.0 )
-        headerView.textLabel?.textAlignment = .center
+        //headerView.textLabel?.textAlignment = .center
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -113,9 +116,9 @@ class DivesTableViewController: SearchableTableViewController
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
-        cell.separatorInset = UIEdgeInsets.zero
+        /*cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
-        cell.preservesSuperviewLayoutMargins = false
+        cell.preservesSuperviewLayoutMargins = false*/
     }
     
     // Override to support editing the table view.

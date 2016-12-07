@@ -13,7 +13,6 @@ class DiverTableViewCell: UITableViewCell {
     var viewcontroller : DiversTableViewController!
     var id: String!
     @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var selectionSwitch: UISwitch!
     

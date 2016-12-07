@@ -49,6 +49,24 @@ class Dive : NSObject
         self.excludedDivers!.insert(diver)
     }
     
+    func diverIsInGroup(_ diverId: String) -> Bool
+    {
+        if (groups == nil)
+        {
+            return false;
+        }
+
+        for group in self.groups!
+        {
+            if group.containsDiver(diverId)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     func getAvailableDivers(_ trip: Trip, scanOnlyLockedGroups: Bool) -> Set<String>
     {
         var availableDivers = Set<String>()

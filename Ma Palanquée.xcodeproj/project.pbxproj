@@ -19,7 +19,10 @@
 		302B97541BF7A78F00C58F74 /* SearchableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B97531BF7A78F00C58F74 /* SearchableTableViewController.swift */; };
 		3030DB311C0B856F003205E0 /* ErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3030DB301C0B856F003205E0 /* ErrorHelper.swift */; };
 		3030DB331C0CE15B003205E0 /* DraggableDiverData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3030DB321C0CE15B003205E0 /* DraggableDiverData.swift */; };
+		3054D4B61DF5FC4A00F16990 /* NameDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3054D4B51DF5FC4A00F16990 /* NameDisplay.swift */; };
 		306608A31C0B5EC800E2F297 /* PreferencesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306608A21C0B5EC800E2F297 /* PreferencesHelper.swift */; };
+		308131F51DF7944E009E75D2 /* TableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308131F41DF7944E009E75D2 /* TableViewHelper.swift */; };
+		308131F71DF890BB009E75D2 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308131F61DF890BB009E75D2 /* UIHelper.swift */; };
 		30969FB71BEE50D300711979 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30969FB61BEE50D300711979 /* AppDelegate.swift */; };
 		30969FB91BEE50D300711979 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30969FB81BEE50D300711979 /* ViewController.swift */; };
 		30969FBC1BEE50D400711979 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30969FBA1BEE50D400711979 /* Main.storyboard */; };
@@ -73,7 +76,10 @@
 		302B97531BF7A78F00C58F74 /* SearchableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchableTableViewController.swift; path = "Ma Palanquée/SearchableTableViewController.swift"; sourceTree = "<group>"; };
 		3030DB301C0B856F003205E0 /* ErrorHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHelper.swift; sourceTree = "<group>"; };
 		3030DB321C0CE15B003205E0 /* DraggableDiverData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableDiverData.swift; sourceTree = "<group>"; };
+		3054D4B51DF5FC4A00F16990 /* NameDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameDisplay.swift; sourceTree = "<group>"; };
 		306608A21C0B5EC800E2F297 /* PreferencesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesHelper.swift; sourceTree = "<group>"; };
+		308131F41DF7944E009E75D2 /* TableViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHelper.swift; sourceTree = "<group>"; };
+		308131F61DF890BB009E75D2 /* UIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		30969FB31BEE50D300711979 /* Ma Palanquée.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ma Palanquée.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30969FB61BEE50D300711979 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30969FB81BEE50D300711979 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +210,7 @@
 				3096EECD1BEFB58D00F67D14 /* TripManager.swift */,
 				302B97471BF393DC00C58F74 /* TripStatus.swift */,
 				302B97491BF394F200C58F74 /* TripType.swift */,
+				3054D4B51DF5FC4A00F16990 /* NameDisplay.swift */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -228,6 +235,8 @@
 				30FC113A1C06336E006A0361 /* IconHelper.swift */,
 				30A0B7EE1C00909500994C51 /* MessageHelper.swift */,
 				3030DB301C0B856F003205E0 /* ErrorHelper.swift */,
+				308131F41DF7944E009E75D2 /* TableViewHelper.swift */,
+				308131F61DF890BB009E75D2 /* UIHelper.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -341,6 +350,7 @@
 				302B974A1BF394F200C58F74 /* TripType.swift in Sources */,
 				30FC11231C00DFA7006A0361 /* DateHelper.swift in Sources */,
 				30FC11381C03E051006A0361 /* ColorHelper.swift in Sources */,
+				308131F51DF7944E009E75D2 /* TableViewHelper.swift in Sources */,
 				30969FBF1BEE50D400711979 /* Ma_Palanque_e.xcdatamodeld in Sources */,
 				30A0B7E21BFE70F200994C51 /* Dive.swift in Sources */,
 				30A0B7E81BFF9A3D00994C51 /* ConstraintsTableViewController.swift in Sources */,
@@ -352,6 +362,7 @@
 				30969FD51BEE615B00711979 /* TripsTableViewController.swift in Sources */,
 				3096EED01BEFB5F100F67D14 /* Trip.swift in Sources */,
 				3096EED21BEFB6A300F67D14 /* Diver.swift in Sources */,
+				308131F71DF890BB009E75D2 /* UIHelper.swift in Sources */,
 				30A0B7E61BFE900F00994C51 /* DivesTableViewController.swift in Sources */,
 				30FC11451C09BA8E006A0361 /* GroupTableTableViewCell.swift in Sources */,
 				30969FD91BEE68DD00711979 /* AboutViewController.swift in Sources */,
@@ -361,6 +372,7 @@
 				30A0B7EF1C00909500994C51 /* MessageHelper.swift in Sources */,
 				302B97481BF393DC00C58F74 /* TripStatus.swift in Sources */,
 				306608A31C0B5EC800E2F297 /* PreferencesHelper.swift in Sources */,
+				3054D4B61DF5FC4A00F16990 /* NameDisplay.swift in Sources */,
 				3030DB311C0B856F003205E0 /* ErrorHelper.swift in Sources */,
 				30A0B7D51BFE527100994C51 /* ConstraintType.swift in Sources */,
 				302B973C1BF1308300C58F74 /* TripTableViewCell.swift in Sources */,

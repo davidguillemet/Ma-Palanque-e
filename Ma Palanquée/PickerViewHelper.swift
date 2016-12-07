@@ -45,7 +45,7 @@ class PickerViewHelper: AbstractPickerViewHelper, UIPickerViewDataSource, UIPick
     //MARK: Delegates
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
-        return elements[row].description
+        return  elements[row].description
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)

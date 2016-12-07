@@ -12,9 +12,13 @@ class PreferencesHelper
 {
     fileprivate static var levelColors: [Int: UIColor] = [Int: UIColor]()
     
+    private static var _nameDisplayOption: NameDisplay!
+    
     class func loadPreferences()
     {
         // TODO : read persistence
+        
+        _nameDisplayOption = NameDisplay.FirstNameLastName;
     }
     
     class func GetDiveLevelColors(_ level: DiveLevel) -> (color: UIColor, reversedColor:UIColor)
@@ -30,6 +34,18 @@ class PreferencesHelper
             default:
                 return (UIColor ( red: 0.0, green: 0.2645, blue: 1.0, alpha: 1.0 ), UIColor ( red: 0.3981, green: 0.7257, blue: 1.0, alpha: 1.0 ))
         }
-        
+    }
+    
+    static var NameDisplayOption: NameDisplay
+    {
+        get
+        {
+            return _nameDisplayOption
+        }
+        set
+        {
+            _nameDisplayOption = newValue
+            // TODO: persist preferences
+        }
     }
 }

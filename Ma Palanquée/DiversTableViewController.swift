@@ -13,9 +13,13 @@ class DiversTableViewController: SearchableTableViewController {
     var selectionType: String!
     
     var initialDivers: [Diver]?
+    var dive: Dive?
     var trip: Trip?
-    var divers: [Diver]!
-    var filteredDivers = [Diver]()
+    
+    private var divers: [Diver]!
+    private var filteredDivers: [Diver] = [Diver]()
+    private var diverSections: [String: [Diver]]!
+    private var orderedSections: [String]!
     
     // Selected divers
     var selection: Set<String> = Set<String>()
@@ -26,12 +30,14 @@ class DiversTableViewController: SearchableTableViewController {
     
     override func viewDidLoad() {
         
-        // Initial display = all divers if th eselection is empty
-        self.divers = GetDiversFromScope(selection.count == 0, loading: true)
+        // Initial display = all divers if the selection is empty
+        GetDiversFromScope(selection.count == 0, loading: true)
         
         updateSelection()
         
         super.viewDidLoad()
+        
+        TableViewHelper.ConfigureTable(tableView: self.tableView)
         
         // Reload the table
         self.tableView.reloadData()
@@ -50,21 +56,36 @@ class DiversTableViewController: SearchableTableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+    override func numberOfSections(in tableView: UITableView) -> Int
+    {
+        return DisplaySearchResult() ? 1 : orderedSections.count
     }
-    
+        
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        if (DisplaySearchResult())
-        {
-            return self.filteredDivers.count
-        }
-        else
-        {
-            return self.divers!.count
-        }
+        return DisplaySearchResult() ? self.filteredDivers.count : self.diverSections[self.orderedSections[section]]!.count
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    {
+        return DisplaySearchResult() ? "" : self.orderedSections[section]
+    }
+
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    {
+        let headerView = view as! UITableViewHeaderFooterView
+        headerView.contentView.backgroundColor = UIColor(red: 0.8863, green: 1, blue: 0.898, alpha: 1.0)
+        //headerView.textLabel?.textAlignment = .center
+    }
+    
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]?
+    {
+        return self.orderedSections as [String]?
+    }
+    
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        return self.orderedSections.index(of: title)!
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -75,32 +96,40 @@ class DiversTableViewController: SearchableTableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! DiverTableViewCell
         
+        var divers: [Diver]!
+        
         if (DisplaySearchResult())
         {
-            diver = self.filteredDivers[indexPath.row]
+            divers = self.filteredDivers
         }
         else
         {
-            diver = self.divers![indexPath.row]
+            divers = self.diverSections[self.orderedSections[indexPath.section]]
         }
         
-        cell.firstNameLabel.text = diver.firstName
-        cell.lastNameLabel.text = diver.lastName
-        cell.levelLabel.text = diver.level.stringValue
+        diver = divers[indexPath.row]
+        
+        cell.firstNameLabel.attributedText = UIHelper.GetDiverNameAttributedString(forDiver: diver)
+        
+        IconHelper.WriteDiveLevel(cell.levelLabel, diver.level)
         cell.id = diver.id
         
         cell.viewcontroller = self
         
         // In case a trip is specified it means we are selecting divers for the trip
-        // then we can disable the switch in case th ediver is already part of a dive
+        // then we can disable the switch in case the diver is already part of a dive
         // In case no trip is specified, we just select divers which are not diving for a new dive
-        if (self.selectionType == "TripDivers" && self.trip != nil && !self.trip!.canRemoveDiver(diver.id))
+        if ((self.selectionType == "TripDivers" && self.trip != nil && !self.trip!.canRemoveDiver(diver.id)) ||
+            (self.selectionType == "DiveExcludedDivers" && self.dive != nil && self.dive!.diverIsInGroup(diver.id)))
         {
-            cell.selectionSwitch.isEnabled = false // cannot remove a diver which has already dived...or cannot exclude dive director
-            if (self.selectionType == "DiveExcludedDivers")
-            {
-                cell.backgroundColor = UIColor ( red: 0.9108, green: 1.0, blue: 0.0, alpha: 1.0 )
-            }
+            cell.selectionSwitch.isEnabled = false // cannot remove a diver which is already part of a group...or cannot exclude dive director
+            cell.backgroundColor =  UIColor ( red: 0.90, green: 0.90, blue: 0.90, alpha: 1.0 )
+
+        }
+        else
+        {
+            cell.selectionSwitch.isEnabled = true
+            cell.backgroundColor = UIColor.white
         }
         
         if (selection.contains(diver.id))
@@ -159,11 +188,17 @@ class DiversTableViewController: SearchableTableViewController {
     
     func updateSelection()
     {
-        self.diverScope.setTitle("\(selection.count) Plongeurs", forSegmentAt: 1)
-        //self.title = "\(selection.count) Plongeur(s)"
+        if (self.selectionType == "DiveExcludedDivers")
+        {
+            self.diverScope.setTitle("Repos (\(selection.count))", forSegmentAt: 1)
+        }
+        else
+        {
+            self.diverScope.setTitle("Sélection (\(selection.count))", forSegmentAt: 1)
+        }
     }
     
-    func GetDiversFromScope(_ all: Bool, loading: Bool) -> [Diver]
+    func GetDiversFromScope(_ all: Bool, loading: Bool)
     {
         var divers = initialDivers ?? DiverManager.GetDivers()
         
@@ -181,11 +216,27 @@ class DiversTableViewController: SearchableTableViewController {
         }
         
         // Sort in alphabetical order
-        divers = divers.sorted(by: { (d1: Diver, d2: Diver) -> Bool in
+        self.divers = divers.sorted(by: { (d1: Diver, d2: Diver) -> Bool in
             return d1.lastName < d2.lastName
         })
         
-        return divers
+        // Prepare sections
+        self.diverSections = [String: [Diver]]()
+        self.orderedSections = [String]()
+        
+        for diver: Diver in self.divers
+        {
+            let lastNameFirstLetter = String(describing: diver.lastName.characters.first!)
+            var section = self.diverSections[lastNameFirstLetter]
+            if section == nil
+            {
+                section = [Diver]()
+                self.diverSections[lastNameFirstLetter] = section
+                self.orderedSections.append(lastNameFirstLetter)
+            }
+            
+            self.diverSections[lastNameFirstLetter]!.append(diver)
+        }
     }
 
     /*
@@ -229,11 +280,11 @@ class DiversTableViewController: SearchableTableViewController {
     {
         if (sender.selectedSegmentIndex == 0)
         {
-            self.divers = GetDiversFromScope(true, loading: false)
+            GetDiversFromScope(true, loading: false)
         }
         else
         {
-            self.divers = GetDiversFromScope(false, loading: false)
+            GetDiversFromScope(false, loading: false)
         }
         
         self.tableView.reloadData()

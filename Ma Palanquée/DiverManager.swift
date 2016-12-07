@@ -94,7 +94,7 @@ class DiverManager
     
     fileprivate class func LoadDivers() -> Bool
     {
-        var diver = Diver(firstName:"Stéphane", lastName:"Desjardins", level:DiveLevel.e4, trainingLevel:nil)
+        var diver = Diver(firstName:"Stéphane", lastName:"Desjardinsssfdfdfdfdfd", level:DiveLevel.e4, trainingLevel:nil)
         Instance.dico[diver.id] = diver
         
         diver = Diver(firstName:"David", lastName:"Guillemet", level:DiveLevel.e2, trainingLevel:nil)
