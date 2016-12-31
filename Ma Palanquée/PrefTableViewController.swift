@@ -21,6 +21,8 @@ class PrefTableViewController: UITableViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        IconHelper.SetIcon(forBarButtonItem: menuButton, icon: Icon.Back, fontSize: 24)
+        
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))

@@ -24,8 +24,8 @@ class DivesTableViewController: SearchableTableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        IconHelper.SetBarButtonIcon(doneButton, icon: IconValue.IconDone, fontSize: nil, center: false)
-        IconHelper.SetBarButtonIcon(addButton, icon: IconValue.IconPlus, fontSize: nil, center: false)
+        IconHelper.SetIcon(forBarButtonItem: doneButton, icon: Icon.Back, fontSize: 24)
+        IconHelper.SetIcon(forBarButtonItem: addButton, icon: Icon.Plus, fontSize: 24)
 
         self.title = trip.desc
         
@@ -62,7 +62,7 @@ class DivesTableViewController: SearchableTableViewController
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
     {
         let headerView = view as! UITableViewHeaderFooterView
-        headerView.contentView.backgroundColor = UIColor ( red: 0.7687, green: 0.9521, blue: 0.9974, alpha: 1.0 )
+        headerView.contentView.backgroundColor = ColorHelper.TableViewBackground
         //headerView.textLabel?.textAlignment = .center
     }
     

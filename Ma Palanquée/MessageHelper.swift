@@ -12,8 +12,18 @@ class MessageHelper
 {
     class func displayError(_ msg: String, controller: UIViewController)
     {
-        let alert:UIAlertController = UIAlertController(title: "Oops...", message: msg, preferredStyle:.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in }))
+        displayError(msg, controller: controller, onOk: MessageHelper.globalOnOk)
+    }
+    
+    class func globalOnOk()
+    {
+        // Empty
+    }
+
+    class func displayError(_ msg: String, controller: UIViewController, onOk: @escaping ((Void) -> Void))
+    {
+        let alert:UIAlertController = UIAlertController(title: "Oops...", message: msg, preferredStyle:UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in onOk() }))
         controller.present(alert, animated:true, completion:nil);
     }
     

@@ -16,20 +16,20 @@ class Trip : NSObject
     var desc: String
     var dateFrom: Date
     var dateTo: Date
-    var tripType: TripType
+    var diveType: DiveType
     var divers: Set<String>
     var constraints: [Constraint]?
     var archived: Bool
     
     fileprivate var dives: [String: Dive] = [String: Dive]()
     
-    init(location: String, desc: String, dateFrom: Date, dateTo: Date, tripType: TripType, divers: Set<String>, constraints: [Constraint]?)
+    init(location: String, desc: String, dateFrom: Date, dateTo: Date, diveType: DiveType, divers: Set<String>, constraints: [Constraint]?)
     {
         self.location = location
         self.desc = desc
         self.dateFrom = dateFrom
         self.dateTo = dateTo
-        self.tripType = tripType
+        self.diveType = diveType
         self.divers = divers
         self.constraints = constraints
         
@@ -37,13 +37,13 @@ class Trip : NSObject
         self.archived = false
     }
 
-    func update(_ location: String, desc: String, dateFrom: Date, dateTo: Date, tripType: TripType, divers: Set<String>, constraints: [Constraint]?)
+    func update(_ location: String, desc: String, dateFrom: Date, dateTo: Date, diveType: DiveType, divers: Set<String>, constraints: [Constraint]?)
     {
         self.location = location
         self.desc = desc
         self.dateFrom = dateFrom
         self.dateTo = dateTo
-        self.tripType = tripType
+        self.diveType = diveType
         self.divers = divers
         self.constraints = constraints
     }

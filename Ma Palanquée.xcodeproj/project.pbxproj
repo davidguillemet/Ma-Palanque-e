@@ -13,7 +13,6 @@
 		302B97441BF2A7F300C58F74 /* PopDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302B97421BF2A7F300C58F74 /* PopDateViewController.xib */; };
 		302B97461BF2ABC100C58F74 /* PopDatepicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B97451BF2ABC100C58F74 /* PopDatepicker.swift */; };
 		302B97481BF393DC00C58F74 /* TripStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B97471BF393DC00C58F74 /* TripStatus.swift */; };
-		302B974A1BF394F200C58F74 /* TripType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B97491BF394F200C58F74 /* TripType.swift */; };
 		302B974E1BF3AAF500C58F74 /* DiversTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B974D1BF3AAF500C58F74 /* DiversTableViewController.swift */; };
 		302B97501BF558C900C58F74 /* DiverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B974F1BF558C900C58F74 /* DiverTableViewCell.swift */; };
 		302B97541BF7A78F00C58F74 /* SearchableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302B97531BF7A78F00C58F74 /* SearchableTableViewController.swift */; };
@@ -23,6 +22,19 @@
 		306608A31C0B5EC800E2F297 /* PreferencesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306608A21C0B5EC800E2F297 /* PreferencesHelper.swift */; };
 		308131F51DF7944E009E75D2 /* TableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308131F41DF7944E009E75D2 /* TableViewHelper.swift */; };
 		308131F71DF890BB009E75D2 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308131F61DF890BB009E75D2 /* UIHelper.swift */; };
+		308131FA1DF8A325009E75D2 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308131F91DF8A325009E75D2 /* ServiceManager.swift */; };
+		308132001DF8A879009E75D2 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308131FF1DF8A879009E75D2 /* UserSession.swift */; };
+		308132061DF8C098009E75D2 /* ConnectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308132051DF8C098009E75D2 /* ConnectionTableViewController.swift */; };
+		308132081DFB31C2009E75D2 /* WebServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308132071DFB31C1009E75D2 /* WebServiceDelegate.swift */; };
+		3081320A1DFB31E6009E75D2 /* WebServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308132091DFB31E6009E75D2 /* WebServiceProtocol.swift */; };
+		3081320C1DFB3204009E75D2 /* ConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081320B1DFB3204009E75D2 /* ConnectionService.swift */; };
+		308A407A1DFE08EB002AB790 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A40791DFE08EB002AB790 /* User.swift */; };
+		308A407C1DFE0A87002AB790 /* GetUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A407B1DFE0A87002AB790 /* GetUserService.swift */; };
+		308A407E1DFE1407002AB790 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A407D1DFE1407002AB790 /* UIApplicationExtension.swift */; };
+		308A40801DFF2170002AB790 /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A407F1DFF2170002AB790 /* StartScreenViewController.swift */; };
+		308A40821E01CE0A002AB790 /* AccountPropertiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A40811E01CE09002AB790 /* AccountPropertiesTableViewController.swift */; };
+		308A40841E01DBA0002AB790 /* SidePanelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A40831E01DBA0002AB790 /* SidePanelTableViewController.swift */; };
+		308A40861E04BA07002AB790 /* ReplaceSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A40851E04BA05002AB790 /* ReplaceSegue.swift */; };
 		30969FB71BEE50D300711979 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30969FB61BEE50D300711979 /* AppDelegate.swift */; };
 		30969FB91BEE50D300711979 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30969FB81BEE50D300711979 /* ViewController.swift */; };
 		30969FBC1BEE50D400711979 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30969FBA1BEE50D400711979 /* Main.storyboard */; };
@@ -48,6 +60,8 @@
 		30A0B7E61BFE900F00994C51 /* DivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A0B7E51BFE900F00994C51 /* DivesTableViewController.swift */; };
 		30A0B7E81BFF9A3D00994C51 /* ConstraintsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A0B7E71BFF9A3D00994C51 /* ConstraintsTableViewController.swift */; };
 		30A0B7EF1C00909500994C51 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A0B7EE1C00909500994C51 /* MessageHelper.swift */; };
+		30B896F41E181F4B00EAB45B /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B896F31E181F4B00EAB45B /* UITextFieldExtension.swift */; };
+		30E0A5B01E0C811A005D7BD7 /* DiversSelectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0A5AF1E0C811A005D7BD7 /* DiversSelectionType.swift */; };
 		30FC11231C00DFA7006A0361 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FC11221C00DFA7006A0361 /* DateHelper.swift */; };
 		30FC11251C01EEC7006A0361 /* NewDiveTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FC11241C01EEC7006A0361 /* NewDiveTableViewController.swift */; };
 		30FC11271C0225A0006A0361 /* PickerViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FC11261C0225A0006A0361 /* PickerViewHelper.swift */; };
@@ -70,7 +84,6 @@
 		302B97421BF2A7F300C58F74 /* PopDateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopDateViewController.xib; path = "Ma Palanquée/PopDateViewController.xib"; sourceTree = "<group>"; };
 		302B97451BF2ABC100C58F74 /* PopDatepicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopDatepicker.swift; sourceTree = "<group>"; };
 		302B97471BF393DC00C58F74 /* TripStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripStatus.swift; sourceTree = "<group>"; };
-		302B97491BF394F200C58F74 /* TripType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripType.swift; sourceTree = "<group>"; };
 		302B974D1BF3AAF500C58F74 /* DiversTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiversTableViewController.swift; sourceTree = "<group>"; };
 		302B974F1BF558C900C58F74 /* DiverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverTableViewCell.swift; sourceTree = "<group>"; };
 		302B97531BF7A78F00C58F74 /* SearchableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchableTableViewController.swift; path = "Ma Palanquée/SearchableTableViewController.swift"; sourceTree = "<group>"; };
@@ -80,6 +93,19 @@
 		306608A21C0B5EC800E2F297 /* PreferencesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesHelper.swift; sourceTree = "<group>"; };
 		308131F41DF7944E009E75D2 /* TableViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHelper.swift; sourceTree = "<group>"; };
 		308131F61DF890BB009E75D2 /* UIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
+		308131F91DF8A325009E75D2 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		308131FF1DF8A879009E75D2 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		308132051DF8C098009E75D2 /* ConnectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTableViewController.swift; sourceTree = "<group>"; };
+		308132071DFB31C1009E75D2 /* WebServiceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServiceDelegate.swift; sourceTree = "<group>"; };
+		308132091DFB31E6009E75D2 /* WebServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServiceProtocol.swift; sourceTree = "<group>"; };
+		3081320B1DFB3204009E75D2 /* ConnectionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionService.swift; sourceTree = "<group>"; };
+		308A40791DFE08EB002AB790 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		308A407B1DFE0A87002AB790 /* GetUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserService.swift; sourceTree = "<group>"; };
+		308A407D1DFE1407002AB790 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		308A407F1DFF2170002AB790 /* StartScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
+		308A40811E01CE09002AB790 /* AccountPropertiesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPropertiesTableViewController.swift; sourceTree = "<group>"; };
+		308A40831E01DBA0002AB790 /* SidePanelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelTableViewController.swift; sourceTree = "<group>"; };
+		308A40851E04BA05002AB790 /* ReplaceSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceSegue.swift; sourceTree = "<group>"; };
 		30969FB31BEE50D300711979 /* Ma Palanquée.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ma Palanquée.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30969FB61BEE50D300711979 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30969FB81BEE50D300711979 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +135,8 @@
 		30A0B7E51BFE900F00994C51 /* DivesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DivesTableViewController.swift; sourceTree = "<group>"; };
 		30A0B7E71BFF9A3D00994C51 /* ConstraintsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintsTableViewController.swift; sourceTree = "<group>"; };
 		30A0B7EE1C00909500994C51 /* MessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
+		30B896F31E181F4B00EAB45B /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
+		30E0A5AF1E0C811A005D7BD7 /* DiversSelectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiversSelectionType.swift; sourceTree = "<group>"; };
 		30FC11221C00DFA7006A0361 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		30FC11241C01EEC7006A0361 /* NewDiveTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDiveTableViewController.swift; sourceTree = "<group>"; };
 		30FC11261C0225A0006A0361 /* PickerViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerViewHelper.swift; sourceTree = "<group>"; };
@@ -135,6 +163,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		308131F81DF89BDB009E75D2 /* WebServices */ = {
+			isa = PBXGroup;
+			children = (
+				3091B5DB1E087E4C006FC460 /* Framework */,
+				3081320B1DFB3204009E75D2 /* ConnectionService.swift */,
+				308A407B1DFE0A87002AB790 /* GetUserService.swift */,
+			);
+			name = WebServices;
+			sourceTree = "<group>";
+		};
+		3091B5DB1E087E4C006FC460 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				308131FF1DF8A879009E75D2 /* UserSession.swift */,
+				308131F91DF8A325009E75D2 /* ServiceManager.swift */,
+				308132071DFB31C1009E75D2 /* WebServiceDelegate.swift */,
+				308132091DFB31E6009E75D2 /* WebServiceProtocol.swift */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
 		30969FAA1BEE50D300711979 = {
 			isa = PBXGroup;
 			children = (
@@ -155,18 +204,20 @@
 		30969FB51BEE50D300711979 /* Ma Palanquée */ = {
 			isa = PBXGroup;
 			children = (
+				308131F81DF89BDB009E75D2 /* WebServices */,
 				30FC11341C03C99C006A0361 /* TableViewCells */,
 				30A0B7ED1C00908100994C51 /* Util */,
 				3096EECC1BEFB57000F67D14 /* DataModel */,
-				30969FD41BEE615B00711979 /* TripsTableViewController.swift */,
 				30969FCB1BEE510C00711979 /* SWRevealViewController */,
 				30969FB61BEE50D300711979 /* AppDelegate.swift */,
 				30969FB81BEE50D300711979 /* ViewController.swift */,
 				30969FBA1BEE50D400711979 /* Main.storyboard */,
-				302B973D1BF27C1A00C58F74 /* NewTripViewController.swift */,
-				302B97451BF2ABC100C58F74 /* PopDatepicker.swift */,
 				30969FD81BEE68DD00711979 /* AboutViewController.swift */,
-				30969FD61BEE669400711979 /* PrefTableViewController.swift */,
+				308A40811E01CE09002AB790 /* AccountPropertiesTableViewController.swift */,
+				308132051DF8C098009E75D2 /* ConnectionTableViewController.swift */,
+				308A40851E04BA05002AB790 /* ReplaceSegue.swift */,
+				30A0B7E71BFF9A3D00994C51 /* ConstraintsTableViewController.swift */,
+				30FC11401C07C22A006A0361 /* DiveGroupsCollectionViewController.swift */,
 				30969FC01BEE50D400711979 /* Assets.xcassets */,
 				30969FC21BEE50D400711979 /* LaunchScreen.storyboard */,
 				30969FC51BEE50D400711979 /* Info.plist */,
@@ -175,9 +226,13 @@
 				30969FBD1BEE50D400711979 /* Ma_Palanque_e.xcdatamodeld */,
 				302B974D1BF3AAF500C58F74 /* DiversTableViewController.swift */,
 				30A0B7E51BFE900F00994C51 /* DivesTableViewController.swift */,
-				30A0B7E71BFF9A3D00994C51 /* ConstraintsTableViewController.swift */,
 				30FC11241C01EEC7006A0361 /* NewDiveTableViewController.swift */,
-				30FC11401C07C22A006A0361 /* DiveGroupsCollectionViewController.swift */,
+				302B973D1BF27C1A00C58F74 /* NewTripViewController.swift */,
+				302B97451BF2ABC100C58F74 /* PopDatepicker.swift */,
+				30969FD61BEE669400711979 /* PrefTableViewController.swift */,
+				308A40831E01DBA0002AB790 /* SidePanelTableViewController.swift */,
+				308A407F1DFF2170002AB790 /* StartScreenViewController.swift */,
+				30969FD41BEE615B00711979 /* TripsTableViewController.swift */,
 			);
 			path = "Ma Palanquée";
 			sourceTree = "<group>";
@@ -205,12 +260,12 @@
 				3096EED91BEFBD5100F67D14 /* DiverManager.swift */,
 				3096EED71BEFBB6400F67D14 /* DiveType.swift */,
 				30A0B7E31BFE8C5000994C51 /* Group.swift */,
+				3054D4B51DF5FC4A00F16990 /* NameDisplay.swift */,
 				306608A21C0B5EC800E2F297 /* PreferencesHelper.swift */,
 				3096EECF1BEFB5F100F67D14 /* Trip.swift */,
 				3096EECD1BEFB58D00F67D14 /* TripManager.swift */,
 				302B97471BF393DC00C58F74 /* TripStatus.swift */,
-				302B97491BF394F200C58F74 /* TripType.swift */,
-				3054D4B51DF5FC4A00F16990 /* NameDisplay.swift */,
+				308A40791DFE08EB002AB790 /* User.swift */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -231,12 +286,15 @@
 				30FC11391C052EE4006A0361 /* PickerView */,
 				30FC11371C03E051006A0361 /* ColorHelper.swift */,
 				30FC11221C00DFA7006A0361 /* DateHelper.swift */,
+				30E0A5AF1E0C811A005D7BD7 /* DiversSelectionType.swift */,
 				3030DB321C0CE15B003205E0 /* DraggableDiverData.swift */,
 				30FC113A1C06336E006A0361 /* IconHelper.swift */,
 				30A0B7EE1C00909500994C51 /* MessageHelper.swift */,
 				3030DB301C0B856F003205E0 /* ErrorHelper.swift */,
 				308131F41DF7944E009E75D2 /* TableViewHelper.swift */,
+				308A407D1DFE1407002AB790 /* UIApplicationExtension.swift */,
 				308131F61DF890BB009E75D2 /* UIHelper.swift */,
+				30B896F31E181F4B00EAB45B /* UITextFieldExtension.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -344,24 +402,31 @@
 				30A0B7E41BFE8C5000994C51 /* Group.swift in Sources */,
 				30A0B7D31BFE525400994C51 /* Constraint.swift in Sources */,
 				3096EED41BEFB9CD00F67D14 /* DiveLevel.swift in Sources */,
+				308A40801DFF2170002AB790 /* StartScreenViewController.swift in Sources */,
 				302B97431BF2A7F300C58F74 /* PopDateViewController.swift in Sources */,
+				30B896F41E181F4B00EAB45B /* UITextFieldExtension.swift in Sources */,
 				30FC11271C0225A0006A0361 /* PickerViewHelper.swift in Sources */,
 				302B973E1BF27C1A00C58F74 /* NewTripViewController.swift in Sources */,
-				302B974A1BF394F200C58F74 /* TripType.swift in Sources */,
 				30FC11231C00DFA7006A0361 /* DateHelper.swift in Sources */,
 				30FC11381C03E051006A0361 /* ColorHelper.swift in Sources */,
+				308132001DF8A879009E75D2 /* UserSession.swift in Sources */,
 				308131F51DF7944E009E75D2 /* TableViewHelper.swift in Sources */,
+				308132081DFB31C2009E75D2 /* WebServiceDelegate.swift in Sources */,
 				30969FBF1BEE50D400711979 /* Ma_Palanque_e.xcdatamodeld in Sources */,
+				308A407E1DFE1407002AB790 /* UIApplicationExtension.swift in Sources */,
 				30A0B7E21BFE70F200994C51 /* Dive.swift in Sources */,
 				30A0B7E81BFF9A3D00994C51 /* ConstraintsTableViewController.swift in Sources */,
 				30FC11251C01EEC7006A0361 /* NewDiveTableViewController.swift in Sources */,
 				3096EEDA1BEFBD5100F67D14 /* DiverManager.swift in Sources */,
+				308A40841E01DBA0002AB790 /* SidePanelTableViewController.swift in Sources */,
 				30FC11431C07D28E006A0361 /* GroupCollectionViewCell.swift in Sources */,
 				3030DB331C0CE15B003205E0 /* DraggableDiverData.swift in Sources */,
 				30FC113B1C06336E006A0361 /* IconHelper.swift in Sources */,
 				30969FD51BEE615B00711979 /* TripsTableViewController.swift in Sources */,
+				308A407C1DFE0A87002AB790 /* GetUserService.swift in Sources */,
 				3096EED01BEFB5F100F67D14 /* Trip.swift in Sources */,
 				3096EED21BEFB6A300F67D14 /* Diver.swift in Sources */,
+				308131FA1DF8A325009E75D2 /* ServiceManager.swift in Sources */,
 				308131F71DF890BB009E75D2 /* UIHelper.swift in Sources */,
 				30A0B7E61BFE900F00994C51 /* DivesTableViewController.swift in Sources */,
 				30FC11451C09BA8E006A0361 /* GroupTableTableViewCell.swift in Sources */,
@@ -371,21 +436,28 @@
 				30A0B7DE1BFE6F0C00994C51 /* DiveParameters.swift in Sources */,
 				30A0B7EF1C00909500994C51 /* MessageHelper.swift in Sources */,
 				302B97481BF393DC00C58F74 /* TripStatus.swift in Sources */,
+				308A40821E01CE0A002AB790 /* AccountPropertiesTableViewController.swift in Sources */,
 				306608A31C0B5EC800E2F297 /* PreferencesHelper.swift in Sources */,
 				3054D4B61DF5FC4A00F16990 /* NameDisplay.swift in Sources */,
+				308132061DF8C098009E75D2 /* ConnectionTableViewController.swift in Sources */,
 				3030DB311C0B856F003205E0 /* ErrorHelper.swift in Sources */,
+				3081320C1DFB3204009E75D2 /* ConnectionService.swift in Sources */,
 				30A0B7D51BFE527100994C51 /* ConstraintType.swift in Sources */,
 				302B973C1BF1308300C58F74 /* TripTableViewCell.swift in Sources */,
 				3096EED81BEFBB6400F67D14 /* DiveType.swift in Sources */,
+				308A407A1DFE08EB002AB790 /* User.swift in Sources */,
 				30FC11361C03C9D9006A0361 /* DiveTableViewCell.swift in Sources */,
 				30969FB71BEE50D300711979 /* AppDelegate.swift in Sources */,
 				30969FD71BEE669400711979 /* PrefTableViewController.swift in Sources */,
 				3096EECE1BEFB58D00F67D14 /* TripManager.swift in Sources */,
 				30FC11331C025EB6006A0361 /* AbstractPickerViewHelper.swift in Sources */,
 				302B97461BF2ABC100C58F74 /* PopDatepicker.swift in Sources */,
+				30E0A5B01E0C811A005D7BD7 /* DiversSelectionType.swift in Sources */,
 				302B974E1BF3AAF500C58F74 /* DiversTableViewController.swift in Sources */,
+				3081320A1DFB31E6009E75D2 /* WebServiceProtocol.swift in Sources */,
 				30969FCF1BEE518A00711979 /* SWRevealViewController.m in Sources */,
 				302B97541BF7A78F00C58F74 /* SearchableTableViewController.swift in Sources */,
+				308A40861E04BA07002AB790 /* ReplaceSegue.swift in Sources */,
 				30FC11311C0256DF006A0361 /* DatePickerViewHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

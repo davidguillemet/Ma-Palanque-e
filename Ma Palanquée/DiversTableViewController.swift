@@ -10,7 +10,7 @@ import UIKit
 
 class DiversTableViewController: SearchableTableViewController {
 
-    var selectionType: String!
+    var selectionType: DiversSelectionType!
     
     var initialDivers: [Diver]?
     var dive: Dive?
@@ -25,10 +25,14 @@ class DiversTableViewController: SearchableTableViewController {
     var selection: Set<String> = Set<String>()
     
     @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     @IBOutlet weak var diverScope: UISegmentedControl!
     
     override func viewDidLoad() {
+        
+        IconHelper.SetIcon(forBarButtonItem: doneButton, icon: Icon.Done, fontSize: 24)
+        IconHelper.SetIcon(forBarButtonItem: cancelButton, icon: Icon.CancelCircled, fontSize: 24)
         
         // Initial display = all divers if the selection is empty
         GetDiversFromScope(selection.count == 0, loading: true)
@@ -74,8 +78,7 @@ class DiversTableViewController: SearchableTableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
     {
         let headerView = view as! UITableViewHeaderFooterView
-        headerView.contentView.backgroundColor = UIColor(red: 0.8863, green: 1, blue: 0.898, alpha: 1.0)
-        //headerView.textLabel?.textAlignment = .center
+        headerView.contentView.backgroundColor = ColorHelper.TableViewBackground
     }
     
     
@@ -119,8 +122,8 @@ class DiversTableViewController: SearchableTableViewController {
         // In case a trip is specified it means we are selecting divers for the trip
         // then we can disable the switch in case the diver is already part of a dive
         // In case no trip is specified, we just select divers which are not diving for a new dive
-        if ((self.selectionType == "TripDivers" && self.trip != nil && !self.trip!.canRemoveDiver(diver.id)) ||
-            (self.selectionType == "DiveExcludedDivers" && self.dive != nil && self.dive!.diverIsInGroup(diver.id)))
+        if ((self.selectionType == DiversSelectionType.TripDivers && self.trip != nil && !self.trip!.canRemoveDiver(diver.id)) ||
+            (self.selectionType == DiversSelectionType.DiveExcludedDivers && self.dive != nil && self.dive!.diverIsInGroup(diver.id)))
         {
             cell.selectionSwitch.isEnabled = false // cannot remove a diver which is already part of a group...or cannot exclude dive director
             cell.backgroundColor =  UIColor ( red: 0.90, green: 0.90, blue: 0.90, alpha: 1.0 )
@@ -188,7 +191,7 @@ class DiversTableViewController: SearchableTableViewController {
     
     func updateSelection()
     {
-        if (self.selectionType == "DiveExcludedDivers")
+        if (self.selectionType == DiversSelectionType.DiveExcludedDivers)
         {
             self.diverScope.setTitle("Repos (\(selection.count))", forSegmentAt: 1)
         }
@@ -293,10 +296,21 @@ class DiversTableViewController: SearchableTableViewController {
     // MARK: - Navigation
     @IBAction func doneAction(_ sender: AnyObject)
     {
-        if (self.selectionType == "TripDivers")
+        if (self.selectionType == DiversSelectionType.TripDivers)
         {
             // Back To New Trip
             self.performSegue(withIdentifier: "TripSelectedDivers", sender: self)
+        }
+        else if (self.selectionType == DiversSelectionType.CreateGroup)
+        {
+            // Back To Dive Groups to add a new group from divers selection
+            self.performSegue(withIdentifier: "NewGroupDivers", sender: self)
+        }
+        else if (self.selectionType == DiversSelectionType.AddDiversToGroup)
+        {
+            // Back To Dive Groups to add divers selection to the selected group
+            self.performSegue(withIdentifier: "AddDiversToGroup", sender: self)
+            
         }
         else
         {
@@ -309,10 +323,18 @@ class DiversTableViewController: SearchableTableViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func saveSelection(_ sender: UIBarButtonItem) {
-    }
     override func shouldPerformSegue(withIdentifier identifier: String,sender: Any?) -> Bool
     {
+        if self.selectionType == DiversSelectionType.CreateGroup
+        {
+            // Dans le cas de la création d'une nouvelle palanquée, on vérifie que l'utilisateur a bien sélectionné au moins un plongeur
+            if self.selection.count == 0
+            {
+                MessageHelper.displayError("Vous n'avez pas sélectioné de plongeurs...", controller: self)
+                return false
+            }
+        }
+        
         return true
     }
 

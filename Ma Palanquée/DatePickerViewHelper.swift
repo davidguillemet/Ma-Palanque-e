@@ -48,9 +48,23 @@ class DatePickerViewHelper: AbstractPickerViewHelper
     func datePickerValueChanged(_ sender:UIDatePicker)
     {
         selectedDate = pickerView.date
+        updateField()
     }
     
-    func donePicker()
+    override func donePicker()
+    {
+        updateField()
+        textField.endEditing(true)
+    }
+    
+    override func nextPicker()
+    {
+        updateField()
+        textField.resignFirstResponder()
+        textField.sendActions(for: .editingDidEndOnExit)
+    }
+    
+    private func updateField()
     {
         if (validationDelegate != nil && validationDelegate!(selectedDate ?? pickerView.date, self.textField))
         {
@@ -62,8 +76,7 @@ class DatePickerViewHelper: AbstractPickerViewHelper
             {
                 textField.text = DateHelper.stringFromDate(selectedDate ?? pickerView.date, fullStyle: true)
             }
-            textField.endEditing(true)
         }
     }
-
+    
 }

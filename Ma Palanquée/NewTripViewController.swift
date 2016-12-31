@@ -41,8 +41,14 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var contentView: UIView!
     
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        IconHelper.SetIcon(forBarButtonItem: cancelButton, icon: Icon.CancelCircled, fontSize: 24)
+        IconHelper.SetIcon(forBarButtonItem: saveButton, icon: Icon.Save, fontSize: 24)
+
         
         let topConstraint: NSLayoutConstraint = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutAttribute.topMargin, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.topMargin
             , multiplier: 1.0, constant: 8)
@@ -62,7 +68,7 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
             self.tripDateTo.text = DateHelper.stringFromDate(self.initialTrip!.dateTo, fullStyle: true)
             self.nsDateTo = initialTrip!.dateTo
             
-            if (self.initialTrip!.tripType == TripType.exploration)
+            if (self.initialTrip!.diveType == DiveType.exploration)
             {
                 self.tripType.selectedSegmentIndex = 1
             }
@@ -201,28 +207,27 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
             return false
         }
         
-        let tripType: TripType = self.tripType.selectedSegmentIndex == 0 ? TripType.training : TripType.exploration
+        let diveType: DiveType = self.tripType.selectedSegmentIndex == 0 ? DiveType.training : DiveType.exploration
         let localDivers: Set<String> = self.divers != nil ? self.divers! : Set<String>()
         
         if (initialTrip == nil)
         {
             // New Trip
-            self.newTrip = Trip(location: tripLocation.text!, desc: tripDesc.text!, dateFrom: self.nsDateFrom!, dateTo: self.nsDateTo!, tripType: tripType, divers: localDivers, constraints: self.constraints)
+            self.newTrip = Trip(location: tripLocation.text!, desc: tripDesc.text!, dateFrom: self.nsDateFrom!, dateTo: self.nsDateTo!, diveType: diveType, divers: localDivers, constraints: self.constraints)
         }
         else
         {
             // Update Trip
-            self.initialTrip!.update(tripLocation.text!, desc: tripDesc.text!, dateFrom: self.nsDateFrom!, dateTo: self.nsDateTo!, tripType: tripType, divers: localDivers, constraints: self.constraints)
+            self.initialTrip!.update(tripLocation.text!, desc: tripDesc.text!, dateFrom: self.nsDateFrom!, dateTo: self.nsDateTo!, diveType: diveType, divers: localDivers, constraints: self.constraints)
         }
         
         return true
     }
-
-    @IBAction func cancel(_ sender: UIBarButtonItem)
+    
+    @IBAction func onCancel(_ sender: Any)
     {
         dismiss(animated: true, completion: nil)
     }
-    
     
     // MARK: - Navigation
 
@@ -256,7 +261,7 @@ class NewTripViewController: UIViewController, UITextFieldDelegate {
                 targetController?.selection = self.divers!
             }
             targetController?.trip = self.initialTrip
-            targetController?.selectionType = "TripDivers"
+            targetController?.selectionType = DiversSelectionType.TripDivers
         }
         else if ((sender as AnyObject) === constraintsButton)
         {

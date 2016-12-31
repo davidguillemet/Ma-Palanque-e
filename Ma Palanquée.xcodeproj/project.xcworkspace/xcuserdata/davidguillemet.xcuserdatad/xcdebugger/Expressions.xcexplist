@@ -3,12 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "DivesTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DivesTableViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.sections[orderedSections[section]]!.count">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "NewDiveTableViewController.viewDidLoad() -&gt; ():NewDiveTableViewController.swift">
       </ContextState>
       <ContextState
          contextName = "NewDiveTableViewController.validateDive() -&gt; Bool:NewDiveTableViewController.swift">
@@ -70,6 +65,9 @@
                value = "sectionInsets.right">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static ServiceManager.InvokeService&lt;A where ...&gt; (withService : A, controller : UIViewController) -&gt; ():ServiceManager.swift">
       </ContextState>
       <ContextState
          contextName = "DiversTableViewController.GetDiversFromScope(Bool, loading : Bool) -&gt; ():DiversTableViewController.swift">
@@ -143,6 +141,17 @@
          contextName = "DiversTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:DiversTableViewController.swift">
       </ContextState>
       <ContextState
+         contextName = "DiveGroupsCollectionViewController.openMenu(sender : UIView) -&gt; ():DiveGroupsCollectionViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sender.frame.origin.x">
+            </PersistentString>
+            <PersistentString
+               value = "sender.frame.origin.y">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Group.addDiver(String) -&gt; ():Group.swift">
       </ContextState>
       <ContextState
@@ -157,10 +166,10 @@
          contextName = "DiveGroupsCollectionViewController.collectionView(UICollectionView, moveItemAtIndexPath : NSIndexPath, toIndexPath : NSIndexPath) -&gt; ():DiveGroupsCollectionViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "DiversTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DiversTableViewController.swift">
+         contextName = "StartScreenViewController.OnResponse&lt;A where ...&gt; (fromService : A) -&gt; ():StartScreenViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.resultSearchController">
+               value = "self.navigationController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -172,6 +181,14 @@
             </PersistentString>
             <PersistentString
                value = "cell.diveSiteTextField.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DiversTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DiversTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.resultSearchController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -242,13 +259,27 @@
          contextName = "NewTripViewController.textFieldShouldEndEditing(UITextField) -&gt; Bool:NewTripViewController.swift">
       </ContextState>
       <ContextState
+         contextName = "static ServiceManager.(InvokeService&lt;A where ...&gt; (withService : A, controller : UIViewController) -&gt; ()).(closure #1):ServiceManager.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ConnectionService.OnResponse(data : Data, response : URLResponse) throws -&gt; ():ConnectionService.swift">
+      </ContextState>
+      <ContextState
+         contextName = "static ServiceManager.loadPersistedSession() -&gt; ():ServiceManager.swift">
+      </ContextState>
+      <ContextState
          contextName = "GroupCollectionViewCell.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:GroupCollectionViewCell.swift">
       </ContextState>
       <ContextState
-         contextName = "NewTripViewController.validateTrip() -&gt; Bool:NewTripViewController.swift">
+         contextName = "DivesTableViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:DivesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.sections[orderedSections[section]]!.count">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "NewDiveTableViewController.viewDidLoad() -&gt; ():NewDiveTableViewController.swift">
+         contextName = "NewTripViewController.validateTrip() -&gt; Bool:NewTripViewController.swift">
       </ContextState>
       <ContextState
          contextName = "Group.moveDiver(Int, toIndex : Int) throws -&gt; ():Group.swift">

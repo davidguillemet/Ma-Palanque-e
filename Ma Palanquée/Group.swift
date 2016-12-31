@@ -46,7 +46,27 @@ class Group
         divers!.append(diver)
     }
     
-    func insertDiver(_ diver: String, atIndex: Int)
+    func addDivers(divers: [String])
+    {
+        if (self.divers == nil)
+        {
+            self.divers = [String]()
+        }
+        
+        var diversToAdd: [String] = [String]()
+        for diver in divers
+        {
+            if self.divers!.contains(diver)
+            {
+                continue
+            }
+            diversToAdd.append(diver)
+        }
+        
+        self.divers!.append(contentsOf: diversToAdd)
+    }
+    
+    func insertDiver(_ diver: String, atIndex: Int?)
     {
         if (divers == nil)
         {
@@ -56,9 +76,17 @@ class Group
         {
             return
         }
-        if (atIndex <= divers!.count)
+        
+        if atIndex != nil
         {
-            divers!.insert(diver, at: atIndex)
+            if (atIndex! <= divers!.count)
+            {
+                divers!.insert(diver, at: atIndex!)
+            }
+        }
+        else
+        {
+            divers!.append(diver)
         }
     }
     func moveDiver(_ fromIndex: Int, toIndex: Int) throws

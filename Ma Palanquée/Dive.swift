@@ -14,28 +14,31 @@ class Dive : NSObject
     var time: Date
     var site: String
     var director: String
+    var diveType: DiveType
     var groups: [Group]?
     var excludedDivers: Set<String>?
     var id: String
     
-    init(date: Date, time: Date, site: String, director: String, groups: [Group]?, excludedDivers: Set<String>?)
+    init(date: Date, time: Date, site: String, director: String, diveType: DiveType, groups: [Group]?, excludedDivers: Set<String>?)
     {
         self.date = date
         self.time = time
         self.site = site
         self.director = director
+        self.diveType = diveType
         self.groups = groups
         self.excludedDivers = excludedDivers
 
         self.id = UUID().uuidString
     }
     
-    func update(_ date: Date, time: Date, site: String, director: String, groups: [Group]?, excludedDivers: Set<String>?)
+    func update(_ date: Date, time: Date, site: String, director: String, diveType: DiveType, groups: [Group]?, excludedDivers: Set<String>?)
     {
         self.date = date
         self.time = time
         self.site = site
         self.director = director
+        self.diveType = diveType
         self.groups = groups
         self.excludedDivers = excludedDivers
     }

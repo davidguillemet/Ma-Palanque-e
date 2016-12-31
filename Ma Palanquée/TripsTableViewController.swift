@@ -28,8 +28,8 @@ class TripsTableViewController: SearchableTableViewController {
     
     override func viewDidLoad() {
         
-        IconHelper.SetBarButtonIcon(menuButton, icon: IconValue.IconMenu, fontSize: nil, center: false)
-        IconHelper.SetBarButtonIcon(addButton, icon: IconValue.IconPlus, fontSize: nil, center: false)
+        IconHelper.SetIcon(forBarButtonItem: menuButton, icon: Icon.Menu, fontSize: 24)
+        IconHelper.SetIcon(forBarButtonItem: addButton, icon: Icon.Plus, fontSize: 24)
         
         loadTrips()
         
@@ -117,7 +117,7 @@ class TripsTableViewController: SearchableTableViewController {
         dateFormatter.locale = Locale.init(identifier:"fr")
         dateFormatter.dateStyle = DateFormatter.Style.medium
 
-        IconHelper.SetCircledIcon(cell.tripIcon, icon: trip.tripType == TripType.exploration ? IconValue.IconPlane : IconValue.IconUniversity, fontSize: 18, center: true)
+        IconHelper.SetCircledIcon(cell.tripIcon, icon: trip.diveType == DiveType.exploration ? Icon.Plane : Icon.University, fontSize: 18, center: true)
         
         SetTripIconColor(
             cell.tripIcon,
@@ -141,9 +141,9 @@ class TripsTableViewController: SearchableTableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
-        cell.separatorInset = UIEdgeInsets.zero
+        /*cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
-        cell.preservesSuperviewLayoutMargins = false
+        cell.preservesSuperviewLayoutMargins = false*/
     }
 
     /*

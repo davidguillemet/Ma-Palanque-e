@@ -33,13 +33,13 @@ class TripManager
             return d.id
         }))
         
-        var newTrip = Trip(location:"Marseille", desc:"Week-End Technique Novembre 2015", dateFrom:Date(), dateTo:Date(), tripType:TripType.training ,divers: diversSet, constraints: nil)
+        var newTrip = Trip(location:"Marseille", desc:"Week-End Technique Novembre 2015", dateFrom:Date(), dateTo:Date(), diveType:DiveType.training ,divers: diversSet, constraints: nil)
         Instance.dico[newTrip.id] = newTrip
         
-        newTrip = Trip(location:"La Ciotat", desc:"Stage Bio Juin 2015", dateFrom:Date(), dateTo:Date(), tripType:TripType.training ,divers: diversSet, constraints: nil)
+        newTrip = Trip(location:"La Ciotat", desc:"Stage Bio Juin 2015", dateFrom:Date(), dateTo:Date(), diveType:DiveType.training ,divers: diversSet, constraints: nil)
         Instance.dico[newTrip.id] = newTrip
         
-        newTrip = Trip(location:"Cap Creus", desc:"Sortie Rentrée 2015", dateFrom:Date(), dateTo:Date(), tripType:TripType.training ,divers: diversSet, constraints: nil)
+        newTrip = Trip(location:"Cap Creus", desc:"Sortie Rentrée 2015", dateFrom:Date(), dateTo:Date(), diveType:DiveType.training ,divers: diversSet, constraints: nil)
         Instance.dico[newTrip.id] = newTrip
         
         return true

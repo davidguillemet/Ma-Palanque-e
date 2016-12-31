@@ -13,6 +13,6 @@ class TableViewHelper
     class func ConfigureTable(tableView: UITableView)
     {
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        tableView.backgroundColor = UIColor(red: 0.949, green: 1, blue: 0.9961, alpha: 1.0)
+        tableView.backgroundColor = ColorHelper.TableViewBackground
     }
 }

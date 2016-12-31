@@ -15,12 +15,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        // Load application preferences
-        PreferencesHelper.loadPreferences()
-        
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+    {
         // Override point for customization after application launch.
+        
+        UIBarButtonItem.appearance().setTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: 50), for: UIBarMetrics.default)
+        UIBarButtonItem.appearance().setBackgroundVerticalPositionAdjustment(50, for: UIBarMetrics.default)
+        UITableViewHeaderFooterView.appearance().backgroundColor = ColorHelper.TableViewBackground
+        
+        UITableViewCell.appearance().separatorInset = UIEdgeInsets.zero
+        UITableViewCell.appearance().layoutMargins = UIEdgeInsets.zero
+        UITableViewCell.appearance().preservesSuperviewLayoutMargins = false
+
+ 
         return true
     }
 

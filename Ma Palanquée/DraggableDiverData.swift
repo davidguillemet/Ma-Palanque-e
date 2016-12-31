@@ -163,7 +163,7 @@ class Drag
     {
         let errorIndicatorView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         let indicatorLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        IconHelper.SetCircledIcon(indicatorLabel, icon: IconValue.IconClose2, fontSize: 26, center: true)
+        IconHelper.SetCircledIcon(indicatorLabel, icon: Icon.Close, fontSize: 26, center: true)
         indicatorLabel.textColor = UIColor.red
         indicatorLabel.layer.borderColor = UIColor.red.cgColor
         indicatorLabel.backgroundColor = ColorHelper.ForbiddenIconBackground

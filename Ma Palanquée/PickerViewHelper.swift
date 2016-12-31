@@ -53,14 +53,25 @@ class PickerViewHelper: AbstractPickerViewHelper, UIPickerViewDataSource, UIPick
         selectedElement = row
     }
     
-    func donePicker()
+    override func donePicker()
+    {
+        updateField()
+        textField.endEditing(true)
+    }
+    
+    override func nextPicker()
+    {
+        updateField()
+        textField.resignFirstResponder()
+        textField.sendActions(for: .editingDidEndOnExit)        
+    }
+
+    private func updateField()
     {
         textField.text = elements[selectedElement].description
         if (self.onSelection != nil)
         {
             onSelection!(elements[selectedElement])
         }
-        textField.endEditing(true)
     }
-
 }

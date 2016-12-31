@@ -34,13 +34,19 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
     @IBOutlet weak var diveDiversLabel: UILabel!
     @IBOutlet weak var excludedDiversButton: UIButton!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    @IBOutlet weak var generateGroups: UIButton!
-    @IBOutlet weak var viewGroupsLabel: UILabel!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var diveTypeSwitch: UISwitch!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        IconHelper.SetIcon(forBarButtonItem: saveButton, icon: Icon.Save, fontSize: 24)
+        IconHelper.SetIcon(forBarButtonItem: cancelButton, icon: Icon.CancelCircled, fontSize: 24)
+        
         TableViewHelper.ConfigureTable(tableView: self.tableView)
+        
+        UITextField.connectFields(fields: [diveSiteTextfield, diveDateTextField, diveTimeTextField, diveDirectorTextField])
         
         diveSiteTextfield.borderStyle = .none
         diveDateTextField.borderStyle = .none
@@ -55,6 +61,16 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         if (initialDive == nil)
         {
             self.title = "Nouvelle Plongée"
+            
+            // Initialize doive type from trip type
+            if (self.trip.diveType == DiveType.training)
+            {
+                self.diveTypeSwitch.setOn(true, animated: false)
+            }
+            else
+            {
+                self.diveTypeSwitch.setOn(false, animated: false)
+            }
         }
         else
         {
@@ -65,6 +81,16 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             self.diveDate = self.initialDive!.date
             self.diveTime = self.initialDive!.time
             self.diveDirector = DiverManager.GetDiver(self.initialDive!.director)
+            
+            if (self.initialDive!.diveType == DiveType.training)
+            {
+                self.diveTypeSwitch.setOn(true, animated: false)
+            }
+            else
+            {
+                self.diveTypeSwitch.setOn(false, animated: false)
+            }
+            
             if (self.initialDive!.excludedDivers != nil)
             {
                 self.excludedDivers = self.initialDive!.excludedDivers!
@@ -75,15 +101,6 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             diveDateTextField.text = DateHelper.stringFromDate(self.initialDive!.date, fullStyle: true)
             diveTimeTextField.text = DateHelper.stringFromTime(self.initialDive!.time)
             diveDirectorTextField.text = self.diveDirector!.description
-        }
-
-        if (initialDive == nil || initialDive!.groups == nil || initialDive!.groups!.count == 0)
-        {
-            viewGroupsLabel.text = "Générer les palanquées"
-        }
-        else
-        {
-            viewGroupsLabel.text = "Afficher les palanquées"
         }
         
         updateExcludedDiversButtonLabel()
@@ -116,10 +133,12 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         return 60
     }
     
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    {
         if let headerView = view as? UITableViewHeaderFooterView
         {
             headerView.textLabel?.textAlignment = .center
+            headerView.contentView.backgroundColor = ColorHelper.TableViewBackground
         }
     }
 
@@ -213,14 +232,25 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             return false
         }
         
-        // New Dive
-        if (initialDive != nil)
+        var diveType: DiveType!
+        
+        if self.diveTypeSwitch.isOn
         {
-            initialDive!.update(diveDate!, time: diveTime!, site: diveSiteTextfield.text!, director: diveDirector!.id, groups: self.groups, excludedDivers: self.excludedDivers)
+            diveType = DiveType.training
         }
         else
         {
-            self.newdive = Dive(date: diveDate!, time: diveTime!, site: diveSiteTextfield.text!, director: diveDirector!.id, groups: self.groups, excludedDivers: self.excludedDivers)
+            diveType = DiveType.exploration
+        }
+        
+        // New Dive
+        if (initialDive != nil)
+        {
+            initialDive!.update(diveDate!, time: diveTime!, site: diveSiteTextfield.text!, director: diveDirector!.id, diveType: diveType, groups: self.groups, excludedDivers: self.excludedDivers)
+        }
+        else
+        {
+            self.newdive = Dive(date: diveDate!, time: diveTime!, site: diveSiteTextfield.text!, director: diveDirector!.id, diveType: diveType, groups: self.groups, excludedDivers: self.excludedDivers)
         }
         
         return true
@@ -265,7 +295,7 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
             targetController?.selection = excludedDivers
             targetController?.dive = initialDive
             targetController?.initialDivers = trip.divers.map{ (diverId: String) -> Diver in return DiverManager.GetDiver(diverId) }
-            targetController?.selectionType = "DiveExcludedDivers"
+            targetController?.selectionType = DiversSelectionType.DiveExcludedDivers
         }
         else if (segue.identifier == "ShowDiveGroups")
         {
@@ -337,16 +367,17 @@ class NewDiveTableViewController: UITableViewController, UITextFieldDelegate  {
         return true
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    /*func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         self.diveSiteTextfield.resignFirstResponder()
         self.view.endEditing(true)
         return false
-    }
+    }*/
     
-    @IBAction func cancelAction(_ sender: AnyObject)
+    
+    @IBAction func onCancelAction(_ sender: Any)
     {
+        view.endEditing(true)
         dismiss(animated: true, completion: nil)
     }
-
 }
